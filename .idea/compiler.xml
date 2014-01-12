@@ -26,6 +26,9 @@
         <module name="Web" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Web" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
