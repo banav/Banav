@@ -12,7 +12,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true">
+  <component name="ProjectResources">
+    <resource url="http://java.sun.com/jsf/html" location="$APPLICATION_HOME_DIR$/plugins/JavaEE/lib/javaee-impl.jar" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
