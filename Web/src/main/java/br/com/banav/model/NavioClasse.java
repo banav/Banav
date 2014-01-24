@@ -1,10 +1,47 @@
 package br.com.banav.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * Created by GilsonRocha on 12/01/14.
  */
-public class NavioClasse {
+@Entity
+@Table(name = "navio_classe")
+@IdClass(NavioClassePK.class)
+public class NavioClasse implements Serializable{
+
+    @Id
+    @JoinColumn(name = "navio_id", referencedColumnName = "navio_id")
     private Navio navio;
+
+    @Id
+    @JoinColumn(name = "classe_id", referencedColumnName = "classe_id")
     private Classe classe;
+
     private Integer quantidade;
+
+    public Navio getNavio() {
+        return navio;
+    }
+
+    public void setNavio(Navio navio) {
+        this.navio = navio;
+    }
+
+    public Classe getClasse() {
+        return classe;
+    }
+
+    public void setClasse(Classe classe) {
+        this.classe = classe;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
 }
