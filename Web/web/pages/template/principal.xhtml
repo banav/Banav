@@ -26,37 +26,17 @@
 
         <h:body>
 
-            <div>
-                <img src="#{request.contextPath}/images/banav.png" alt="Banav"/>
+            <div id="topo">
+                <img src="#{request.contextPath}/images/banav_bg.jpg" alt="Banav"/>
             </div>
 
-            <p:menubar>
-                <p:submenu label="File" icon="ui-icon-document">
-                    <p:submenu label="New" icon="ui-icon-contact">
-                        <p:menuitem value="Project" url="#" />
-                        <p:menuitem value="Other" url="#" />
-                    </p:submenu>
-                    <p:menuitem value="Open" url="#" />
-                    <p:menuitem value="Quit" url="#" />
-                </p:submenu>
+            <div id="menu">
+                <ui:include src="menu.xhtml" />
+            </div>
 
-                <p:submenu label="Edit" icon="ui-icon-pencil">
-                    <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
-                    <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
-                </p:submenu>
-
-                <p:submenu label="Help" icon="ui-icon-help">
-                    <p:menuitem value="Contents" url="#" />
-                    <p:submenu label="Search" icon="ui-icon-search">
-                        <p:submenu label="Text">
-                            <p:menuitem value="Workspace" url="#" />
-                        </p:submenu>
-                        <p:menuitem value="File" url="#" />
-                    </p:submenu>
-                </p:submenu>
-            </p:menubar>
-
-            <ui:insert name="conteudo" />
+            <div id="conteudo">
+                <ui:insert name="conteudo" />
+            </div>
         </h:body>
     </f:view>
 </html>
