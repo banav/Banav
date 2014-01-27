@@ -12,11 +12,9 @@ import java.io.Serializable;
 public class NavioClasse implements Serializable{
 
     @Id
-    @JoinColumn(name = "navio_id", referencedColumnName = "navio_id")
     private Navio navio;
 
     @Id
-    @JoinColumn(name = "classe_id", referencedColumnName = "classe_id")
     private Classe classe;
 
     private Integer quantidade;

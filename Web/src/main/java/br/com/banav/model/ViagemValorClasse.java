@@ -19,7 +19,10 @@ public class ViagemValorClasse implements Serializable{
     @JoinColumn(name = "viagem_id")
     private Viagem viagem;
 
-    @JoinColumn(name = "navio_classe_id")
+    @JoinColumns({
+       @JoinColumn(name = "navio", referencedColumnName = "navio"),
+       @JoinColumn(name = "classe", referencedColumnName = "classe")
+    })
     @OneToOne
     private NavioClasse navioClasse;
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "Porto")
+@Table(name = "porto")
 @SequenceGenerator(name = "PortoGenerator_SEQ", initialValue = 1, sequenceName = "seq_porto")
 public class Porto implements Serializable{
 

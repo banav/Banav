@@ -8,23 +8,23 @@ import java.io.Serializable;
 
 public class NavioClassePK implements Serializable {
 
-    private Long navioID;
+    private Long navio;
 
-    private Long classeID;
+    private Long classe;
 
-    public Long getNavioID() {
-        return navioID;
+    public Long getNavio() {
+        return navio;
     }
 
-    public void setNavioID(Long navioID) {
-        this.navioID = navioID;
+    public void setNavio(Long navio) {
+        this.navio = navio;
     }
 
-    public Long getClasseID() {
-        return classeID;
+    public Long getClasse() {
+        return classe;
     }
 
-    public void setClasseID(Long classeID) {
-        this.classeID = classeID;
+    public void setClasse(Long classe) {
+        this.classe = classe;
     }
 }

@@ -9,13 +9,13 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "Navio")
+@Table(name = "navio")
 @SequenceGenerator(name = "NavioGenerator_SEQ", initialValue = 1, sequenceName = "seq_navio")
 public class Navio implements Serializable{
 
     @Id
     @GeneratedValue(generator = "NavioGenerator_SEQ", strategy = GenerationType.SEQUENCE)
-    @Column(name = "navio_id")
+    @Column(name = "id")
     private Long navioID;
 
     private String nome;

@@ -18,7 +18,7 @@ public class Passagem implements Serializable{
 
 
     @ManyToOne()
-    @JoinColumn(name = "viag_val_cla")
+    @JoinColumn(name = "viagem_valor_classe_id")
     private ViagemValorClasse viagemValorClasse;
 
     private String codigoBarras;

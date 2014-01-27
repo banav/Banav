@@ -7,14 +7,14 @@ import java.io.Serializable;
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "Classe")
+@Table(name = "classe")
 @SequenceGenerator(name = "ClasseGenerator_SEQ", initialValue = 1, sequenceName = "seq_classe")
 public class Classe implements Serializable {
 
 
     @Id
-    @GeneratedValue(generator = "seq_classe", strategy = GenerationType.SEQUENCE)
-    @Column(name = "classe_id")
+    @GeneratedValue(generator = "ClasseGenerator_SEQ", strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Long classeID;
 
     private String nome;

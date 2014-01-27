@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "Cidade")
+@Table(name = "cidade")
 @SequenceGenerator(name = "CidadeGenerator_SEQ", initialValue = 1, sequenceName = "seq_cidade")
 public class Cidade implements Serializable {
 
