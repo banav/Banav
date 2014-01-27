@@ -4,6 +4,7 @@ package br.com.banav.service;
  * Created by GilsonRocha on 22/01/14.
  */
 
+import br.com.banav.dao.EnderecoDAO;
 import br.com.banav.dao.UsuarioDAO;
 import br.com.banav.model.Usuario;
 
@@ -16,7 +17,10 @@ public class UsuarioSrv {
 
     @Inject private UsuarioDAO usuarioDAO;
 
+    @Inject private EnderecoDAO enderecoDAO;
+
     public void salvar(Usuario usuario) {
+        enderecoDAO.salvar(usuario.getEndereco());
         usuarioDAO.salvar(usuario);
     }
 
@@ -24,7 +28,7 @@ public class UsuarioSrv {
         usuarioDAO.atualizar(usuario);
     }
 
-    public Usuario getUm(Integer id) {
+    public Usuario getUm(Long id) {
         return usuarioDAO.getUm(id, Usuario.class);
     }
 

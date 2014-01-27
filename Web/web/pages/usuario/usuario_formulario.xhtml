@@ -15,11 +15,68 @@
 
                 <p:messages closable="true" autoUpdate="true" severity="info" showDetail="true" showSummary="false"/>
 
-                <h:panelGrid columns="3">
-                    <p:outputLabel value="Nome:" for="tfNome"/>
-                    <p:inputText id="tfNome" value="#{usuarioFormularioBean.usuario.nome}" size="100" maxlength="100" required="true" requiredMessage="Campo obrigatório." />
-                    <p:message for="tfNome" />
-                </h:panelGrid>
+                <br />
+
+                <p:fieldset legend="Dados Pessoais">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Nome:" for="tfNome"/>
+                        <p:inputText id="tfNome" value="#{usuarioFormularioBean.usuario.nome}" size="100" maxlength="100" required="true" requiredMessage="Campo obrigatório." />
+                        <p:message for="tfNome" />
+
+                        <p:outputLabel value="Telefone:" for="tfTelefone"/>
+                        <p:inputMask id="tfTelefone" value="#{usuarioFormularioBean.usuario.endereco.telefone}" mask="(99) 9999-9999" maxlength="14" size="20"/>
+                        <p:message for="tfTelefone" />
+
+                        <p:outputLabel value="Celular:" for="tfCelular"/>
+                        <p:inputMask id="tfCelular" value="#{usuarioFormularioBean.usuario.endereco.celular}" mask="(99) 9999-9999"  maxlength="14" size="20"/>
+                        <p:message for="tfCelular" />
+
+                        <p:outputLabel value="Cidade:" for="tfCidade"/>
+                        <p:selectOneMenu id="tfCidade" value="#{usuarioFormularioBean.usuario.endereco.cidade}" converter="objConverter" required="true" requiredMessage="Campo obrigatório.">
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{usuarioFormularioBean.cidades}" />
+                        </p:selectOneMenu>
+                        <p:message for="tfCidade" />
+
+                        <p:outputLabel value="Logradouro:" for="tfLogradouro"/>
+                        <p:inputText id="tfLogradouro" value="#{usuarioFormularioBean.usuario.endereco.logradouro}" size="100" maxlength="100"/>
+                        <p:message for="tfLogradouro" />
+
+                        <p:outputLabel value="Complemento:" for="tfComplemento"/>
+                        <p:inputText id="tfComplemento" value="#{usuarioFormularioBean.usuario.endereco.complemento}" size="20" maxlength="20"/>
+                        <p:message for="tfComplemento" />
+
+                        <p:outputLabel value="CEP:" for="tfCEP"/>
+                        <p:inputMask id="tfCEP" value="#{usuarioFormularioBean.usuario.endereco.cep}"  mask="99999-999" size="20" maxlength="9"/>
+                        <p:message for="tfCEP" />
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <br />
+
+                <p:fieldset legend="Segurança">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Login:" for="tfLogin"/>
+                        <p:inputText id="tfLogin" value="#{usuarioFormularioBean.usuario.login}" size="20" maxlength="20" required="true" requiredMessage="Campo obrigatório." />
+                        <p:message for="tfLogin" />
+
+                        <p:outputLabel for="tfSenha" value="Senha:" />
+                        <p:password id="tfSenha" value="#{usuarioFormularioBean.usuario.senha}" match="tfSenhaConfirmacao" size="20" maxlength="20" required="true" requiredMessage="Campo obrigatório." />
+                        <p:message for="tfSenha" />
+
+                        <p:outputLabel for="tfSenhaConfirmacao" value="Repita a senha:" />
+                        <p:password id="tfSenhaConfirmacao" value="#{usuarioFormularioBean.usuario.senha}" size="20" maxlength="20" required="true" requiredMessage="Campo obrigatório." validatorMessage="As senhas precisam ser iguais."/>
+                        <p:message for="tfSenhaConfirmacao" />
+
+                        <p:outputLabel for="tfPerfil" value="Perfil:" />
+                        <p:selectOneButton id="tfPerfil" value="#{usuarioFormularioBean.perfilAux}" required="true" requiredMessage="Campo obrigatório.">
+                            <f:selectItem itemLabel="Administrador" itemValue="A" />
+                            <f:selectItem itemLabel="Vendedor" itemValue="V" />
+                        </p:selectOneButton>
+                        <p:message for="tfPerfil" />
+                    </h:panelGrid>
+
+                </p:fieldset>
 
                 <p:separator />
 

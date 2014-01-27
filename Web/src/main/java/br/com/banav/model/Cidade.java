@@ -45,4 +45,30 @@ public class Cidade implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cidade cidade = (Cidade) o;
+
+        if (id != null ? !id.equals(cidade.id) : cidade.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        if(estado != null) {
+            return nome + " / " + estado.getNome();
+        }
+
+        return nome;
+    }
 }
