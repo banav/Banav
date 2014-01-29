@@ -28,10 +28,10 @@ public class Viagem implements Serializable {
     @JoinColumn(name = "porto_destino")
     private Porto destino;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaSaida;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaChegada;
 
     public Long getId() {
