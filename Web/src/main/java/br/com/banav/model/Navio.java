@@ -46,4 +46,26 @@ public class Navio implements Serializable{
     public void setClasses(List<NavioClasse> classes) {
         this.classes = classes;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Navio navio = (Navio) o;
+
+        if (navioID != null ? !navioID.equals(navio.navioID) : navio.navioID != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return navioID != null ? navioID.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../pages/template/principal.xhtml">
+
+    <ui:define name="conteudo">
+        <p:panel id="panel" header="Viagens > Agendar Viagem">
+
+            <h:form id="form" prependId="false">
+
+                <p:messages closable="true" autoUpdate="true" severity="info" showDetail="true" showSummary="false"/>
+
+                <br />
+
+                <p:fieldset legend="Dados">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Navio:" for="tfNavio"/>
+                        <p:selectOneMenu id="tfNavio" value="#{novaViagemBean.viagem.navio}" converter="objConverter" required="true" requiredMessage="Campo obrigatório." style="width: 250px;">
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{novaViagemBean.navios}" />
+                        </p:selectOneMenu>
+                        <p:message for="tfNavio" />
+
+                        <p:outputLabel value="Origem:" for="tfOrigem"/>
+                        <p:selectOneMenu id="tfOrigem" value="#{novaViagemBean.viagem.origem}" converter="objConverter" required="true" requiredMessage="Campo obrigatório." style="width: 250px;">
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{novaViagemBean.portos}" />
+                        </p:selectOneMenu>
+                        <p:message for="tfOrigem" />
+
+                        <p:outputLabel value="Destino:" for="tfDestino"/>
+                        <p:selectOneMenu id="tfDestino" value="#{novaViagemBean.viagem.destino}" converter="objConverter" required="true" requiredMessage="Campo obrigatório." style="width: 250px;">
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{novaViagemBean.portos}" />
+                        </p:selectOneMenu>
+                        <p:message for="tfDestino" />
+
+                        <p:outputLabel value="Data/Hora de Saída:" for="tfSaida"/>
+                        <p:calendar id="tfSaida" value="#{novaViagemBean.viagem.horaSaida}" locale="pt" showButtonPanel="true" pattern="dd/MM/yyyy HH:mm" showOn="button" stepHour="1" stepMinute="10" required="true" requiredMessage="Campo obrigatório."/>
+                        <p:message for="tfSaida" />
+
+                        <p:outputLabel value="Data/Hora de Chegada:" for="tfChegada"/>
+                        <p:calendar id="tfChegada" value="#{novaViagemBean.viagem.horaChegada}" locale="pt" showButtonPanel="true" pattern="dd/MM/yyyy HH:mm" showOn="button" stepHour="1" stepMinute="10" required="true" requiredMessage="Campo obrigatório."/>
+                        <p:message for="tfChegada" />
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <br />
+
+                <p:fieldset legend="Frequência">
+
+                    <p:tabView id="tabsFrequencia" dynamic="true" activeIndex="#{novaViagemBean.frequencia}">
+                        <p:tab title="Nunca" id="tabNunca">
+                            <p:outputLabel value="Não repetir a viagem." />
+                        </p:tab>
+                        <p:tab title="Diariamente" id="tabDiariamente">
+                            <p:outputLabel value="A viagem se repetirá diariamente a partir da Data/Hora de Saída informada acima." />
+                            <br /><br />
+                            <p:outputLabel value="Qual a quantidade de repetições? "/>
+                            <p:spinner value="#{novaViagemBean.repeticoes}" min="1" />
+                        </p:tab>
+                        <p:tab title="Semanalmente" id="tabSemanalmente">
+                            <p:outputLabel value="A viagem se repetirá semanalmente a partir da Data/Hora de Saída informada acima." />
+                            <br /><br />
+                            <p:outputLabel value="Qual a quantidade de repetições? " />
+                            <p:spinner value="#{novaViagemBean.repeticoes}" min="1" />
+                        </p:tab>
+                        <p:tab title="Mensalmente" id="tabMensalmente">
+                            <p:outputLabel value="A viagem se repetirá mensalmente a partir da Data/Hora de Saída informada acima." />
+                            <br /><br />
+                            <p:outputLabel value="Qual a quantidade de repetições? " />
+                            <p:spinner value="#{novaViagemBean.repeticoes}" min="1" />
+                        </p:tab>
+                    </p:tabView>
+
+                </p:fieldset>
+
+                <p:separator />
+
+                <p:commandButton value="Salvar" action="#{novaViagemBean.salvar}" styleClass="ui-priority-primary" update="form"/>
+
+            </h:form>
+
+        </p:panel>
+    </ui:define>
+</ui:composition>
+
+</html>
