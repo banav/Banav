@@ -54,6 +54,18 @@ public class ViagemSrv {
         }
     }
 
+    public void atualizar(Viagem viagem) {
+        viagemDAO.atualizar(viagem);
+    }
+
+    public void remover(Long id) {
+        viagemDAO.remover(id, Viagem.class);
+    }
+
+    public Viagem getUm(Long id) {
+        return viagemDAO.getUm(id, Viagem.class);
+    }
+
     public List<Viagem> listar() {
         return viagemDAO.listar();
     }

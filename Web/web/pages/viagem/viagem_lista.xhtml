@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../pages/template/principal.xhtml">
+
+    <ui:define name="conteudo">
+        <p:panel id="panel" header="Viagens > Viagens Agendadas">
+
+            <h:form id="formConteudo" prependId="false">
+
+                <h:panelGrid columns="1" cellspacing="2">
+                    <p:commandButton value="Nova Viagem" action="pretty:viagemFormulario" ajax="false" immediate="true" process="@this" styleClass="ui-priority-primary"/>
+                </h:panelGrid>
+
+                <p:dataTable id="tbViagens" var="v" value="#{viagemListaBean.viagens}"
+                     paginator="true" rows="10" paginatorPosition="bottom" currentPageReportTemplate="Página {currentPage} de {totalPages}"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="10,20,30" emptyMessage="Nenhuma registro encontrado.">
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data/Hora Saída" />
+                        </f:facet>
+                        <h:outputText value="#{v.horaSaida}">
+                            <f:convertDateTime locale="pt" pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data/Hora Chegada" />
+                        </f:facet>
+                        <h:outputText value="#{v.horaChegada}">
+                            <f:convertDateTime locale="pt" pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Origem" />
+                        </f:facet>
+                        <h:outputText value="#{v.origem.nome}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Destino" />
+                        </f:facet>
+                        <h:outputText value="#{v.destino.nome}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Navio" />
+                        </f:facet>
+                        <h:outputText value="#{v.navio.nome}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Opções" />
+                        </f:facet>
+
+                        <h:link outcome="pretty:viagemEditar" value="Editar">
+                            <f:param name="id" value="#{v.id}"/>
+                        </h:link>
+                        &nbsp;&nbsp;
+                        <p:commandLink value="Excluir" action="#{viagemListaBean.remover(v.id)}" update=":formConteudo:tbViagens,:formMsg:msg"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+
+        </p:panel>
+    </ui:define>
+</ui:composition>
+
+</html>
