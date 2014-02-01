@@ -12,31 +12,31 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pretty="http://ocpsoft.com/prettyfaces">
 
-    <h:form id="formMenu">
+<h:form id="formMenu">
 
-        <p:menubar>
-            <p:menuitem value="Início" outcome="/pages/home.jsf" ajax="false" icon="ui-icon-home"/>
+    <p:menubar>
+        <p:menuitem value="Início" outcome="/pages/home.jsf" ajax="false" icon="ui-icon-home"/>
 
-            <p:submenu label="Cadastros Básicos" icon="ui-icon-gear">
-                <p:menuitem value="Cidades" url="#" />
-                <p:menuitem value="Classes" url="#" />
-                <p:menuitem value="Navios" url="#" />
-                <p:menuitem value="Portos" url="#" />
-                <p:menuitem value="Usuários" outcome="pretty:usuarioLista" ajax="false"/>
-            </p:submenu>
+        <p:submenu label="Cadastros Básicos" icon="ui-icon-gear">
+            <p:menuitem value="Cidades" outcome="pretty:cidadeLista" ajax="false" />
+            <p:menuitem value="Classes" url="#" />
+            <p:menuitem value="Navios" url="#" />
+            <p:menuitem value="Portos" url="#" />
+            <p:menuitem value="Usuários" outcome="pretty:usuarioLista" ajax="false"/>
+        </p:submenu>
 
-            <p:submenu label="Viagens" icon="ui-icon-bookmark">
-                <p:menuitem value="Agendar Viagem" outcome="pretty:novaViagem" ajax="false" />
-                <p:menuitem value="Viagens Agendadas" url="#" />
-                <p:menuitem value="Histórico de Passagens" url="#" />
-            </p:submenu>
+        <p:submenu label="Viagens" icon="ui-icon-bookmark">
+            <p:menuitem value="Agendar Viagem" outcome="pretty:novaViagem" ajax="false" />
+            <p:menuitem value="Viagens Agendadas" url="#" />
+            <p:menuitem value="Histórico de Passagens" url="#" />
+        </p:submenu>
 
-            <p:submenu label="Relatórios" icon="ui-icon-print">
-                <p:menuitem value="A definir" url="#" />
-            </p:submenu>
+        <p:submenu label="Relatórios" icon="ui-icon-print">
+            <p:menuitem value="A definir" url="#" />
+        </p:submenu>
 
-            <p:menuitem value="Sair" url="pretty:sair" icon="ui-icon-close" ajax="false"/>
-        </p:menubar>
+        <p:menuitem value="Sair" url="pretty:sair" icon="ui-icon-close" ajax="false"/>
+    </p:menubar>
 
-    </h:form>
+</h:form>
 </html>
