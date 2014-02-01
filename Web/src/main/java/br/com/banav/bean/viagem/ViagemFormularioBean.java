@@ -9,9 +9,9 @@ import br.com.banav.service.NavioSrv;
 import br.com.banav.service.PortoSrv;
 import br.com.banav.service.ViagemSrv;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
+import com.ocpsoft.pretty.faces.annotation.URLActions;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
-import org.primefaces.event.TabChangeEvent;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -24,9 +24,10 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-    @URLMapping(id = "novaViagem", pattern = "/viagem/nova", viewId = "/pages/viagem/nova_viagem.jsf")
+    @URLMapping(id = "viagemFormulario", pattern = "/viagem/nova", viewId = "/pages/viagem/viagem_formulario.jsf"),
+    @URLMapping(id = "viagemEditar", pattern = "/viagem/#{id : viagemFormularioBean.id}", viewId = "/pages/viagem/viagem_formulario.jsf")
 })
-public class NovaViagemBean extends PaginaBean {
+public class ViagemFormularioBean extends PaginaBean {
 
     @EJB
     private ViagemSrv viagemSrv;
@@ -36,6 +37,8 @@ public class NovaViagemBean extends PaginaBean {
 
     @EJB
     private PortoSrv portoSrv;
+
+    private Long id;
 
     private List<Navio> navios;
 
@@ -47,29 +50,41 @@ public class NovaViagemBean extends PaginaBean {
 
     private Integer repeticoes;
 
-    @URLAction(mappingId = "novaViagem", onPostback = false)
+    @URLActions(actions = {
+            @URLAction(mappingId = "viagemFormulario", onPostback = false),
+            @URLAction(mappingId = "viagemEditar", onPostback = false)
+    })
     public void abrir() {
-        repeticoes = 1;
         navios = navioSrv.listar();
         portos = portoSrv.listar();
-        viagem = new Viagem();
+
+        if(id == null) {
+            repeticoes = 1;
+            viagem = new Viagem();
+        } else {
+            viagem = viagemSrv.getUm(id);
+        }
     }
 
     public void salvar() {
-        if(Frequencia.NUNCA.ordinal() == frequencia.intValue()) {
-            viagemSrv.salvar(viagem, Frequencia.NUNCA, repeticoes);
-        } else if(Frequencia.DIARIAMENTE.ordinal() == frequencia.intValue()) {
-            viagemSrv.salvar(viagem, Frequencia.DIARIAMENTE, repeticoes);
-        } else if(Frequencia.SEMANALMENTE.ordinal() == frequencia.intValue()) {
-            viagemSrv.salvar(viagem, Frequencia.SEMANALMENTE, repeticoes);
-        } else if(Frequencia.MENSALMENTE.ordinal() == frequencia.intValue()) {
-            viagemSrv.salvar(viagem, Frequencia.MENSALMENTE, repeticoes);
+        if(id == null) {
+            if(Frequencia.NUNCA.ordinal() == frequencia.intValue()) {
+                viagemSrv.salvar(viagem, Frequencia.NUNCA, repeticoes);
+            } else if(Frequencia.DIARIAMENTE.ordinal() == frequencia.intValue()) {
+                viagemSrv.salvar(viagem, Frequencia.DIARIAMENTE, repeticoes);
+            } else if(Frequencia.SEMANALMENTE.ordinal() == frequencia.intValue()) {
+                viagemSrv.salvar(viagem, Frequencia.SEMANALMENTE, repeticoes);
+            } else if(Frequencia.MENSALMENTE.ordinal() == frequencia.intValue()) {
+                viagemSrv.salvar(viagem, Frequencia.MENSALMENTE, repeticoes);
+            }
+
+            viagem = new Viagem();
+            repeticoes = 1;
+        } else {
+            viagemSrv.atualizar(viagem);
         }
 
         addInfo("Salvo com sucesso.");
-
-        viagem = new Viagem();
-        repeticoes = 1;
     }
 
     public List<Navio> getNavios() {
@@ -110,5 +125,13 @@ public class NovaViagemBean extends PaginaBean {
 
     public void setRepeticoes(Integer repeticoes) {
         this.repeticoes = repeticoes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

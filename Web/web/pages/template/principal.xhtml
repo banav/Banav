@@ -16,6 +16,11 @@
       xmlns:p="http://primefaces.org/ui">
 
     <f:view contentType="text/html">
+
+        <h:form id="formMsg" prependId="false">
+            <p:growl id="msg" sticky="true" autoUpdate="true" severity="warn,info" showDetail="true" showSummary="false"/>
+        </h:form>
+
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=ISO-8859-1' http-equiv="Content-Type" />
