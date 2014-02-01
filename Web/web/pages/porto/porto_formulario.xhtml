@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../pages/template/principal.xhtml">
+
+    <ui:define name="conteudo">
+        <p:panel id="panel" header="Cadastros Básicos > Portos > Formulário">
+
+            <h:form id="form" prependId="false">
+
+                <p:messages closable="true" autoUpdate="true" severity="info" showDetail="true" showSummary="false"/>
+
+                <br />
+
+                <p:fieldset legend="Dados do Porto">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Nome:" for="tfNome"/>
+                        <p:inputText id="tfNome" value="#{portoFormularioBean.porto.nome}" size="100" maxlength="100" required="true" requiredMessage="Campo obrigatório." />
+                        <p:message for="tfNome" />
+
+                        <p:outputLabel value="Telefone:" for="tfTelefone"/>
+                        <p:inputMask id="tfTelefone" value="#{portoFormularioBean.porto.endereco.telefone}" mask="(99) 9999-9999" maxlength="14" size="20"/>
+                        <p:message for="tfTelefone" />
+
+                        <p:outputLabel value="Celular:" for="tfCelular"/>
+                        <p:inputMask id="tfCelular" value="#{portoFormularioBean.porto.endereco.celular}" mask="(99) 9999-9999"  maxlength="14" size="20"/>
+                        <p:message for="tfCelular" />
+
+                        <p:outputLabel value="Cidade:" for="tfCidade"/>
+                        <p:selectOneMenu id="tfCidade" value="#{portoFormularioBean.porto.endereco.cidade}" converter="objConverter" required="true" requiredMessage="Campo obrigatório.">
+                            <f:selectItem itemLabel="Selecione" />
+                            <f:selectItems value="#{portoFormularioBean.cidades}" />
+                        </p:selectOneMenu>
+                        <p:message for="tfCidade" />
+
+                        <p:outputLabel value="Logradouro:" for="tfLogradouro"/>
+                        <p:inputText id="tfLogradouro" value="#{portoFormularioBean.porto.endereco.logradouro}" size="100" maxlength="100"/>
+                        <p:message for="tfLogradouro" />
+
+                        <p:outputLabel value="Complemento:" for="tfComplemento"/>
+                        <p:inputText id="tfComplemento" value="#{portoFormularioBean.porto.endereco.complemento}" size="20" maxlength="20"/>
+                        <p:message for="tfComplemento" />
+
+                        <p:outputLabel value="CEP:" for="tfCEP"/>
+                        <p:inputMask id="tfCEP" value="#{portoFormularioBean.porto.endereco.cep}"  mask="99999-999" size="20" maxlength="9"/>
+                        <p:message for="tfCEP" />
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <p:separator />
+
+                <p:commandButton value="Salvar" action="#{portoFormularioBean.salvar}" styleClass="ui-priority-primary" update="form"/>
+                <p:commandButton value="Voltar" action="pretty:portoLista" ajax="false" process="@this" immediate="true"/>
+
+            </h:form>
+
+        </p:panel>
+    </ui:define>
+</ui:composition>
+
+</html>

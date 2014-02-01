@@ -18,10 +18,10 @@
             <p:menuitem value="Início" outcome="/pages/home.jsf" ajax="false" icon="ui-icon-home"/>
 
             <p:submenu label="Cadastros Básicos" icon="ui-icon-gear">
-                <p:menuitem value="Cidades" url="pretty:cidadeLista" />
+                <p:menuitem value="Cidades" outcome="pretty:cidadeLista" />
                 <p:menuitem value="Classes" outcome="pretty:classeLista" />
                 <p:menuitem value="Navios" url="#" />
-                <p:menuitem value="Portos" url="#" />
+                <p:menuitem value="Portos" outcome="pretty:portoLista" />
                 <p:menuitem value="Usuários" outcome="pretty:usuarioLista" ajax="false"/>
             </p:submenu>
 
