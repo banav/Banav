@@ -20,7 +20,7 @@ public class Navio implements Serializable{
 
     private String nome;
 
-    @OneToMany(mappedBy = "navio", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "navio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<NavioClasse> classes;
 
     public Long getNavioID() {

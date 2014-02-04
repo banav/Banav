@@ -18,11 +18,11 @@
             <p:menuitem value="Início" outcome="/pages/home.jsf" ajax="false" icon="ui-icon-home"/>
 
             <p:submenu label="Cadastros Básicos" icon="ui-icon-gear">
-                <p:menuitem value="Cidades" outcome="pretty:cidadeLista" />
-                <p:menuitem value="Classes" outcome="pretty:classeLista" />
-                <p:menuitem value="Navios" url="#" />
-                <p:menuitem value="Portos" outcome="pretty:portoLista" />
+                <p:menuitem value="Cidades" outcome="pretty:cidadeLista" ajax="false"/>
+                <p:menuitem value="Classes" outcome="pretty:classeLista" ajax="false" />
+                <p:menuitem value="Portos"  outcome="pretty:portoLista" ajax="false" />
                 <p:menuitem value="Usuários" outcome="pretty:usuarioLista" ajax="false"/>
+                <p:menuitem value="Navios" outcome="pretty:nList" ajax="false"/>
             </p:submenu>
 
             <p:submenu label="Viagens" icon="ui-icon-bookmark">

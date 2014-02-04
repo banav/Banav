@@ -9,16 +9,16 @@
 <ui:composition template="../../pages/template/principal.xhtml">
 
     <ui:define name="conteudo">
-        <p:panel id="panel" header="Cadastros Básicos > Classes > Lista">
+        <p:panel id="panel" header="Cadastros Básicos > Navios > Lista">
 
             <h:form id="formConteudo" prependId="false">
 
 
                 <h:panelGrid columns="1" cellspacing="2">
-                    <p:commandButton value="Nova Classe" action="pretty:classeNovo" ajax="false" immediate="true" process="@this" styleClass="ui-priority-primary"/>
+                    <p:commandButton value="Novo Navio" action="pretty:navioNovo" ajax="false" immediate="true" process="@this" styleClass="ui-priority-primary"/>
                 </h:panelGrid>
 
-                <p:dataTable id="tbClasses" var="c" value="#{classeListaBean.classes}"
+                <p:dataTable id="tbNavio" var="n" value="#{naviosListaBean.navios}"
                              paginator="true" rows="10" paginatorPosition="bottom" currentPageReportTemplate="Página {currentPage} de {totalPages}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="10,20,30" emptyMessage="Nenhuma registro encontrado.">
@@ -27,18 +27,10 @@
                         <f:facet name="header">
                             <h:outputText value="Nome" />
                         </f:facet>
-                        <h:outputText value="#{c.nome}" />
+                        <h:outputText value="#{n.nome}" />
                     </p:column>
 
-                    <p:column width="30%">
-                        <f:facet name="header">
-                            <h:outputText value="Opções" />
-                        </f:facet>
 
-                        <h:link outcome="pretty:classeEditar" value="Editar">
-                            <f:param name="id" value="#{c.classeID}"/>
-                        </h:link>
-                    </p:column>
 
                 </p:dataTable>
             </h:form>

@@ -34,4 +34,26 @@ public class Classe implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Classe classe = (Classe) o;
+
+        if (classeID != null ? !classeID.equals(classe.classeID) : classe.classeID != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return classeID != null ? classeID.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return  this.nome;
+    }
 }
