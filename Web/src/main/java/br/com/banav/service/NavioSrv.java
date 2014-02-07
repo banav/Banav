@@ -6,13 +6,14 @@ import br.com.banav.model.Navio;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by GilsonRocha on 27/01/14.
  */
 @Stateless
-public class NavioSrv {
+public class NavioSrv implements Serializable{
 
     @Inject private NavioDAO navioDAO;
 

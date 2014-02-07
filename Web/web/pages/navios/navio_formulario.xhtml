@@ -27,27 +27,9 @@
                     </h:panelGrid>
                     <p:fieldset legend="Classe">
 
-                        <p:commandButton value="Adicionar Classe" update=":form:tfClasse" action="#{naviosFormularioBean.novaClasse}" id="novaClasseBtn" styleClass="ui-priority-primary" immediate="true" process="@this"/>
+                        <p:commandButton value="Adicionar Classe"  action="#{naviosFormularioBean.novaClasse}" id="novaClasseBtn" styleClass="ui-priority-primary" immediate="true" process="@this"/>
 
-                        <p:overlayPanel id="classePanel"  for="novaClasseBtn" hideEffect="fade" dynamic="true">
 
-                            <h:panelGrid columns="3">
-
-                            <p:outputLabel value="Classe:" for="tfClasse"/>
-                            <p:selectOneMenu id="tfClasse" value="#{naviosFormularioBean.navioClasse.classe}" converter="objConverter" required="true" requiredMessage="Campo obrigatório." style="width: 250px;">
-                                <f:selectItem itemLabel="Selecione" />
-                                <f:selectItems value="#{naviosFormularioBean.classes}" />
-                            </p:selectOneMenu>
-                            <p:message for="tfClasse"/>
-
-                            <p:outputLabel value="Quantidade:" for="tfQuantidade"/>
-                            <p:inputText id="tfQuantidade" value="#{naviosFormularioBean.navioClasse.quantidade}" required="true" requiredMessage="Campo obrigatório."/>
-                            <p:message for="tfQuantidade" />
-
-                            <p:commandButton action="#{naviosFormularioBean.salvarClasse}" value="Salvar Classe" id="salvarClasse" update=":form:tbClasses" styleClass="ui-priority-primary" immediate="true"/>
-
-                            </h:panelGrid>
-                        </p:overlayPanel>
 
                         <p:dataTable id="tbClasses" var="c" value="#{naviosFormularioBean.navio.classes}"
                                      paginator="true" rows="10" paginatorPosition="bottom" currentPageReportTemplate="Página {currentPage} de {totalPages}"
@@ -75,12 +57,12 @@
                     </p:fieldset >
                 </p:fieldset>
 
-                <p:separator />
 
 
 
-                <p:commandButton value="Salvar" action="#{cidadeFormularioBean.salvar}" styleClass="ui-priority-primary" update="form"/>
-                <p:commandButton value="Voltar" action="pretty:cidadeLista" ajax="false" process="@this" immediate="true"/>
+
+                <p:commandButton value="Salvar" action="#{naviosFormularioBean.salvarNavio}" styleClass="ui-priority-primary" />
+                <p:commandButton value="Voltar" action="pretty:nList" ajax="false" process="@this" immediate="true"/>
 
             </h:form>
 

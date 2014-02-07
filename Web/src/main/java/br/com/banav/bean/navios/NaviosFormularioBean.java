@@ -11,9 +11,11 @@ import com.ocpsoft.pretty.faces.annotation.URLActions;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +23,15 @@ import java.util.List;
  * Created by gustavocosta on 02/02/14.
  */
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 @URLMappings(mappings = {
         @URLMapping(id = "navioNovo", pattern = "/navios/novo", viewId = "/pages/navios/navio_formulario.jsf"),
-        @URLMapping(id = "naviosEditar", pattern = "/navio/#{id : naviosFormularioBean.id}", viewId = "/pages/navios/navio_formulario.jsf")
+        @URLMapping(id = "naviosEditar", pattern = "/navio/editar#{id : naviosFormularioBean.id}", viewId = "/pages/navios/navio_formulario.jsf"),
+        @URLMapping(id = "salvarNavioClasse", pattern = "/navio/novo", viewId = "/pages/navios/navio_formulario.jsf"),
+        @URLMapping(id = "novoClasseNavio", pattern = "/navio/classe/novo", viewId = "/pages/navios/navios_classes_formulario.jsf")
 })
-public class NaviosFormularioBean extends PaginaBean {
+public class NaviosFormularioBean extends PaginaBean implements Serializable {
 
     private Long id;
 
@@ -37,11 +41,14 @@ public class NaviosFormularioBean extends PaginaBean {
 
     private List<Classe> classes;
 
-    @EJB
+    @Inject
     private NavioSrv navioSrv;
 
-    @EJB
+    @Inject
     private ClasseSrv classeSrv;
+
+    @Inject
+    private Conversation conversation;
 
 
     @URLActions(actions = {
@@ -49,6 +56,8 @@ public class NaviosFormularioBean extends PaginaBean {
             @URLAction(mappingId = "naviosEditar", onPostback = false)
     })
     public void abrir() {
+
+        beginConversation();
 
         if(id != null){
             navio = navioSrv.getUm(id);
@@ -59,26 +68,57 @@ public class NaviosFormularioBean extends PaginaBean {
 
     }
 
-    public void novaClasse(){
+    public String salvarNavio(){
+
+        if(navio.getNavioID() == null){
+            navioSrv.salvar(navio);
+        }
+        else
+            navioSrv.atualizar(navio);
+
+        endConversation();
+
+        return "/pages/navios/navio_lista.xhtml";
+    }
+
+    public String salvarNavioClasse(){
+        List<NavioClasse> classes = navio.getClasses();
+
+        if(classes == null){
+            classes = new ArrayList<NavioClasse>();
+            navio.setClasses(classes);
+        }
+        navioClasse.setNavio(this.navio);
+        classes.add(navioClasse);
+
+        navioClasse = new NavioClasse();
+        navioClasse.setNavio(navio);
+
+        return "/pages/navios/navio_formulario.xhtml";
+    }
+
+    private void beginConversation(){
+        if(conversation.isTransient()){
+            conversation.begin();
+        }
+    }
+
+    public void endConversation(){
+        if(!conversation.isTransient()){
+            conversation.end();
+        }
+    }
+
+    public String novaClasse(){
 
         if(classes == null)
             classes = classeSrv.listar();
 
         navioClasse = new NavioClasse();
         navioClasse.setClasse(new Classe());
-    }
+        navioClasse.setNavio(this.navio);
 
-
-    public void salvarClasse(){
-        System.out.println("teste");
-        List<NavioClasse> classes = navio.getClasses();
-        if(classes == null)
-            classes = new ArrayList<NavioClasse>();
-        classes.add(navioClasse);
-        System.out.println("quantidade" + classes.size());
-
-        navioClasse = new NavioClasse();
-        navioClasse.setNavio(navio);
+        return "/pages/navios/navios_classes_formulario.xhtml";
     }
 
     public Long getId() {
