@@ -19,7 +19,7 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "nList", pattern = "/navios/lista", viewId = "/pages/navios/navio_lista.jsf")
+        @URLMapping(id = "nList", pattern = "/navio/lista", viewId = "/pages/navios/navio_lista.jsf")
 })
 public class NaviosListaBean extends PaginaBean{
 

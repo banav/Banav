@@ -25,7 +25,7 @@ import java.util.List;
 @ViewScoped
 @URLMappings(mappings = {
         @URLMapping(id = "portoNovo", pattern = "/porto/novo", viewId = "/pages/porto/porto_formulario.jsf"),
-        @URLMapping(id = "portoEditar", pattern = "/porto/#{id : portoFormularioBean.id}", viewId = "/pages/porto/porto_formulario.jsf")
+        @URLMapping(id = "portoEditar", pattern = "/porto/editar/#{id : portoFormularioBean.id}", viewId = "/pages/porto/porto_formulario.jsf")
 })
 public class PortoFormularioBean extends PaginaBean {
 

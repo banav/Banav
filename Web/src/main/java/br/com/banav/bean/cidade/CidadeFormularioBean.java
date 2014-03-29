@@ -22,7 +22,7 @@ import java.util.List;
 @ViewScoped
 @URLMappings(mappings = {
         @URLMapping(id = "cidadeNovo", pattern = "/cidade/novo", viewId = "/pages/cidade/cidade_formulario.jsf"),
-        @URLMapping(id = "cidadeEditar", pattern = "/cidade/#{id : cidadeFormularioBean.id}", viewId = "/pages/cidade/cidade_formulario.jsf")
+        @URLMapping(id = "cidadeEditar", pattern = "/cidade/editar/#{id : cidadeFormularioBean.id}", viewId = "/pages/cidade/cidade_formulario.jsf")
 })
 public class CidadeFormularioBean extends PaginaBean {
 

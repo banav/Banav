@@ -21,7 +21,7 @@
                     <h:panelGrid columns="3">
 
                         <p:outputLabel value="Nome:" for="tfNome"/>
-                        <p:inputText id="tfNome" value="#{cidadeFormularioBean.cidade.nome}"/>
+                        <p:inputText id="tfNome" value="#{cidadeFormularioBean.cidade.nome}" required="true" requiredMessage="Campo obrigatório." maxlength="50" size="50"/>
                         <p:message for="tfNome" />
 
                         <p:outputLabel value="Estado:" for="tfEstado"/>

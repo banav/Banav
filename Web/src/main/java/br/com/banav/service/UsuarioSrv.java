@@ -20,7 +20,6 @@ public class UsuarioSrv {
     @Inject private EnderecoDAO enderecoDAO;
 
     public void salvar(Usuario usuario) {
-        enderecoDAO.salvar(usuario.getEndereco());
         usuarioDAO.salvar(usuario);
     }
 

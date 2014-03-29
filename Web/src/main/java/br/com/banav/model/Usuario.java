@@ -22,7 +22,7 @@ public class Usuario implements Serializable{
 
     private String senha;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 

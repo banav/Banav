@@ -22,7 +22,7 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 @URLMappings(mappings = {
         @URLMapping(id = "classeNovo", pattern = "/classe/novo", viewId = "/pages/classe/classe_formulario.jsf"),
-        @URLMapping(id = "classeEditar", pattern = "/classe/#{id : classeFormularioBean.id}", viewId = "/pages/classe/classe_formulario.jsf")
+        @URLMapping(id = "classeEditar", pattern = "/classe/editar/#{id : classeFormularioBean.id}", viewId = "/pages/classe/classe_formulario.jsf")
 })
 public class ClasseFormularioBean extends PaginaBean{
 

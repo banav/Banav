@@ -23,8 +23,8 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-    @URLMapping(id = "usuarioNovo", pattern = "/usuarios/novo", viewId = "/pages/usuario/usuario_formulario.jsf"),
-    @URLMapping(id = "usuarioEditar", pattern = "/user/#{id : usuarioFormularioBean.id}", viewId = "/pages/usuario/usuario_formulario.jsf")
+    @URLMapping(id = "usuarioNovo", pattern = "/usuario/novo", viewId = "/pages/usuario/usuario_formulario.jsf"),
+    @URLMapping(id = "usuarioEditar", pattern = "/usuario/editar/#{id : usuarioFormularioBean.id}", viewId = "/pages/usuario/usuario_formulario.jsf")
 })
 public class UsuarioFormularioBean extends PaginaBean {
 
@@ -39,10 +39,6 @@ public class UsuarioFormularioBean extends PaginaBean {
     private Usuario usuario;
 
     private List<Cidade> cidades;
-
-    private Perfil administrador = Perfil.ADMINISTRADOR;
-
-    private Perfil vendedor = Perfil.VENDEDOR;
 
     @URLActions(actions = {
         @URLAction(mappingId = "usuarioNovo", onPostback = false),
@@ -96,22 +92,6 @@ public class UsuarioFormularioBean extends PaginaBean {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public Perfil getAdministrador() {
-        return administrador;
-    }
-
-    public void setAdministrador(Perfil administrador) {
-        this.administrador = administrador;
-    }
-
-    public Perfil getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Perfil vendedor) {
-        this.vendedor = vendedor;
     }
 
     public List<Cidade> getCidades() {

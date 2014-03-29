@@ -2,11 +2,12 @@ package br.com.banav.bean.common;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.io.Serializable;
 
 /**
  * Created by GilsonRocha on 22/01/14.
  */
-public class PaginaBean {
+public class PaginaBean implements Serializable {
 
     /**
      * Adiciona uma nova mensagem do tipo info.

@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="banav.war">
-    <output-path>$PROJECT_DIR$/out/artifacts/banav.war</output-path>
-    <root id="root">
+  <artifact type="war" build-on-make="true" name="banav.war">
+    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <root id="archive" name="banav.war">
       <element id="javaee-facet-resources" facet="Web/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
