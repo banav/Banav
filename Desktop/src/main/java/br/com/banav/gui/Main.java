@@ -1,5 +1,7 @@
 package br.com.banav.gui;
 
+import br.com.banav.model.Viagem;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,6 +14,7 @@ public class Main extends JFrame {
 
     private MenuPrincipal menuPrincipal;
     private DestinoViagem destinoViagem;
+    private Passagem passagem;
 
     public Main() {
         setContentPane(mainContent);
@@ -29,13 +32,25 @@ public class Main extends JFrame {
     private void inicializarPaineis() {
         menuPrincipal = new MenuPrincipal(this);
         destinoViagem = new DestinoViagem(this);
+        passagem = new Passagem(this);
 
         panelCard.add(menuPrincipal, menuPrincipal.getClass().getCanonicalName());
         panelCard.add(destinoViagem, destinoViagem.getClass().getCanonicalName());
+        panelCard.add(passagem, passagem.getClass().getCanonicalName());
     }
 
     public void abrir(String panel) {
         CardLayout cardLayout = (CardLayout) panelCard.getLayout();
         cardLayout.show(panelCard, panel);
+    }
+
+    public void abrirDestinos() {
+        abrir(DestinoViagem.class.getCanonicalName());
+        destinoViagem.carregarDestinos();
+    }
+
+    public void abrirPassagens(Viagem viagem) {
+        abrir(Passagem.class.getCanonicalName());
+        passagem.carregar(viagem);
     }
 }

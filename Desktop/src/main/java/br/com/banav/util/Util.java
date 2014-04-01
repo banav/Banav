@@ -3,6 +3,8 @@ package br.com.banav.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by GilsonRocha on 26/12/13.
@@ -23,5 +25,25 @@ public class Util {
         }
 
         return hexString.toString();
+    }
+
+    public static String dataFormatada(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        if(date != null) {
+            return simpleDateFormat.format(date);
+        } else {
+            return simpleDateFormat.format(new Date());
+        }
+    }
+
+    public static String horaFormatada(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+
+        if(date != null) {
+            return simpleDateFormat.format(date);
+        } else {
+            return simpleDateFormat.format(new Date());
+        }
     }
 }

@@ -34,7 +34,7 @@ public class MenuPrincipal extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            menuPrincipal.main.abrir(DestinoViagem.class.getCanonicalName());
+            menuPrincipal.main.abrirDestinos();
         }
     }
 }

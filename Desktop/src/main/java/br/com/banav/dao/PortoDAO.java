@@ -15,4 +15,9 @@ public class PortoDAO extends DAO<Porto> {
         Query query = getEM().createQuery("select p from Porto as p order by p.nome");
         return query.getResultList();
     }
+
+    public List<Porto> listarDestinosAgendados() {
+        Query query = getEM().createQuery("select p from Porto p where p.id  in (select v.destino.id from Viagem v)");
+        return query.getResultList();
+    }
 }

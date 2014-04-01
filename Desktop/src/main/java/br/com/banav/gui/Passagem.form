@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="br.com.banav.gui.Passagem">
+  <grid id="27dc6" binding="mainContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="32a9d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="813d9" class="javax.swing.JButton" binding="btVoltar">
+            <constraints/>
+            <properties>
+              <text value="Voltar"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="9efc4" binding="panelPassagens" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="b7953" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none">
+              <color color="-16777216"/>
+            </border>
+            <children>
+              <grid id="16823" binding="inteiraPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
+                <properties/>
+                <border type="line" title="Inteira" title-justification="1" title-position="2"/>
+                <children>
+                  <component id="c16eb" class="javax.swing.JButton" binding="button1" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Button"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="7eea0" binding="meiaPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
+                <properties/>
+                <border type="line" title="Meia Passagem" title-justification="1" title-position="2"/>
+                <children>
+                  <component id="d739b" class="javax.swing.JButton" binding="button2" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Button"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="a67d5" binding="gratuidadePanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
+                <properties/>
+                <border type="line" title="Gratuidade" title-justification="1" title-position="2"/>
+                <children>
+                  <component id="65081" class="javax.swing.JButton" binding="button3" default-binding="true">
+                    <constraints/>
+                    <properties>
+                      <text value="Button"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <scrollpane id="503bc">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2ad83" class="javax.swing.JTable" binding="tablePassagem">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="80719" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="691f8" class="javax.swing.JLabel" binding="labelQuantidade">
+            <constraints/>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="f18d6" class="javax.swing.JLabel" binding="labelTotal">
+            <constraints/>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="bc854" class="javax.swing.JButton" binding="butFinalizar">
+            <constraints/>
+            <properties>
+              <text value="Finalizar Pedido"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

@@ -15,4 +15,11 @@ public class ViagemDAO extends DAO<Viagem> {
         Query query = getEM().createQuery("select v from Viagem as v order by v.horaSaida asc");
         return query.getResultList();
     }
+
+    public List<Viagem> listarPorDestino(Long destino) {
+        Query query = getEM().createQuery("select v from Viagem v where v.destino.id = :destino order by v.horaSaida asc");
+        query.setParameter("destino", destino);
+
+        return query.getResultList();
+    }
 }
