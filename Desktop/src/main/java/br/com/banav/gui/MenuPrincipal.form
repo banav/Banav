@@ -13,6 +13,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <font size="24"/>
           <hideActionText value="true"/>
           <text value="Emitir Passagem"/>
@@ -24,6 +25,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <font size="24"/>
           <text value="Efetuar Check-in"/>
         </properties>
@@ -34,8 +36,10 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <font size="24"/>
-          <text value="Upgrade"/>
+          <label value="Atualizar Passagem"/>
+          <text value="Atualizar Passagem"/>
         </properties>
       </component>
       <vspacer id="890fd">

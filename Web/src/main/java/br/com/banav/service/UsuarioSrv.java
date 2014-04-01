@@ -7,9 +7,12 @@ package br.com.banav.service;
 import br.com.banav.dao.EnderecoDAO;
 import br.com.banav.dao.UsuarioDAO;
 import br.com.banav.model.Usuario;
+import br.com.banav.util.Util;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Stateless
@@ -20,6 +23,14 @@ public class UsuarioSrv {
     @Inject private EnderecoDAO enderecoDAO;
 
     public void salvar(Usuario usuario) {
+        try {
+            usuario.setSenha(Util.toMD5(usuario.getSenha()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         usuarioDAO.salvar(usuario);
     }
 

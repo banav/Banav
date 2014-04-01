@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="br.com.banav.gui.DestinoViagem">
+  <grid id="27dc6" binding="mainContent" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="8a0d5" binding="panelDestino" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="2a426" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <font size="24" style="1"/>
+              <text value="Destino"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <hspacer id="75b2b">
+        <constraints/>
+      </hspacer>
+      <grid id="69b7d" binding="panelViagens" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="19596" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <font size="24" style="1"/>
+              <text value="Viagens"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
