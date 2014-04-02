@@ -15,4 +15,15 @@ public class ClasseDAO extends DAO<Classe> {
         Query query = getEM().createQuery("select c from Classe c order by c.nome");
         return query.getResultList();
     }
+
+    public Classe getClasseEconomica() {
+        Query query = getEM().createQuery("select c from Classe c where c.id = 2");
+        List<Classe> resultList = query.getResultList();
+
+        if(resultList == null || resultList.isEmpty()) {
+            throw new RuntimeException("É necessário configurar a classe Econômica");
+        }
+
+        return resultList.get(0);
+    }
 }

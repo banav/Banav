@@ -1,0 +1,1 @@
+insert into estado values (nextval('seq_estado'), 'Pará');
