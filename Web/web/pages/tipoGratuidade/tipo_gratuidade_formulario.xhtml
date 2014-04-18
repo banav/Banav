@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../pages/template/principal.xhtml">
+
+    <ui:define name="conteudo">
+        <p:panel id="panel" header="Cadastros Básicos > Tipo Gratuidade > Formulário">
+
+            <h:form id="form" prependId="false">
+
+                <p:messages closable="true" autoUpdate="true" severity="info" showDetail="true" showSummary="false"/>
+
+                <br />
+
+                <p:fieldset legend="Tipo de Gratuidade">
+                    <h:panelGrid columns="3">
+
+                        <p:outputLabel value="Nome:" for="tfNome"/>
+                        <p:inputText id="tfNome" value="#{tipoGratuidadeFormularioBean.tipoGratuidade.nome}" required="true" requiredMessage="Campo obrigatório." maxlength="50" size="50"/>
+                        <p:message for="tfNome" />
+
+
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <p:separator />
+
+                <p:commandButton value="Salvar" action="#{tipoGratuidadeFormularioBean.salvar}" styleClass="ui-priority-primary" update="form"/>
+                <p:commandButton value="Voltar" action="pretty:tipoGratuidadeLista" ajax="false" process="@this" immediate="true"/>
+
+            </h:form>
+
+        </p:panel>
+    </ui:define>
+</ui:composition>
+
+</html>
