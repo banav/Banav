@@ -21,13 +21,13 @@
                     <h:panelGrid columns="3">
 
                         <p:outputLabel value="Nome:" for="tfNome"/>
-                        <p:inputText id="tfNome" value="#{cidadeFormularioBean.cidade.nome}" required="true" requiredMessage="Campo obrigatório." maxlength="50" size="50"/>
+                        <p:inputText id="tfNome" value="#{cortesiaFormularioBean.cidade.nome}" required="true" requiredMessage="Campo obrigatório." maxlength="50" size="50"/>
                         <p:message for="tfNome" />
 
                         <p:outputLabel value="Estado:" for="tfEstado"/>
-                        <p:selectOneMenu id="tfEstado" value="#{cidadeFormularioBean.cidade.estado}" converter="objConverter" required="true" requiredMessage="Campo obrigatório.">
+                        <p:selectOneMenu id="tfEstado" value="#{cortesiaFormularioBean.cidade.estado}" converter="objConverter" required="true" requiredMessage="Campo obrigatório.">
                             <f:selectItem itemLabel="Selecione" />
-                            <f:selectItems value="#{cidadeFormularioBean.estados}"  />
+                            <f:selectItems value="#{cortesiaFormularioBean.estados}"  />
                         </p:selectOneMenu>
                         <p:message for="tfEstado" />
 
@@ -37,7 +37,7 @@
 
                 <p:separator />
 
-                <p:commandButton value="Salvar" action="#{cidadeFormularioBean.salvar}" styleClass="ui-priority-primary" update="form"/>
+                <p:commandButton value="Salvar" action="#{cortesiaFormularioBean.salvar}" styleClass="ui-priority-primary" update="form"/>
                 <p:commandButton value="Voltar" action="pretty:cidadeLista" ajax="false" process="@this" immediate="true"/>
 
             </h:form>
