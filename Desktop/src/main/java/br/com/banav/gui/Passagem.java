@@ -10,6 +10,7 @@ import br.com.banav.model.PassagemMovimento;
 import br.com.banav.model.Viagem;
 import com.lowagie.text.pdf.BarcodeEAN;
 import net.sf.jasperreports.components.barcode4j.EAN8Component;
+import nfiscal.Ticket;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +21,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
@@ -51,7 +53,6 @@ public class Passagem extends JPanel {
     private ArrayList<String[]> values = new ArrayList<String[]>();
 
     private ArrayList<String> columns = new ArrayList<String>();
-
 
     public Passagem(Main main) {
         this.main = main;
@@ -211,6 +212,9 @@ public class Passagem extends JPanel {
             Vector dataVector = model.getDataVector();
             ArrayList _data = new ArrayList(dataVector);
 
+            SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mmy");
+
             double total = 0;
             for (Object objRow : _data) {
                 Vector row = (Vector) objRow;
@@ -235,6 +239,16 @@ public class Passagem extends JPanel {
                 passagemHistorico.setPassagem(_passagem);
 
                 passagemHistoricoDAO.salvar(passagemHistorico);
+
+                Ticket.imprimir(
+                    viagem.getOrigem().getNome(),
+                    viagem.getDestino().getNome(),
+                    dataPadrao.format(viagem.getHoraSaida()),
+                    horaPadrao.format(viagem.getHoraSaida()),
+                    row.get(1).toString(),
+                    String.format("%.2f", valor),
+                    _passagem.getCodigoBarras()
+                );
             }
 
             TableModel tableModel = new DefaultTableModel(passagem.values.toArray(new Object[][] {}), passagem.columns.toArray());
