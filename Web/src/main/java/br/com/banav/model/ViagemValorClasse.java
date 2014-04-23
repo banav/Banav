@@ -28,6 +28,9 @@ public class ViagemValorClasse implements Serializable{
 
     private Double valor;
 
+    @Column(name = "valor_meia")
+    private Double valorMeia;
+
     public Long getId() {
         return id;
     }
@@ -58,5 +61,30 @@ public class ViagemValorClasse implements Serializable{
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Double getValorMeia() {
+        return valorMeia;
+    }
+
+    public void setValorMeia(Double valorMeia) {
+        this.valorMeia = valorMeia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ViagemValorClasse that = (ViagemValorClasse) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

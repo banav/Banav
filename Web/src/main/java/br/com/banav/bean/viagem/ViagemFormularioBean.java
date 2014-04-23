@@ -1,13 +1,11 @@
 package br.com.banav.bean.viagem;
 
 import br.com.banav.bean.common.PaginaBean;
-import br.com.banav.model.Frequencia;
-import br.com.banav.model.Navio;
-import br.com.banav.model.Porto;
-import br.com.banav.model.Viagem;
+import br.com.banav.model.*;
 import br.com.banav.service.NavioSrv;
 import br.com.banav.service.PortoSrv;
 import br.com.banav.service.ViagemSrv;
+import br.com.banav.service.ViagemValorClasseSrv;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLActions;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
@@ -16,6 +14,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,20 +28,21 @@ import java.util.List;
 })
 public class ViagemFormularioBean extends PaginaBean {
 
-    @EJB
-    private ViagemSrv viagemSrv;
+    @EJB private ViagemSrv viagemSrv;
 
-    @EJB
-    private NavioSrv navioSrv;
+    @EJB private NavioSrv navioSrv;
 
-    @EJB
-    private PortoSrv portoSrv;
+    @EJB private PortoSrv portoSrv;
+
+    @EJB private ViagemValorClasseSrv viagemValorClasseSrv;
 
     private Long id;
 
     private List<Navio> navios;
 
     private List<Porto> portos;
+
+    private List<ViagemValorClasse> viagemValores;
 
     private Viagem viagem;
 
@@ -51,10 +51,12 @@ public class ViagemFormularioBean extends PaginaBean {
     private Integer repeticoes;
 
     @URLActions(actions = {
-            @URLAction(mappingId = "viagemFormulario", onPostback = false),
-            @URLAction(mappingId = "viagemEditar", onPostback = false)
+        @URLAction(mappingId = "viagemFormulario", onPostback = false),
+        @URLAction(mappingId = "viagemEditar", onPostback = false)
     })
     public void abrir() {
+        viagemValores = new ArrayList<ViagemValorClasse>();
+
         navios = navioSrv.listar();
         portos = portoSrv.listar();
 
@@ -63,19 +65,20 @@ public class ViagemFormularioBean extends PaginaBean {
             viagem = new Viagem();
         } else {
             viagem = viagemSrv.getUm(id);
+            viagemValores = viagemValorClasseSrv.listarPor(viagem);
         }
     }
 
     public void salvar() {
         if(id == null) {
             if(Frequencia.NUNCA.ordinal() == frequencia.intValue()) {
-                viagemSrv.salvar(viagem, Frequencia.NUNCA, repeticoes);
+                viagemSrv.salvar(viagem, Frequencia.NUNCA, repeticoes, viagemValores);
             } else if(Frequencia.DIARIAMENTE.ordinal() == frequencia.intValue()) {
-                viagemSrv.salvar(viagem, Frequencia.DIARIAMENTE, repeticoes);
+                viagemSrv.salvar(viagem, Frequencia.DIARIAMENTE, repeticoes, viagemValores);
             } else if(Frequencia.SEMANALMENTE.ordinal() == frequencia.intValue()) {
-                viagemSrv.salvar(viagem, Frequencia.SEMANALMENTE, repeticoes);
+                viagemSrv.salvar(viagem, Frequencia.SEMANALMENTE, repeticoes, viagemValores);
             } else if(Frequencia.MENSALMENTE.ordinal() == frequencia.intValue()) {
-                viagemSrv.salvar(viagem, Frequencia.MENSALMENTE, repeticoes);
+                viagemSrv.salvar(viagem, Frequencia.MENSALMENTE, repeticoes, viagemValores);
             }
 
             viagem = new Viagem();
@@ -85,6 +88,14 @@ public class ViagemFormularioBean extends PaginaBean {
         }
 
         addInfo("Salvo com sucesso.");
+    }
+
+    public void handleNavio() {
+        if(viagem != null && viagem.getNavio() != null) {
+            viagemValores = viagemValorClasseSrv.listarPor(viagem.getNavio());
+        } else {
+            viagemValores = new ArrayList<ViagemValorClasse>();
+        }
     }
 
     public List<Navio> getNavios() {
@@ -133,5 +144,13 @@ public class ViagemFormularioBean extends PaginaBean {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<ViagemValorClasse> getViagemValores() {
+        return viagemValores;
+    }
+
+    public void setViagemValores(List<ViagemValorClasse> viagemValores) {
+        this.viagemValores = viagemValores;
     }
 }

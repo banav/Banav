@@ -82,5 +82,20 @@ public class Viagem implements Serializable {
         this.horaChegada = horaChegada;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Viagem viagem = (Viagem) o;
+
+        if (id != null ? !id.equals(viagem.id) : viagem.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

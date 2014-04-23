@@ -23,6 +23,7 @@
                         <p:selectOneMenu id="tfNavio" value="#{viagemFormularioBean.viagem.navio}" converter="objConverter" required="true" requiredMessage="Campo obrigatório." style="width: 250px;">
                             <f:selectItem itemLabel="Selecione" />
                             <f:selectItems value="#{viagemFormularioBean.navios}" />
+                            <p:ajax update="tbViagemValores" listener="#{viagemFormularioBean.handleNavio()}" />
                         </p:selectOneMenu>
                         <p:message for="tfNavio" />
 
@@ -78,6 +79,32 @@
                         </p:tab>
                     </p:tabView>
 
+                </p:fieldset>
+
+                <br />
+
+                <p:fieldset legend="Valores das Passagens">
+                    <p:dataTable id="tbViagemValores" var="vv" value="#{viagemFormularioBean.viagemValores}" emptyMessage="Selecione um navio." editable="true" editMode="cell">
+
+                        <p:column headerText="Classe">
+                            <h:outputText value="#{vv.navioClasse.classe.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Valor Inteira">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{vv.valor}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{vv.valor}" style="width:99%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Valor Meia">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{vv.valorMeia}"/></f:facet>
+                                <f:facet name="input"><p:inputText id="modelInput" value="#{vv.valorMeia}" style="width:99%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                    </p:dataTable>
                 </p:fieldset>
 
                 <p:separator />

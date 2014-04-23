@@ -31,6 +31,20 @@
 
                     <p:column>
                         <f:facet name="header">
+                            <h:outputText value="RG" />
+                        </f:facet>
+                        <h:outputText value="#{c.rg}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="CPF" />
+                        </f:facet>
+                        <h:outputText value="#{c.cpf}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
                             <h:outputText value="Viagem"/>
                         </f:facet>
                         <h:outputText value="#{c.viagem.origem.nome} > #{c.viagem.destino.nome}"/>
@@ -38,8 +52,10 @@
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Opções" />
+                            <h:outputText value="Passagem"/>
                         </f:facet>
+                        <h:outputText rendered="#{c.passagem ne null}" value="Emitida"/>
+                        <h:outputText rendered="#{c.passagem eq null}" value="Não Emitida"/>
                     </p:column>
 
                 </p:dataTable>

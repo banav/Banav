@@ -1,8 +1,10 @@
 package br.com.banav.service;
 
 import br.com.banav.dao.ViagemDAO;
+import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.model.Frequencia;
 import br.com.banav.model.Viagem;
+import br.com.banav.model.ViagemValorClasse;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,11 +17,14 @@ import java.util.List;
 @Stateless
 public class ViagemSrv {
 
-    @Inject
-    private ViagemDAO viagemDAO;
+    @Inject private ViagemDAO viagemDAO;
 
-    public void salvar(Viagem viagem, Frequencia frequencia, Integer repeticoes) {
+    @Inject private ViagemValorClasseDAO viagemValorClasseDAO;
+
+    public void salvar(Viagem viagem, Frequencia frequencia, Integer repeticoes, List<ViagemValorClasse> viagemValores) {
         viagemDAO.salvar(viagem);
+
+        salvarValorPassagens(viagem, viagemValores);
 
         if(!frequencia.equals(Frequencia.NUNCA)) {
             Calendar calendarSaida = Calendar.getInstance();
@@ -50,6 +55,8 @@ public class ViagemSrv {
                 novaViagem.setHoraChegada(calendarChegada.getTime());
 
                 viagemDAO.salvar(novaViagem);
+
+                salvarValorPassagens(novaViagem, viagemValores);
             }
         }
     }
@@ -68,5 +75,17 @@ public class ViagemSrv {
 
     public List<Viagem> listar() {
         return viagemDAO.listar();
+    }
+
+    public void salvarValorPassagens(Viagem viagem, List<ViagemValorClasse> viagemValores) {
+        for (ViagemValorClasse viagemValorClasse : viagemValores) {
+            viagemValorClasse.setViagem(viagem);
+
+            if(viagemValorClasse.getId() == null) {
+                viagemValorClasseDAO.salvar(viagemValorClasse);
+            } else {
+                viagemValorClasseDAO.atualizar(viagemValorClasse);
+            }
+        }
     }
 }
