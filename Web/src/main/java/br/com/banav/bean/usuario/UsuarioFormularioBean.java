@@ -49,7 +49,11 @@ public class UsuarioFormularioBean extends PaginaBean {
 
         if(id != null) {
             usuario = usuarioSrv.getUm(id);
-            perfilAux = usuario.getPerfil().equals(Perfil.ADMINISTRADOR) ? "A" : "V";
+
+            if(usuario.getPerfil().equals(Perfil.ADMINISTRADOR)) perfilAux = "A";
+            if(usuario.getPerfil().equals(Perfil.VENDEDOR)) perfilAux = "V";
+            if(usuario.getPerfil().equals(Perfil.CHECKIN)) perfilAux = "C";
+
         } else {
             Cidade cidade = new Cidade();
 
@@ -64,8 +68,10 @@ public class UsuarioFormularioBean extends PaginaBean {
     public void salvar() {
         if(perfilAux.equals("A")) {
             usuario.setPerfil(Perfil.ADMINISTRADOR);
-        } else {
+        } else if(perfilAux.equals("V")) {
             usuario.setPerfil(Perfil.VENDEDOR);
+        } else if(perfilAux.equals("C")) {
+            usuario.setPerfil(Perfil.CHECKIN);
         }
 
         if(id != null) {
