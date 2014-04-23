@@ -23,15 +23,15 @@ public class Cortesia implements Serializable {
     private String cpf;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "data_criacao")
+    @Column(name = "data_criacao", nullable = false)
     private Date dataCriacao;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "viagem_id")
+    @JoinColumn(name = "viagem_id", nullable = false)
     private Viagem viagem;
 
     @ManyToOne
