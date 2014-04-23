@@ -21,8 +21,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "classeNovo", pattern = "/classe/novo", viewId = "/pages/classe/classe_formulario.jsf"),
-        @URLMapping(id = "classeEditar", pattern = "/classe/editar/#{id : classeFormularioBean.id}", viewId = "/pages/classe/classe_formulario.jsf")
+        @URLMapping(id = "classeNovo", pattern = "/classe/novo", viewId = "/pages/classe/classe_formulario.jsf", parentId = "paginaRestrita"),
+        @URLMapping(id = "classeEditar", pattern = "/classe/editar/#{id : classeFormularioBean.id}", viewId = "/pages/classe/classe_formulario.jsf", parentId = "paginaRestrita")
 })
 public class ClasseFormularioBean extends PaginaBean{
 
@@ -34,19 +34,16 @@ public class ClasseFormularioBean extends PaginaBean{
     private ClasseSrv classeSrv;
 
     @URLActions(actions = {
-            @URLAction(mappingId = "classeNovo", onPostback = false),
-            @URLAction(mappingId = "classeEditar", onPostback = false)
+        @URLAction(mappingId = "classeNovo", onPostback = false),
+        @URLAction(mappingId = "classeEditar", onPostback = false)
     })
     public void abrir() {
-
         if(id != null){
             classe = classeSrv.getUm(id);
         }
         else{
             classe = new Classe();
         }
-
-
     }
 
     public void salvar() {

@@ -26,8 +26,8 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-    @URLMapping(id = "cortesiaNovo", pattern = "/cortesia/novo", viewId = "/pages/cortesia/cortesia_formulario.jsf"),
-    @URLMapping(id = "cortesiaEditar", pattern = "/cortesia/editar/#{id : cortesiaFormularioBean.id}", viewId = "/pages/cortesia/cidade_formulario.jsf")
+    @URLMapping(id = "cortesiaNovo", pattern = "/cortesia/novo", viewId = "/pages/cortesia/cortesia_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "cortesiaEditar", pattern = "/cortesia/editar/#{id : cortesiaFormularioBean.id}", viewId = "/pages/cortesia/cidade_formulario.jsf", parentId = "paginaRestrita")
 })
 public class CortesiaFormularioBean extends PaginaBean {
 

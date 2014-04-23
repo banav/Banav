@@ -15,4 +15,12 @@ public class UsuarioDAO extends DAO<Usuario> {
         Query query = getEm().createQuery("select u from Usuario as u order by u.nome");
         return query.getResultList();
     }
+
+    public List<Usuario> listarPor(String login, String senha) {
+        Query query = getEm().createQuery("select u from Usuario as u where u.login = :login and u.senha = :senha");
+        query.setParameter("login", login);
+        query.setParameter("senha", senha);
+
+        return query.getResultList();
+    }
 }

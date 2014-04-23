@@ -19,7 +19,7 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "classeLista", pattern = "/classe/lista", viewId = "/pages/classe/classe_lista.jsf")
+    @URLMapping(id = "classeLista", pattern = "/classe/lista", viewId = "/pages/classe/classe_lista.jsf", parentId = "paginaRestrita")
 })
 public class ClasseListaBean extends PaginaBean{
 

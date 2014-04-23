@@ -23,8 +23,8 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-    @URLMapping(id = "viagemFormulario", pattern = "/viagem/nova", viewId = "/pages/viagem/viagem_formulario.jsf"),
-    @URLMapping(id = "viagemEditar", pattern = "/viagem/#{id : viagemFormularioBean.id}", viewId = "/pages/viagem/viagem_formulario.jsf")
+    @URLMapping(id = "viagemFormulario", pattern = "/viagem/nova", viewId = "/pages/viagem/viagem_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "viagemEditar", pattern = "/viagem/#{id : viagemFormularioBean.id}", viewId = "/pages/viagem/viagem_formulario.jsf", parentId = "paginaRestrita")
 })
 public class ViagemFormularioBean extends PaginaBean {
 

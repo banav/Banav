@@ -21,7 +21,7 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-    @URLMapping(id = "cortesiaLista", pattern = "/cortesia/lista", viewId = "/pages/cortesia/cortesia_lista.jsf")
+    @URLMapping(id = "cortesiaLista", pattern = "/cortesia/lista", viewId = "/pages/cortesia/cortesia_lista.jsf", parentId = "paginaRestrita")
 })
 public class CortesiaListaBean extends PaginaBean {
 

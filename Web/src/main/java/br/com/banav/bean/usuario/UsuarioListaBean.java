@@ -18,7 +18,7 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-    @URLMapping(id = "usuarioLista", pattern = "/usuario/lista", viewId = "/pages/usuario/usuario_lista.jsf")
+    @URLMapping(id = "usuarioLista", pattern = "/usuario/lista", viewId = "/pages/usuario/usuario_lista.jsf", parentId = "paginaRestrita")
 })
 public class UsuarioListaBean extends PaginaBean {
 

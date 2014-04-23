@@ -6,6 +6,7 @@ package br.com.banav.service;
 
 import br.com.banav.dao.EnderecoDAO;
 import br.com.banav.dao.UsuarioDAO;
+import br.com.banav.model.Perfil;
 import br.com.banav.model.Usuario;
 import br.com.banav.util.Util;
 
@@ -44,5 +45,20 @@ public class UsuarioSrv {
 
     public List<Usuario> listar() {
         return usuarioDAO.listar();
+    }
+
+    public Usuario logar(Usuario usuario) {
+        try {
+            final List<Usuario> usuarios = usuarioDAO.listarPor(usuario.getLogin(), Util.toMD5(usuario.getSenha()));
+            if(usuarios != null && !usuarios.isEmpty() && usuarios.get(0).getPerfil().equals(Perfil.ADMINISTRADOR)) {
+                return usuarios.get(0);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

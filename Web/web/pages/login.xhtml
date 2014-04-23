@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<f:view contentType="text/html">
+	<h:head>
+		<meta content='text/html; charset=ISO-8859-1' http-equiv="Content-Type" />
+		<link href="#{request.contextPath}/css/banav.css" rel="stylesheet" type="text/css" />
+	</h:head>
+	
+	<h:body>
+		<h:form id="formLogin" style="padding-left: 38%; padding-top: 4%;" prependId="false">
+		
+			<p:growl autoUpdate="true" showSummary="true" showDetail="false" sticky="true" />
+		
+			<h:panelGrid columns="1" style="width: 100%" cellspacing="5">
+				<h:panelGroup>
+					<p:panelGrid columns="2">
+						<f:facet name="header">Acesso ao sistema</f:facet>
+
+						<p:outputLabel for="login" value="Login:" />
+						<p:inputText id="login" required="true" requiredMessage="Informe o login." maxlength="20" value="#{loginBean.usuario.login}"/>
+
+						<p:outputLabel for="senha" value="Senha:" />
+						<p:password id="senha" required="true" requiredMessage="Informe a senha" maxlength="20" value="#{loginBean.usuario.senha}"/>
+
+						<f:facet name="footer">
+							<p:commandButton value="Entrar" icon="ui-icon-check" action="#{loginBean.logar()}" update="formLogin"/>
+						</f:facet>
+					</p:panelGrid>
+				</h:panelGroup>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</f:view>			
+</html>

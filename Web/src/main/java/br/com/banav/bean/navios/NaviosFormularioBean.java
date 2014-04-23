@@ -26,10 +26,10 @@ import java.util.List;
 @Named
 @ConversationScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "navioNovo", pattern = "/navios/novo", viewId = "/pages/navios/navio_formulario.jsf"),
-        @URLMapping(id = "naviosEditar", pattern = "/navio/editar#{id : naviosFormularioBean.id}", viewId = "/pages/navios/navio_formulario.jsf"),
-        @URLMapping(id = "salvarNavioClasse", pattern = "/navio/novo", viewId = "/pages/navios/navio_formulario.jsf"),
-        @URLMapping(id = "novoClasseNavio", pattern = "/navio/classe/novo", viewId = "/pages/navios/navios_classes_formulario.jsf")
+    @URLMapping(id = "navioNovo", pattern = "/navios/novo", viewId = "/pages/navios/navio_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "naviosEditar", pattern = "/navio/editar#{id : naviosFormularioBean.id}", viewId = "/pages/navios/navio_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "salvarNavioClasse", pattern = "/navio/novo", viewId = "/pages/navios/navio_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "novoClasseNavio", pattern = "/navio/classe/novo", viewId = "/pages/navios/navios_classes_formulario.jsf", parentId = "paginaRestrita")
 })
 public class NaviosFormularioBean extends PaginaBean implements Serializable {
 

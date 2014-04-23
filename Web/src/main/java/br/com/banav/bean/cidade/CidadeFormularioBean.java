@@ -21,8 +21,8 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "cidadeNovo", pattern = "/cidade/novo", viewId = "/pages/cidade/cidade_formulario.jsf"),
-        @URLMapping(id = "cidadeEditar", pattern = "/cidade/editar/#{id : cidadeFormularioBean.id}", viewId = "/pages/cidade/cidade_formulario.jsf")
+    @URLMapping(id = "cidadeNovo", pattern = "/cidade/novo", viewId = "/pages/cidade/cidade_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "cidadeEditar", pattern = "/cidade/editar/#{id : cidadeFormularioBean.id}", viewId = "/pages/cidade/cidade_formulario.jsf", parentId = "paginaRestrita")
 })
 public class CidadeFormularioBean extends PaginaBean {
 
@@ -36,14 +36,11 @@ public class CidadeFormularioBean extends PaginaBean {
 
     private Long id;
 
-
-
     @URLActions(actions = {
             @URLAction(mappingId = "cidadeNovo", onPostback = false),
             @URLAction(mappingId = "cidadeEditar", onPostback = false)
     })
     public void abrir() {
-
         estados = cidadeSrv.listarEstado();
 
         if(id != null){
@@ -53,8 +50,6 @@ public class CidadeFormularioBean extends PaginaBean {
             cidade = new Cidade();
             cidade.setEstado(new Estado());
         }
-
-
     }
 
     public void salvar() {
@@ -67,7 +62,6 @@ public class CidadeFormularioBean extends PaginaBean {
         }
         addInfo("Salvo com sucesso.");
     }
-
 
     public Cidade getCidade() {
         return cidade;

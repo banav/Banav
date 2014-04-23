@@ -6,7 +6,7 @@
 	version="2.1">
 	
 	<application>
-        <!--<action-listener>br.gov.pa.pmb.gcbel.mb.common.GCBelActionListener</action-listener>-->
+        <action-listener>br.com.banav.bean.common.BanavActionListener</action-listener>
         <locale-config>
         	<default-locale>pt_BR</default-locale>
         </locale-config>

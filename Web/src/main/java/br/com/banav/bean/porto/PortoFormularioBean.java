@@ -24,8 +24,8 @@ import java.util.List;
 @ManagedBean
 @ViewScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "portoNovo", pattern = "/porto/novo", viewId = "/pages/porto/porto_formulario.jsf"),
-        @URLMapping(id = "portoEditar", pattern = "/porto/editar/#{id : portoFormularioBean.id}", viewId = "/pages/porto/porto_formulario.jsf")
+    @URLMapping(id = "portoNovo", pattern = "/porto/novo", viewId = "/pages/porto/porto_formulario.jsf", parentId = "paginaRestrita"),
+    @URLMapping(id = "portoEditar", pattern = "/porto/editar/#{id : portoFormularioBean.id}", viewId = "/pages/porto/porto_formulario.jsf", parentId = "paginaRestrita")
 })
 public class PortoFormularioBean extends PaginaBean {
 
@@ -42,8 +42,8 @@ public class PortoFormularioBean extends PaginaBean {
     private Long id;
 
     @URLActions(actions = {
-            @URLAction(mappingId = "portoNovo", onPostback = false),
-            @URLAction(mappingId = "portoEditar", onPostback = false)
+        @URLAction(mappingId = "portoNovo", onPostback = false),
+        @URLAction(mappingId = "portoEditar", onPostback = false)
     })
     public void abrir() {
 
