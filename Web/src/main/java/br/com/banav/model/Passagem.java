@@ -28,6 +28,8 @@ public class Passagem implements Serializable{
     @OneToMany(mappedBy = "passagem")
     private List<PassagemHistorico> historico;
 
+    private Boolean checkin;
+
     public Long getId() {
         return id;
     }
@@ -74,5 +76,30 @@ public class Passagem implements Serializable{
 
     public void setHistorico(List<PassagemHistorico> historico) {
         this.historico = historico;
+    }
+
+    public Boolean getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(Boolean checkin) {
+        this.checkin = checkin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Passagem passagem = (Passagem) o;
+
+        if (id != null ? !id.equals(passagem.id) : passagem.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

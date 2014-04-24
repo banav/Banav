@@ -15,6 +15,7 @@ public class Main extends JFrame {
     private MenuPrincipal menuPrincipal;
     private DestinoViagem destinoViagem;
     private Passagem passagem;
+    private CheckIn checkIn;
 
     public Main() {
         setContentPane(mainContent);
@@ -33,10 +34,12 @@ public class Main extends JFrame {
         menuPrincipal = new MenuPrincipal(this);
         destinoViagem = new DestinoViagem(this);
         passagem = new Passagem(this);
+        checkIn = new CheckIn(this);
 
         panelCard.add(menuPrincipal, menuPrincipal.getClass().getCanonicalName());
         panelCard.add(destinoViagem, destinoViagem.getClass().getCanonicalName());
         panelCard.add(passagem, passagem.getClass().getCanonicalName());
+        panelCard.add(checkIn, checkIn.getClass().getCanonicalName());
     }
 
     public void abrir(String panel) {

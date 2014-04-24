@@ -13,6 +13,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <font name="Arial" size="28"/>
           <text value="Código de Barras:"/>
         </properties>
       </component>
@@ -28,7 +29,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </vspacer>
-      <component id="8c26a" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="8c26a" class="javax.swing.JTextField" binding="tfCodigoBarras">
         <constraints>
           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -36,20 +37,20 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <columns value="14"/>
+          <columns value="10"/>
+          <font name="Arial" size="28"/>
         </properties>
       </component>
-      <grid id="e69b2" binding="panelSinalizador" layout-manager="GridBagLayout">
+      <component id="14352" class="javax.swing.JLabel" binding="lbStatus">
         <constraints>
-          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <minimumSize width="50" height="50"/>
+          <font size="28" style="1"/>
+          <text value=""/>
         </properties>
-        <border type="none"/>
-        <children/>
-      </grid>
+      </component>
     </children>
   </grid>
 </form>
