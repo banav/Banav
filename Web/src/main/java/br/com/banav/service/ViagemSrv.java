@@ -1,8 +1,10 @@
 package br.com.banav.service;
 
+import br.com.banav.dao.NavioClasseDAO;
 import br.com.banav.dao.ViagemDAO;
 import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.model.Frequencia;
+import br.com.banav.model.NavioClasse;
 import br.com.banav.model.Viagem;
 import br.com.banav.model.ViagemValorClasse;
 
@@ -20,6 +22,8 @@ public class ViagemSrv {
     @Inject private ViagemDAO viagemDAO;
 
     @Inject private ViagemValorClasseDAO viagemValorClasseDAO;
+
+    @Inject private NavioClasseDAO navioClasseDAO;
 
     public void salvar(Viagem viagem, Frequencia frequencia, Integer repeticoes, List<ViagemValorClasse> viagemValores) {
         viagemDAO.salvar(viagem);

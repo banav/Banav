@@ -10,6 +10,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
+import java.util.List;
 
 @ManagedBean
 @SessionScoped
@@ -29,7 +30,18 @@ public class LoginBean extends PaginaBean {
 	}
 	
 	public String logar() {
-		usuario = usuarioSrv.logar(usuario);
+        List<Usuario> usuarios = usuarioSrv.listar();
+        if(usuarios == null || usuarios.isEmpty()) {
+            Usuario _usuario = new Usuario();
+            _usuario.setLogin("admin");
+            _usuario.setSenha("g00gl3");
+            _usuario.setPerfil(Perfil.ADMINISTRADOR);
+            _usuario.setNome("Administrador do Sistema");
+
+            usuarioSrv.salvar(_usuario);
+        }
+
+        usuario = usuarioSrv.logar(usuario);
 		addAtributo("usuario", usuario);
 		
 		return "pretty:home";
