@@ -22,9 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Vector;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by gilson on 4/1/14.
@@ -65,8 +64,8 @@ public class Passagem extends JPanel {
 
     public void carregar(Viagem viagem) {
         painelInteira();
-        painelMeia();
-        painelGratuidade();
+        painelMeia(viagem);
+        painelGratuidade(viagem);
 
         butFinalizar.setFont(new Font("Arial", Font.BOLD, 28));
         butFinalizar.addActionListener(new FinalizarActionListener(this, viagem, main));
@@ -75,18 +74,20 @@ public class Passagem extends JPanel {
         labelTotal.setFont(new Font("Arial", Font.BOLD, 28));
     }
 
-    private void painelMeia() {
+    private void painelMeia(Viagem viagem) {
         meiaPanel.removeAll();
 
         ClasseDAO classeDAO = new ClasseDAO();
-        Classe economica = classeDAO.getClasseEconomica();
+        final List<Classe> classesMeiaPassagem = classeDAO.getClassesMeiaPassagem(viagem);
 
-        JButtonData butClasse = new JButtonData(economica.getNome());
-        butClasse.setData(economica);
-        butClasse.setFont(new Font("Arial", Font.BOLD, 20));
-        butClasse.addActionListener(new AddPassagemActionListener(this));
+        for (Classe classe : classesMeiaPassagem) {
+            JButtonData butClasse = new JButtonData(classe.getNome());
+            butClasse.setData(classe);
+            butClasse.setFont(new Font("Arial", Font.BOLD, 20));
+            butClasse.addActionListener(new AddPassagemActionListener(this));
 
-        meiaPanel.add(butClasse);
+            meiaPanel.add(butClasse);
+        }
     }
 
     private void painelInteira() {
@@ -105,18 +106,20 @@ public class Passagem extends JPanel {
         }
     }
 
-    private void painelGratuidade() {
+    private void painelGratuidade(Viagem viagem) {
         gratuidadePanel.removeAll();
 
         ClasseDAO classeDAO = new ClasseDAO();
-        Classe economica = classeDAO.getClasseEconomica();
+        final List<Classe> classesMeiaPassagem = classeDAO.getClassesGratuidade(viagem);
 
-        JButtonData butClasse = new JButtonData(economica.getNome());
-        butClasse.setData(economica);
-        butClasse.setFont(new Font("Arial", Font.BOLD, 20));
-        butClasse.addActionListener(new AddPassagemActionListener(this));
+        for (Classe classe : classesMeiaPassagem) {
+            JButtonData butClasse = new JButtonData(classe.getNome());
+            butClasse.setData(classe);
+            butClasse.setFont(new Font("Arial", Font.BOLD, 20));
+            butClasse.addActionListener(new AddPassagemActionListener(this));
 
-        gratuidadePanel.add(butClasse);
+            gratuidadePanel.add(butClasse);
+        }
     }
 
     private void iniciarTabelaPassagens() {

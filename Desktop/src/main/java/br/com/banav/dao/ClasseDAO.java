@@ -2,6 +2,7 @@ package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.Classe;
+import br.com.banav.model.Viagem;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -16,14 +17,17 @@ public class ClasseDAO extends DAO<Classe> {
         return query.getResultList();
     }
 
-    public Classe getClasseEconomica() {
-        Query query = getEM().createQuery("select c from Classe c where c.id = 2");
-        List<Classe> resultList = query.getResultList();
+    public List<Classe> getClassesMeiaPassagem(Viagem viagem) {
+        Query query = getEM().createQuery("select vvc.navioClasse.classe from ViagemValorClasse vvc where vvc.viagem.id = :viagemId and vvc.valorMeia != null and vvc.valorMeia != 0");
+        query.setParameter("viagemId", viagem.getId());
 
-        if(resultList == null || resultList.isEmpty()) {
-            throw new RuntimeException("É necessário configurar a classe Econômica");
-        }
+        return query.getResultList();
+    }
 
-        return resultList.get(0);
+    public List<Classe> getClassesGratuidade(Viagem viagem) {
+        Query query = getEM().createQuery("select vvc.navioClasse.classe from ViagemValorClasse vvc where vvc.viagem.id = :viagemId and vvc.aceitaGratuidade = true");
+        query.setParameter("viagemId", viagem.getId());
+
+        return query.getResultList();
     }
 }
