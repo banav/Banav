@@ -12,12 +12,12 @@ import java.io.Serializable;
 public class NavioClasse implements Serializable{
 
     @Id
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "navio", referencedColumnName = "id")
     private Navio navio;
 
     @Id
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "classe", referencedColumnName = "id")
     private Classe classe;
 

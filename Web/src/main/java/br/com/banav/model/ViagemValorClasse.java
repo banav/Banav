@@ -15,7 +15,7 @@ public class ViagemValorClasse implements Serializable{
     @GeneratedValue(generator = "ViagemValorClasseGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "viagem_id")
     private Viagem viagem;
 
@@ -23,7 +23,7 @@ public class ViagemValorClasse implements Serializable{
        @JoinColumn(name = "navio", referencedColumnName = "navio"),
        @JoinColumn(name = "classe", referencedColumnName = "classe")
     })
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private NavioClasse navioClasse;
 
     private Double valor;

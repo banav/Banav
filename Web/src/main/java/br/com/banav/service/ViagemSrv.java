@@ -10,6 +10,7 @@ import br.com.banav.model.ViagemValorClasse;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.Query;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ViagemSrv {
     @Inject private NavioClasseDAO navioClasseDAO;
 
     public void salvar(Viagem viagem, Frequencia frequencia, Integer repeticoes, List<ViagemValorClasse> viagemValores) {
-        viagemDAO.salvar(viagem);
+        viagemDAO.atualizar(viagem);
 
         salvarValorPassagens(viagem, viagemValores);
 
@@ -83,10 +84,22 @@ public class ViagemSrv {
 
     public void salvarValorPassagens(Viagem viagem, List<ViagemValorClasse> viagemValores) {
         for (ViagemValorClasse viagemValorClasse : viagemValores) {
+
             viagemValorClasse.setViagem(viagem);
 
+
+           NavioClasse navioClasse =  viagemValorClasse.getNavioClasse();
+
+           Query q = viagemValorClasseDAO.getEm().createQuery("select nc from NavioClasse nc where nc.classe = :classe and nc.navio = :navio");
+           q.setParameter("classe", navioClasse.getClasse());
+           q.setParameter("navio", navioClasse.getNavio());
+           navioClasse = (NavioClasse)q.getSingleResult();
+
+
+            viagemValorClasse.setNavioClasse(navioClasse);
+
             if(viagemValorClasse.getId() == null) {
-                viagemValorClasseDAO.salvar(viagemValorClasse);
+                viagemValorClasseDAO.atualizar(viagemValorClasse);
             } else {
                 viagemValorClasseDAO.atualizar(viagemValorClasse);
             }
