@@ -90,17 +90,24 @@
                             <h:outputText value="#{vv.navioClasse.classe.nome}" />
                         </p:column>
 
-                        <p:column headerText="Valor Inteira">
+                        <p:column headerText="Valor da Passagem">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{vv.valor}"/></f:facet>
                                 <f:facet name="input"><p:inputText value="#{vv.valor}" style="width:99%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Valor Meia">
+                        <p:column headerText="Valor da Meia Passagem">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{vv.valorMeia}"/></f:facet>
                                 <f:facet name="input"><p:inputText id="modelInput" value="#{vv.valorMeia}" style="width:99%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Aceita Gratuidade?">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:selectBooleanCheckbox value="#{vv.aceitaGratuidade}"/></f:facet>
+                                <f:facet name="input"><p:selectBooleanCheckbox value="#{vv.aceitaGratuidade}"/></f:facet>
                             </p:cellEditor>
                         </p:column>
 

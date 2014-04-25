@@ -31,6 +31,9 @@ public class ViagemValorClasse implements Serializable{
     @Column(name = "valor_meia")
     private Double valorMeia;
 
+    @Column(name = "aceita_gratuidade", nullable = false)
+    private Boolean aceitaGratuidade = false;
+
     public Long getId() {
         return id;
     }
@@ -69,6 +72,14 @@ public class ViagemValorClasse implements Serializable{
 
     public void setValorMeia(Double valorMeia) {
         this.valorMeia = valorMeia;
+    }
+
+    public Boolean getAceitaGratuidade() {
+        return aceitaGratuidade;
+    }
+
+    public void setAceitaGratuidade(Boolean aceitaGratuidade) {
+        this.aceitaGratuidade = aceitaGratuidade;
     }
 
     @Override

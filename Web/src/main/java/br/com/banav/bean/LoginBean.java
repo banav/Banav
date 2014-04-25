@@ -42,6 +42,12 @@ public class LoginBean extends PaginaBean {
         }
 
         usuario = usuarioSrv.logar(usuario);
+
+        if(usuario == null) {
+            addWarn("Usuário ou senha inválidos.");
+            return null;
+        }
+
 		addAtributo("usuario", usuario);
 		
 		return "pretty:home";
