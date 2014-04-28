@@ -1,12 +1,7 @@
 package br.com.banav.service;
 
-import br.com.banav.dao.NavioClasseDAO;
-import br.com.banav.dao.ViagemDAO;
-import br.com.banav.dao.ViagemValorClasseDAO;
-import br.com.banav.model.Frequencia;
-import br.com.banav.model.NavioClasse;
-import br.com.banav.model.Viagem;
-import br.com.banav.model.ViagemValorClasse;
+import br.com.banav.dao.*;
+import br.com.banav.model.*;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -26,8 +21,21 @@ public class ViagemSrv {
 
     @Inject private NavioClasseDAO navioClasseDAO;
 
+    @Inject private PortoDAO portoDAO;
+
+    @Inject private NavioDAO navioDAO;
+
     public void salvar(Viagem viagem, Frequencia frequencia, Integer repeticoes, List<ViagemValorClasse> viagemValores) {
-        viagemDAO.atualizar(viagem);
+        Porto _origem = portoDAO.getUm(viagem.getOrigem().getId(), Porto.class);
+        Porto _destino = portoDAO.getUm(viagem.getDestino().getId(), Porto.class);
+        Navio _navio = navioDAO.getUm(viagem.getNavio().getNavioID(), Navio.class);
+
+        viagem.setId(null);
+        viagem.setDestino(_destino);
+        viagem.setOrigem(_origem);
+        viagem.setNavio(_navio);
+
+        viagemDAO.salvar(viagem);
 
         salvarValorPassagens(viagem, viagemValores);
 
@@ -53,9 +61,10 @@ public class ViagemSrv {
                 calendarChegada.add(tipoFrequencia, 1);
 
                 Viagem novaViagem = new Viagem();
-                novaViagem.setDestino(viagem.getDestino());
-                novaViagem.setOrigem(viagem.getOrigem());
-                novaViagem.setNavio(viagem.getNavio());
+                novaViagem.setDestino(_destino);
+                novaViagem.setOrigem(_origem);
+                novaViagem.setDestino(_destino);
+                novaViagem.setNavio(_navio);
                 novaViagem.setHoraSaida(calendarSaida.getTime());
                 novaViagem.setHoraChegada(calendarChegada.getTime());
 
@@ -83,23 +92,21 @@ public class ViagemSrv {
     }
 
     public void salvarValorPassagens(Viagem viagem, List<ViagemValorClasse> viagemValores) {
-        for (ViagemValorClasse viagemValorClasse : viagemValores) {
-
+        for (ViagemValorClasse _viagemValorClasse : viagemValores) {
+            ViagemValorClasse viagemValorClasse = _viagemValorClasse.clone();
             viagemValorClasse.setViagem(viagem);
 
+            NavioClasse navioClasse =  viagemValorClasse.getNavioClasse();
 
-           NavioClasse navioClasse =  viagemValorClasse.getNavioClasse();
-
-           Query q = viagemValorClasseDAO.getEm().createQuery("select nc from NavioClasse nc where nc.classe = :classe and nc.navio = :navio");
-           q.setParameter("classe", navioClasse.getClasse());
-           q.setParameter("navio", navioClasse.getNavio());
-           navioClasse = (NavioClasse)q.getSingleResult();
-
+            Query q = viagemValorClasseDAO.getEm().createQuery("select nc from NavioClasse nc where nc.classe = :classe and nc.navio = :navio");
+            q.setParameter("classe", navioClasse.getClasse());
+            q.setParameter("navio", navioClasse.getNavio());
+            navioClasse = (NavioClasse)q.getSingleResult();
 
             viagemValorClasse.setNavioClasse(navioClasse);
 
             if(viagemValorClasse.getId() == null) {
-                viagemValorClasseDAO.atualizar(viagemValorClasse);
+                viagemValorClasseDAO.salvar(viagemValorClasse);
             } else {
                 viagemValorClasseDAO.atualizar(viagemValorClasse);
             }

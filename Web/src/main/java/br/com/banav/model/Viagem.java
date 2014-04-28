@@ -16,15 +16,15 @@ public class Viagem implements Serializable {
     @GeneratedValue(generator = "ViagemGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "navio_id")
     private Navio navio;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "porto_origem")
     private Porto origem;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "porto_destino")
     private Porto destino;
 
