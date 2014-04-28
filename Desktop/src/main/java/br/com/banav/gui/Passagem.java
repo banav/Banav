@@ -3,11 +3,9 @@ package br.com.banav.gui;
 import br.com.banav.dao.ClasseDAO;
 import br.com.banav.dao.PassagemDAO;
 import br.com.banav.dao.PassagemHistoricoDAO;
+import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.gui.component.JButtonData;
-import br.com.banav.model.Classe;
-import br.com.banav.model.PassagemHistorico;
-import br.com.banav.model.PassagemMovimento;
-import br.com.banav.model.Viagem;
+import br.com.banav.model.*;
 import com.lowagie.text.pdf.BarcodeEAN;
 import net.sf.jasperreports.components.barcode4j.EAN8Component;
 import nfiscal.Ticket;
@@ -49,6 +47,8 @@ public class Passagem extends JPanel {
 
     private Main main;
 
+    private Viagem viagem;
+
     private ArrayList<String[]> values = new ArrayList<String[]>();
 
     private ArrayList<String> columns = new ArrayList<String>();
@@ -63,9 +63,11 @@ public class Passagem extends JPanel {
     }
 
     public void carregar(Viagem viagem) {
+        this.viagem = viagem;
+
         painelInteira();
-        painelMeia(viagem);
-        painelGratuidade(viagem);
+        painelMeia();
+        painelGratuidade();
 
         butFinalizar.setFont(new Font("Arial", Font.BOLD, 28));
         butFinalizar.addActionListener(new FinalizarActionListener(this, viagem, main));
@@ -74,7 +76,7 @@ public class Passagem extends JPanel {
         labelTotal.setFont(new Font("Arial", Font.BOLD, 28));
     }
 
-    private void painelMeia(Viagem viagem) {
+    private void painelMeia() {
         meiaPanel.removeAll();
 
         ClasseDAO classeDAO = new ClasseDAO();
@@ -106,7 +108,7 @@ public class Passagem extends JPanel {
         }
     }
 
-    private void painelGratuidade(Viagem viagem) {
+    private void painelGratuidade() {
         gratuidadePanel.removeAll();
 
         ClasseDAO classeDAO = new ClasseDAO();
@@ -133,23 +135,23 @@ public class Passagem extends JPanel {
         tablePassagem.setRowHeight(40);
     }
 
-    private void addPassagem(Classe classe, Integer tipo) {
+    private void addPassagem(ViagemValorClasse viagemValorClasse, Integer tipo) {
         String descricaoTipo = "";
         String valor = "";
 
         if(tipo.equals(MEIA)) {
             descricaoTipo = "Meia Passagem";
-            valor = "20";
+            valor = viagemValorClasse.getValorMeia().toString();
         } else if(tipo.equals(INTEIRA)) {
             descricaoTipo = "Inteira";
-            valor = "40";
+            valor = viagemValorClasse.getValor().toString();
         } else if(tipo.equals(GRATUIDADE)) {
             descricaoTipo = "Gratuidade";
             valor = "0";
         }
 
         DefaultTableModel model = (DefaultTableModel) tablePassagem.getModel();
-        model.addRow(new Object[]{classe.getNome(), descricaoTipo, valor});
+        model.addRow(new Object[]{viagemValorClasse.getNavioClasse().getClasse().getNome(), descricaoTipo, valor});
 
         Vector dataVector = model.getDataVector();
         ArrayList _data = new ArrayList(dataVector);
@@ -177,6 +179,9 @@ public class Passagem extends JPanel {
             JButtonData butClasse = (JButtonData) actionEvent.getSource();
             Classe classe = (Classe) butClasse.getData();
 
+            ViagemValorClasseDAO viagemValorClasseDAO = new ViagemValorClasseDAO();
+            ViagemValorClasse _viagemValorClasse = viagemValorClasseDAO.getPor(passagem.viagem, classe);
+
             Integer tipo = null;
             if(butClasse.getParent().equals(passagem.meiaPanel)) {
                 tipo = Passagem.MEIA;
@@ -186,7 +191,7 @@ public class Passagem extends JPanel {
                 tipo = Passagem.GRATUIDADE;
             }
 
-            passagem.addPassagem(classe, tipo);
+            passagem.addPassagem(_viagemValorClasse, tipo);
         }
     }
 
@@ -243,7 +248,7 @@ public class Passagem extends JPanel {
 
                 passagemHistoricoDAO.salvar(passagemHistorico);
 
-                /*Ticket.imprimir(
+                Ticket.imprimir(
                     viagem.getOrigem().getNome(),
                     viagem.getDestino().getNome(),
                     dataPadrao.format(viagem.getHoraSaida()),
@@ -251,7 +256,7 @@ public class Passagem extends JPanel {
                     row.get(1).toString(),
                     String.format("%.2f", valor),
                     _passagem.getCodigoBarras()
-                );*/
+                );
             }
 
             TableModel tableModel = new DefaultTableModel(passagem.values.toArray(new Object[][] {}), passagem.columns.toArray());

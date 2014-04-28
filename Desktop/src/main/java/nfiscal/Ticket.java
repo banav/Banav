@@ -29,7 +29,7 @@ public class Ticket {
 		System.out.println(iRetorno);
 		iRetorno = cupom.FormataTX("\r\n", 1, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("                    BOA VIAGEM!\r\n\r\n\r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.AcionaGuilhotina(1);
+		iRetorno = cupom.AcionaGuilhotina(0);
 		iRetorno = cupom.FechaPorta();
 	}
 }
