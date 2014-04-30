@@ -220,7 +220,7 @@ public class Passagem extends JPanel {
             ArrayList _data = new ArrayList(dataVector);
 
             SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mmy");
+            SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mm");
 
             double total = 0;
             for (Object objRow : _data) {
@@ -237,7 +237,7 @@ public class Passagem extends JPanel {
                 passagemDAO.salvar(_passagem);
 
                 String number = String.format("%07d", _passagem.getId());
-                _passagem.setCodigoBarras(number + barcodeEAN.calculateEANParity(number));
+                _passagem.setCodigoBarras(number);// + barcodeEAN.calculateEANParity(number));
 
                 passagemDAO.atualizar(_passagem);
 

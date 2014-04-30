@@ -1,5 +1,7 @@
 package nfiscal;
 
+import br.com.banav.util.Util;
+
 public class Ticket {
 
     static {
@@ -9,7 +11,10 @@ public class Ticket {
 	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras) {
 		int iRetorno;
 		int iOpc = 1;
-		
+
+        origem = Util.removeAcentos(origem);
+        destino = Util.removeAcentos(destino);
+
 		BematechNFiscal cupom = BematechNFiscal.Instance;
 		
 		iRetorno = cupom.ConfiguraModeloImpressora(7);
@@ -17,14 +22,14 @@ public class Ticket {
 		iRetorno = cupom.FormataTX("          BANAV\r\n", 2, 0, 0, 1, 1);
 		iRetorno = cupom.FormataTX("               CONTROLE DE EMBARQUE\r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("\r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.FormataTX("                  ORIGEM:   " + origem + " \r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.FormataTX("                  DESTINO: " + destino + " \r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.FormataTX("                  DATA: " + data + " \r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.FormataTX("                    HORA: " + hora + "\r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.FormataTX("                    TIPO PAX: " + tipo + " \r\n", 2, 0, 0, 0, 0);
-		iRetorno = cupom.FormataTX("                   VALOR: R$ " + valor + " \r\n", 2, 0, 0, 0, 0);
+		iRetorno = cupom.FormataTX("       ORIGEM:  " + origem.toUpperCase() + " \r\n", 2, 0, 0, 0, 0);
+		iRetorno = cupom.FormataTX("       DESTINO: " + destino.toUpperCase() + " \r\n", 2, 0, 0, 0, 0);
+		iRetorno = cupom.FormataTX("       DATA: " + data + " \r\n", 2, 0, 0, 0, 0);
+		iRetorno = cupom.FormataTX("       HORA: " + hora + "\r\n", 2, 0, 0, 0, 0);
+		iRetorno = cupom.FormataTX("       TIPO PAX: " + tipo.toUpperCase() + " \r\n", 2, 0, 0, 0, 0);
+		//iRetorno = cupom.FormataTX("                   VALOR: R$ " + valor + " \r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("\r\r\r", 2, 0, 0, 0, 0);
-		cupom.ConfiguraCodigoBarras(50, 1, 0, 1, 200);
+		cupom.ConfiguraCodigoBarras(50, 1, 1, 1, 200);
 		iRetorno = cupom.ImprimeCodigoBarrasEAN8(codigoBarras);
 		System.out.println(iRetorno);
 		iRetorno = cupom.FormataTX("\r\n", 1, 0, 0, 0, 0);

@@ -3,6 +3,7 @@ package br.com.banav.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,5 +46,13 @@ public class Util {
         } else {
             return simpleDateFormat.format(new Date());
         }
+    }
+
+    public static String removeAcentos(String str) {
+
+        str = Normalizer.normalize(str, Normalizer.Form.NFD);
+        str = str.replaceAll("[^\\p{ASCII}]", "");
+        return str;
+
     }
 }

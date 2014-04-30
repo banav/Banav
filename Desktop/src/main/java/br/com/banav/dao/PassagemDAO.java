@@ -3,6 +3,7 @@ package br.com.banav.dao;
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.Passagem;
 import br.com.banav.model.PassagemHistorico;
+import com.lowagie.text.pdf.BarcodeEAN;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -18,8 +19,11 @@ public class PassagemDAO extends DAO<Passagem> {
     }
 
     public List<Passagem> listarPorCodigoBarras(String codigoBarras) {
+        BarcodeEAN barcodeEAN = new BarcodeEAN();
+        barcodeEAN.setCodeType(BarcodeEAN.EAN8);
+
         Query query = getEM().createQuery("select p from Passagem as p where p.codigoBarras = :codigoBarras");
-        query.setParameter("codigoBarras", codigoBarras);
+        query.setParameter("codigoBarras", codigoBarras.substring(0,7));
         return query.getResultList();
     }
 }

@@ -45,11 +45,14 @@ public class CheckIn extends JPanel {
                     checkIn.lbStatus.setText("Passagem não encontrada. Tente digitar o código e tecle ENTER.");
                 } else {
                     Passagem passagem = passagens.get(0);
-                    passagem.setCheckin(true);
 
-                    passagemDAO.atualizar(passagem);
-
-                    checkIn.lbStatus.setText("Registrado com sucesso.");
+                    if(passagem.getCheckin()) {
+                        checkIn.lbStatus.setText(String.format("Entrada %s já registrada anteriormente.", passagem.getCodigoBarras()));
+                    } else {
+                        passagem.setCheckin(true);
+                        passagemDAO.atualizar(passagem);
+                        checkIn.lbStatus.setText(String.format("Controle %s registrado com sucesso.", passagem.getCodigoBarras()));
+                    }
                 }
 
                 checkIn.tfCodigoBarras.setText("");
