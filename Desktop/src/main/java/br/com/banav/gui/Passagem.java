@@ -18,6 +18,8 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -60,6 +62,8 @@ public class Passagem extends JPanel {
         add(mainContent, BorderLayout.CENTER);
 
         iniciarTabelaPassagens();
+        btVoltar.addActionListener(new VoltarActionListener(this));
+        tablePassagem.addKeyListener(new DeletarKeyAdapter(this));
     }
 
     public void carregar(Viagem viagem) {
@@ -74,6 +78,9 @@ public class Passagem extends JPanel {
 
         labelQuantidade.setFont(new Font("Arial", Font.BOLD, 28));
         labelTotal.setFont(new Font("Arial", Font.BOLD, 28));
+
+        TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
+        tablePassagem.setModel(tableModel);
     }
 
     private void painelMeia() {
@@ -128,11 +135,20 @@ public class Passagem extends JPanel {
         columns.add("Classe");
         columns.add("Tipo de Passagem");
         columns.add("Valor");
+        columns.add("");
 
         TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
         tablePassagem.setModel(tableModel);
         tablePassagem.setFont(new Font("Arial", Font.BOLD, 20));
         tablePassagem.setRowHeight(40);
+
+        //tablePassagem.removeColumn(tablePassagem.getColumnModel().getColumn(3));
+        //tablePassagem.getColumnModel().getColumn(3).setMinWidth(0);
+        //tablePassagem.getColumnModel().getColumn(3).setMaxWidth(0);
+        //tablePassagem.getColumnModel().getColumn(3).setWidth(0);
+
+        //tablePassagem.revalidate();
+        //tablePassagem.repaint();
     }
 
     private void addPassagem(ViagemValorClasse viagemValorClasse, Integer tipo) {
@@ -151,8 +167,12 @@ public class Passagem extends JPanel {
         }
 
         DefaultTableModel model = (DefaultTableModel) tablePassagem.getModel();
-        model.addRow(new Object[]{viagemValorClasse.getNavioClasse().getClasse().getNome(), descricaoTipo, valor});
+        model.addRow(new Object[]{viagemValorClasse.getNavioClasse().getClasse().getNome(), descricaoTipo, valor, viagemValorClasse});
 
+        calculaValores(model);
+    }
+
+    private void calculaValores(DefaultTableModel model) {
         Vector dataVector = model.getDataVector();
         ArrayList _data = new ArrayList(dataVector);
 
@@ -233,6 +253,7 @@ public class Passagem extends JPanel {
                 _passagem.setGratuidade(valor == 0);
                 _passagem.setValor(valor);
                 _passagem.setCheckin(false);
+                _passagem.setViagemValorClasse((ViagemValorClasse) row.get(3));
 
                 passagemDAO.salvar(_passagem);
 
@@ -248,7 +269,7 @@ public class Passagem extends JPanel {
 
                 passagemHistoricoDAO.salvar(passagemHistorico);
 
-                Ticket.imprimir(
+                /*Ticket.imprimir(
                     viagem.getOrigem().getNome(),
                     viagem.getDestino().getNome(),
                     dataPadrao.format(viagem.getHoraSaida()),
@@ -256,7 +277,7 @@ public class Passagem extends JPanel {
                     row.get(1).toString(),
                     String.format("%.2f", valor),
                     _passagem.getCodigoBarras()
-                );
+                );*/
             }
 
             TableModel tableModel = new DefaultTableModel(passagem.values.toArray(new Object[][] {}), passagem.columns.toArray());
@@ -267,6 +288,44 @@ public class Passagem extends JPanel {
             JOptionPane.showMessageDialog(null, "Finalizado com sucesso.");
 
             main.abrir(MenuPrincipal.class.getCanonicalName());
+        }
+    }
+
+    private static class VoltarActionListener implements ActionListener {
+
+        private Passagem passagem;
+
+        private VoltarActionListener(Passagem passagem) {
+            this.passagem = passagem;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            passagem.main.abrirDestinos();
+        }
+    }
+
+    private static class DeletarKeyAdapter extends KeyAdapter {
+
+        private Passagem passagem;
+
+        private DeletarKeyAdapter(Passagem passagem) {
+            this.passagem = passagem;
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+                if(passagem.tablePassagem.getSelectedRow() != -1) {
+                    DefaultTableModel model = (DefaultTableModel) passagem.tablePassagem.getModel();
+                    int[] rows = passagem.tablePassagem.getSelectedRows();
+                    for(int i=0;i<rows.length;i++){
+                        model.removeRow(rows[i]-i);
+                    }
+
+                    passagem.calculaValores(model);
+                }
+            }
         }
     }
 }
