@@ -16,6 +16,7 @@ public class Main extends JFrame {
     private DestinoViagem destinoViagem;
     private Passagem passagem;
     private CheckIn checkIn;
+    private CortesiaForm cortesiaForm;
 
     public Main() {
         setContentPane(mainContent);
@@ -35,11 +36,13 @@ public class Main extends JFrame {
         destinoViagem = new DestinoViagem(this);
         passagem = new Passagem(this);
         checkIn = new CheckIn(this);
+        cortesiaForm = new CortesiaForm(this);
 
         panelCard.add(menuPrincipal, menuPrincipal.getClass().getCanonicalName());
         panelCard.add(destinoViagem, destinoViagem.getClass().getCanonicalName());
         panelCard.add(passagem, passagem.getClass().getCanonicalName());
         panelCard.add(checkIn, checkIn.getClass().getCanonicalName());
+        panelCard.add(cortesiaForm, cortesiaForm.getClass().getCanonicalName());
     }
 
     public void abrir(String panel) {
@@ -55,5 +58,10 @@ public class Main extends JFrame {
     public void abrirPassagens(Viagem viagem) {
         abrir(Passagem.class.getCanonicalName());
         passagem.carregar(viagem);
+    }
+
+    public void abrirCortesias() {
+        abrir(CortesiaForm.class.getCanonicalName());
+        cortesiaForm.carregar();
     }
 }

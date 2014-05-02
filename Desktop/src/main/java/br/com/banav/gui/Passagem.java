@@ -7,23 +7,21 @@ import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.gui.component.JButtonData;
 import br.com.banav.model.*;
 import com.lowagie.text.pdf.BarcodeEAN;
-import net.sf.jasperreports.components.barcode4j.EAN8Component;
 import nfiscal.Ticket;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by gilson on 4/1/14.
@@ -64,6 +62,7 @@ public class Passagem extends JPanel {
         iniciarTabelaPassagens();
         btVoltar.addActionListener(new VoltarActionListener(this));
         tablePassagem.addKeyListener(new DeletarKeyAdapter(this));
+        tablePassagem.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void carregar(Viagem viagem) {
@@ -269,7 +268,7 @@ public class Passagem extends JPanel {
 
                 passagemHistoricoDAO.salvar(passagemHistorico);
 
-                /*Ticket.imprimir(
+                Ticket.imprimir(
                     viagem.getOrigem().getNome(),
                     viagem.getDestino().getNome(),
                     dataPadrao.format(viagem.getHoraSaida()),
@@ -277,7 +276,7 @@ public class Passagem extends JPanel {
                     row.get(1).toString(),
                     String.format("%.2f", valor),
                     _passagem.getCodigoBarras()
-                );*/
+                );
             }
 
             TableModel tableModel = new DefaultTableModel(passagem.values.toArray(new Object[][] {}), passagem.columns.toArray());

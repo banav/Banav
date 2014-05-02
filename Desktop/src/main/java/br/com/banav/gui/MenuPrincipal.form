@@ -30,7 +30,7 @@
           <text value="Efetuar Check-in"/>
         </properties>
       </component>
-      <component id="1c517" class="javax.swing.JButton" binding="upgradeButton" default-binding="true">
+      <component id="1c517" class="javax.swing.JButton" binding="btCortesias">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
@@ -38,8 +38,8 @@
         <properties>
           <enabled value="true"/>
           <font size="24"/>
-          <label value="Atualizar Passagem"/>
-          <text value="Atualizar Passagem"/>
+          <label value="Cortesias"/>
+          <text value="Cortesias"/>
         </properties>
       </component>
       <vspacer id="890fd">
