@@ -136,7 +136,8 @@ public class CortesiaForm extends JPanel {
                             horaPadrao.format(viagem.getHoraSaida()),
                             "Cortesia",
                             String.format("%.2f", 0F),
-                            passagem.getCodigoBarras()
+                            passagem.getCodigoBarras(),
+                            cortesia.getNome()
                         );
 
                         cortesiaForm.carregar();
