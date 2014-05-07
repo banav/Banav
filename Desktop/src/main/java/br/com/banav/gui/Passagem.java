@@ -282,12 +282,12 @@ public class Passagem extends JPanel {
 
             TableModel tableModel = new DefaultTableModel(passagem.values.toArray(new Object[][] {}), passagem.columns.toArray());
             passagem.tablePassagem.setModel(tableModel);
-            passagem.labelTotal.setText("");
-            passagem.labelQuantidade.setText("");
+            passagem.labelTotal.setText("Finalizado com sucesso.");
+            passagem.labelQuantidade.setText("           ");
 
-            JOptionPane.showMessageDialog(null, "Finalizado com sucesso.");
+            //JOptionPane.showMessageDialog(null, "Finalizado com sucesso.");
 
-            main.abrir(MenuPrincipal.class.getCanonicalName());
+            //main.abrir(MenuPrincipal.class.getCanonicalName());
         }
     }
 
