@@ -20,9 +20,11 @@ public abstract class DAO<T> {
 
     protected static EntityManager em;
 
+    protected static boolean autoCommit = true;
+
     static { getEM(); }
 
-    protected static EntityManager getEM() {
+    public static EntityManager getEM() {
         if(emf == null) {
             emf = Persistence.createEntityManagerFactory("BanavPU");
         }
@@ -34,22 +36,38 @@ public abstract class DAO<T> {
         return em;
     }
 
+    public static void setAutoCommit(boolean autoCommit) {
+        DAO.autoCommit = autoCommit;
+    }
+
     public void salvar(T t) {
-        getEM().getTransaction().begin();
-        getEM().persist(t);
-        getEM().getTransaction().commit();
+        if(autoCommit) {
+            getEM().getTransaction().begin();
+            getEM().persist(t);
+            getEM().getTransaction().commit();
+        } else {
+            getEM().persist(t);
+        }
     }
 
     public void atualizar(T t) {
-        getEM().getTransaction().begin();
-        getEM().merge(t);
-        getEM().getTransaction().commit();
+        if(autoCommit) {
+            getEM().getTransaction().begin();
+            getEM().merge(t);
+            getEM().getTransaction().commit();
+        } else {
+            getEM().merge(t);
+        }
     }
 
     public void excluir(Class<T> clazz, Object id) {
-        getEM().getTransaction().begin();
-        getEM().remove(getUm(clazz, id));
-        getEM().getTransaction().commit();
+        if(autoCommit) {
+            getEM().getTransaction().begin();
+            getEM().remove(getUm(clazz, id));
+            getEM().getTransaction().commit();
+        } else {
+            getEM().remove(getUm(clazz, id));
+        }
     }
 
     public T getUm(Class<T> clazz, Object id) {

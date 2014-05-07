@@ -275,7 +275,8 @@ public class Passagem extends JPanel {
                     horaPadrao.format(viagem.getHoraSaida()),
                     row.get(1).toString(),
                     String.format("%.2f", valor),
-                    _passagem.getCodigoBarras()
+                    _passagem.getCodigoBarras(),
+                    null
                 );
             }
 

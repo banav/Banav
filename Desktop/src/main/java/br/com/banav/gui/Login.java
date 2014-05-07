@@ -47,21 +47,21 @@ public class Login extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            login.status.setText("");
-
-            if(login.tfLogin.getText().isEmpty()) {
-                login.status.setText("Por favor, informe o Login.");
-                login.tfLogin.requestFocus();
-            }
-
-            if(new String(login.tfSenha.getPassword()).isEmpty()) {
-                login.status.setText("Por favor, informe a Senha.");
-                login.tfSenha.requestFocus();
-            }
-
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
             try {
+                login.status.setText("");
+
+                if(login.tfLogin.getText().isEmpty()) {
+                    login.status.setText("Por favor, informe o Login.");
+                    login.tfLogin.requestFocus();
+                }
+
+                if(new String(login.tfSenha.getPassword()).isEmpty()) {
+                    login.status.setText("Por favor, informe a Senha.");
+                    login.tfSenha.requestFocus();
+                }
+
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+
                 Usuario usuario = usuarioDAO.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
                 if(usuario == null) {
                     login.status.setText("Usuário não encontrado.");
@@ -75,6 +75,8 @@ public class Login extends JFrame {
                 login.status.setText(e1.getMessage());
             } catch (NoSuchAlgorithmException e1) {
                 login.status.setText(e1.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(login, "Não foi possível conectar com o servidor. Tente novamente.");
             }
         }
     }

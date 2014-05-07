@@ -8,7 +8,7 @@ public class Ticket {
         System.setProperty("jna.library.path", "C:\\Windows\\SysWOW64");
     }
 	
-	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras) {
+	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras, String nome) {
 		int iRetorno;
 		int iOpc = 1;
 
@@ -27,6 +27,9 @@ public class Ticket {
 		iRetorno = cupom.FormataTX("       DATA: " + data + " \r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("       HORA: " + hora + "\r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("       TIPO PAX: " + tipo.toUpperCase() + " \r\n", 2, 0, 0, 0, 0);
+        if(nome != null) {
+            iRetorno = cupom.FormataTX("       " + nome.toUpperCase() + " \r\n", 2, 0, 0, 0, 0);
+        }
 		//iRetorno = cupom.FormataTX("                   VALOR: R$ " + valor + " \r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("\r\r\r", 2, 0, 0, 0, 0);
 		cupom.ConfiguraCodigoBarras(50, 1, 1, 1, 200);

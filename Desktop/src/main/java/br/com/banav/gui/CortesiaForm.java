@@ -1,6 +1,7 @@
 package br.com.banav.gui;
 
 import br.com.banav.dao.*;
+import br.com.banav.dao.common.DAO;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
 import nfiscal.Ticket;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,63 +72,83 @@ public class CortesiaForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if(cortesiaForm.tableCortesia.getSelectedRow() != -1) {
-                final Object valueAt = cortesiaForm.tableCortesia.getModel().getValueAt(cortesiaForm.tableCortesia.getSelectedRow(), 0);
+                try {
+                    DAO.setAutoCommit(false);
+                    DAO.getEM().getTransaction().begin();
 
-                CortesiaDAO cortesiaDAO = new CortesiaDAO();
-                Cortesia cortesia = cortesiaDAO.getUm(Cortesia.class, new Long(valueAt.toString()));
-                Viagem viagem = cortesia.getViagem();
-                NavioClasseDAO navioClasseDAO = new NavioClasseDAO();
-                final List<NavioClasse> navioClasses = navioClasseDAO.listarPor(viagem.getNavio());
+                    final Object valueAt = cortesiaForm.tableCortesia.getModel().getValueAt(cortesiaForm.tableCortesia.getSelectedRow(), 0);
 
-                Object[] possibleValues = new Object[navioClasses.size()];
-                int i = 0;
-                for (NavioClasse navioClasse : navioClasses) {
-                    possibleValues[i] = navioClasse.getClasse();
-                    ++i;
-                }
+                    CortesiaDAO cortesiaDAO = new CortesiaDAO();
+                    Cortesia cortesia = cortesiaDAO.getUm(Cortesia.class, new Long(valueAt.toString()));
+                    Viagem viagem = cortesia.getViagem();
+                    NavioClasseDAO navioClasseDAO = new NavioClasseDAO();
+                    final List<NavioClasse> navioClasses = navioClasseDAO.listarPor(viagem.getNavio());
 
-                Object selectedValue = JOptionPane.showInputDialog(null, "Selecione uma classe:", "Emitir Passagem", JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);
+                    Object[] possibleValues = new Object[navioClasses.size()];
+                    int i = 0;
+                    for (NavioClasse navioClasse : navioClasses) {
+                        possibleValues[i] = navioClasse.getClasse();
+                        ++i;
+                    }
 
-                if(selectedValue != null) {
-                    PassagemDAO passagemDAO = new PassagemDAO();
-                    PassagemHistoricoDAO passagemHistoricoDAO = new PassagemHistoricoDAO();
+                    Object selectedValue = JOptionPane.showInputDialog(null, "Selecione uma classe:", "Emitir Passagem", JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);
 
-                    Classe classeSelecionada = (Classe) selectedValue;
+                    if(selectedValue != null) {
+                        PassagemDAO passagemDAO = new PassagemDAO();
+                        PassagemHistoricoDAO passagemHistoricoDAO = new PassagemHistoricoDAO();
 
-                    ViagemValorClasseDAO viagemValorClasseDAO = new ViagemValorClasseDAO();
-                    ViagemValorClasse viagemValorClasse = viagemValorClasseDAO.getPor(viagem, classeSelecionada);
+                        Classe classeSelecionada = (Classe) selectedValue;
 
-                    br.com.banav.model.Passagem passagem = new Passagem();
-                    passagem.setViagemValorClasse(viagemValorClasse);
-                    passagem.setCheckin(false);
-                    passagem.setCodigoBarras(null);
-                    passagem.setValor(0D);
-                    passagem.setGratuidade(true);
+                        ViagemValorClasseDAO viagemValorClasseDAO = new ViagemValorClasseDAO();
+                        ViagemValorClasse viagemValorClasse = viagemValorClasseDAO.getPor(viagem, classeSelecionada);
 
-                    passagemDAO.salvar(passagem);
+                        br.com.banav.model.Passagem passagem = new Passagem();
+                        passagem.setViagemValorClasse(viagemValorClasse);
+                        passagem.setCheckin(false);
+                        passagem.setCodigoBarras(null);
+                        passagem.setValor(0D);
+                        passagem.setGratuidade(true);
 
-                    String number = String.format("%07d", passagem.getId());
-                    passagem.setCodigoBarras(number);
+                        passagemDAO.salvar(passagem);
 
-                    passagemDAO.atualizar(passagem);
+                        String number = String.format("%07d", passagem.getId());
+                        passagem.setCodigoBarras(number);
 
-                    cortesia.setPassagem(passagem);
-                    cortesiaDAO.atualizar(cortesia);
+                        passagemDAO.atualizar(passagem);
 
-                    SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mm");
+                        cortesia.setPassagem(passagem);
+                        cortesiaDAO.atualizar(cortesia);
 
-                    Ticket.imprimir(
-                        viagem.getOrigem().getNome(),
-                        viagem.getDestino().getNome(),
-                        dataPadrao.format(viagem.getHoraSaida()),
-                        horaPadrao.format(viagem.getHoraSaida()),
-                        "Cortesia",
-                        String.format("%.2f", 0),
-                        passagem.getCodigoBarras()
-                    );
+                        PassagemHistorico passagemHistorico = new PassagemHistorico();
+                        passagemHistorico.setData(new Date());
+                        passagemHistorico.setPassagemMovimento(PassagemMovimento.MARCADA);
+                        passagemHistorico.setPassagem(passagem);
 
-                    cortesiaForm.carregar();
+                        passagemHistoricoDAO.salvar(passagemHistorico);
+
+                        SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mm");
+
+                        Ticket.imprimir(
+                            viagem.getOrigem().getNome(),
+                            viagem.getDestino().getNome(),
+                            dataPadrao.format(viagem.getHoraSaida()),
+                            horaPadrao.format(viagem.getHoraSaida()),
+                            "Cortesia",
+                            String.format("%.2f", 0F),
+                            passagem.getCodigoBarras(),
+                            cortesia.getNome()
+                        );
+
+                        cortesiaForm.carregar();
+
+                        DAO.getEM().getTransaction().commit();
+                    }
+                } catch (Exception ex) {
+                    DAO.getEM().getTransaction().rollback();
+                    ex.printStackTrace();
+                } finally {
+                    DAO.setAutoCommit(true);
                 }
 
             } else {
