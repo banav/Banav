@@ -105,10 +105,7 @@
                         </p:column>
 
                         <p:column headerText="Aceita Gratuidade?">
-                            <p:cellEditor>
-                                <f:facet name="output"><p:selectBooleanCheckbox value="#{vv.aceitaGratuidade}"/></f:facet>
-                                <f:facet name="input"><p:selectBooleanCheckbox value="#{vv.aceitaGratuidade}"/></f:facet>
-                            </p:cellEditor>
+                            <p:selectBooleanButton value="#{vv.aceitaGratuidade}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" />
                         </p:column>
 
                     </p:dataTable>
