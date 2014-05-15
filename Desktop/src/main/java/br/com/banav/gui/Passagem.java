@@ -131,6 +131,7 @@ public class Passagem extends JPanel {
     }
 
     private void iniciarTabelaPassagens() {
+        columns.add("Quantidade");
         columns.add("Classe");
         columns.add("Tipo de Passagem");
         columns.add("Valor");
@@ -165,8 +166,12 @@ public class Passagem extends JPanel {
             valor = "0";
         }
 
+        String quantidadeStr = JOptionPane.showInputDialog(this, "Informe a quantidade", 1);
+        int quantidade = new Integer(quantidadeStr);
+        double valorTotal = Double.parseDouble(valor) * quantidade;
+
         DefaultTableModel model = (DefaultTableModel) tablePassagem.getModel();
-        model.addRow(new Object[]{viagemValorClasse.getNavioClasse().getClasse().getNome(), descricaoTipo, valor, viagemValorClasse});
+        model.addRow(new Object[]{quantidade, viagemValorClasse.getNavioClasse().getClasse().getNome(), descricaoTipo, valorTotal, viagemValorClasse});
 
         calculaValores(model);
     }
@@ -175,14 +180,15 @@ public class Passagem extends JPanel {
         Vector dataVector = model.getDataVector();
         ArrayList _data = new ArrayList(dataVector);
 
-        labelQuantidade.setText("Quantidade: " + _data.size() + "     ");
-
         double total = 0;
+        int quantidade = 0;
         for (Object objRow : _data) {
             Vector row = (Vector) objRow;
-            total += Double.parseDouble(row.get(2).toString().replace(",","."));
+            quantidade += Integer.parseInt(row.get(0).toString());
+            total += Double.parseDouble(row.get(3).toString().replace(",","."));
         }
 
+        labelQuantidade.setText("Quantidade: " + quantidade + "     ");
         labelTotal.setText("Total: R$ " + String.format("%.2f", total) + "     ");
     }
 
@@ -245,39 +251,42 @@ public class Passagem extends JPanel {
             for (Object objRow : _data) {
                 Vector row = (Vector) objRow;
 
-                double valor = Double.parseDouble(row.get(2).toString().replace(",","."));
-                total += valor;
+                int quantidade = Integer.parseInt(row.get(0).toString());
+                for (int i = 0; i < quantidade; i++) {
+                    double valor = Double.parseDouble(row.get(3).toString().replace(",","."));
+                    total += valor;
 
-                br.com.banav.model.Passagem _passagem = new br.com.banav.model.Passagem();
-                _passagem.setGratuidade(valor == 0);
-                _passagem.setValor(valor);
-                _passagem.setCheckin(false);
-                _passagem.setViagemValorClasse((ViagemValorClasse) row.get(3));
+                    br.com.banav.model.Passagem _passagem = new br.com.banav.model.Passagem();
+                    _passagem.setGratuidade(valor == 0);
+                    _passagem.setValor(valor);
+                    _passagem.setCheckin(false);
+                    _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
 
-                passagemDAO.salvar(_passagem);
+                    passagemDAO.salvar(_passagem);
 
-                String number = String.format("%07d", _passagem.getId());
-                _passagem.setCodigoBarras(number);// + barcodeEAN.calculateEANParity(number));
+                    String number = String.format("%07d", _passagem.getId());
+                    _passagem.setCodigoBarras(number);// + barcodeEAN.calculateEANParity(number));
 
-                passagemDAO.atualizar(_passagem);
+                    passagemDAO.atualizar(_passagem);
 
-                PassagemHistorico passagemHistorico = new PassagemHistorico();
-                passagemHistorico.setData(new Date());
-                passagemHistorico.setPassagemMovimento(PassagemMovimento.MARCADA);
-                passagemHistorico.setPassagem(_passagem);
+                    PassagemHistorico passagemHistorico = new PassagemHistorico();
+                    passagemHistorico.setData(new Date());
+                    passagemHistorico.setPassagemMovimento(PassagemMovimento.MARCADA);
+                    passagemHistorico.setPassagem(_passagem);
 
-                passagemHistoricoDAO.salvar(passagemHistorico);
+                    passagemHistoricoDAO.salvar(passagemHistorico);
 
-                Ticket.imprimir(
-                    viagem.getOrigem().getNome(),
-                    viagem.getDestino().getNome(),
-                    dataPadrao.format(viagem.getHoraSaida()),
-                    horaPadrao.format(viagem.getHoraSaida()),
-                    row.get(1).toString(),
-                    String.format("%.2f", valor),
-                    _passagem.getCodigoBarras(),
-                    null
-                );
+                    Ticket.imprimir(
+                        viagem.getOrigem().getNome(),
+                        viagem.getDestino().getNome(),
+                        dataPadrao.format(viagem.getHoraSaida()),
+                        horaPadrao.format(viagem.getHoraSaida()),
+                        row.get(1).toString(),
+                        String.format("%.2f", valor),
+                        _passagem.getCodigoBarras(),
+                        null
+                    );
+                }
             }
 
             TableModel tableModel = new DefaultTableModel(passagem.values.toArray(new Object[][] {}), passagem.columns.toArray());

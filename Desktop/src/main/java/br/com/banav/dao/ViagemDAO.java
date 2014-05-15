@@ -12,12 +12,12 @@ import java.util.List;
 public class ViagemDAO extends DAO<Viagem> {
 
     public List<Viagem> listar() {
-        Query query = getEM().createQuery("select v from Viagem as v order by v.horaSaida asc");
+        Query query = getEM().createQuery("select v from Viagem as v order by v.horaSaida desc");
         return query.getResultList();
     }
 
     public List<Viagem> listarPorDestino(Long destino) {
-        Query query = getEM().createQuery("select v from Viagem v where v.destino.id = :destino order by v.horaSaida asc");
+        Query query = getEM().createQuery("select v from Viagem v where v.destino.id = :destino order by v.horaSaida desc");
         query.setParameter("destino", destino);
 
         return query.getResultList();

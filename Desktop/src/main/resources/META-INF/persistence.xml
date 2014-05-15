@@ -9,6 +9,7 @@
 		<properties>
 <!-- 			<property name="hibernate.format_sql" value="true" /> -->
 <!-- 			<property name="hibernate.show_sql" value="true" /> -->
+
             <!-- Produção
                 <property name="hibernate.connection.url" value="jdbc:postgresql://173.230.137.47:5432/banav" />
                 <property name="hibernate.connection.username" value="banav" />
@@ -21,8 +22,8 @@
                 <property name="hibernate.connection.password" value="j4rv1s" />
             -->
 
-            <property name="hibernate.connection.url" value="jdbc:postgresql://banco-pc:5432/banav" />
-            <property name="hibernate.connection.username" value="postgres" />
+            <property name="hibernate.connection.url" value="jdbc:postgresql://173.230.137.47:5432/banav" />
+            <property name="hibernate.connection.username" value="banav" />
             <property name="hibernate.connection.password" value="j4rv1s" />
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

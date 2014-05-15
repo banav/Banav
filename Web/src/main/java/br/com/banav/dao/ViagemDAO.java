@@ -12,7 +12,7 @@ import java.util.List;
 public class ViagemDAO extends DAO<Viagem> {
 
     public List<Viagem> listar() {
-        Query query = getEm().createQuery("select v from Viagem as v order by v.horaSaida asc");
+        Query query = getEm().createQuery("select v from Viagem as v order by v.horaSaida desc");
         return query.getResultList();
     }
 }

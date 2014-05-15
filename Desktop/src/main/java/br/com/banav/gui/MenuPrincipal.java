@@ -13,6 +13,7 @@ public class MenuPrincipal extends JPanel {
     private JButton btEmitirPassagem;
     private JButton btEfetuarCheckIn;
     private JButton btCortesias;
+    private JButton btCancelamento;
 
     private Main main;
 
@@ -24,6 +25,7 @@ public class MenuPrincipal extends JPanel {
         btEmitirPassagem.addActionListener(new EmitirPassagemActionListener(this));
         btEfetuarCheckIn.addActionListener(new CheckInActionListener(this));
         btCortesias.addActionListener(new CortesiasActionListener(this));
+        btCancelamento.addActionListener(new CancelamentoActionListener(this));
     }
 
     private static class EmitirPassagemActionListener implements ActionListener {
@@ -65,6 +67,20 @@ public class MenuPrincipal extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             menuPrincipal.main.abrirCortesias();
+        }
+    }
+
+    private static class CancelamentoActionListener implements ActionListener {
+
+        private MenuPrincipal menuPrincipal;
+
+        private CancelamentoActionListener(MenuPrincipal menuPrincipal) {
+            this.menuPrincipal = menuPrincipal;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            menuPrincipal.main.abrir(CancelarPassagem.class.getCanonicalName());
         }
     }
 }
