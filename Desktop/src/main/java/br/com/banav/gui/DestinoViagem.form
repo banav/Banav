@@ -60,6 +60,20 @@
               <text value="Voltar"/>
             </properties>
           </component>
+          <hspacer id="855e6">
+            <constraints/>
+          </hspacer>
+          <component id="a848a" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <font size="18" style="1"/>
+              <text value="Data:"/>
+            </properties>
+          </component>
+          <component id="ab4db" class="javax.swing.JFormattedTextField" binding="tfData" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
         </children>
       </grid>
     </children>

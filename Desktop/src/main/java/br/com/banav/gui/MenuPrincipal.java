@@ -22,6 +22,7 @@ public class MenuPrincipal extends JPanel {
 
         setLayout(new BorderLayout());
         add(mainContent, BorderLayout.CENTER);
+
         btEmitirPassagem.addActionListener(new EmitirPassagemActionListener(this));
         btEfetuarCheckIn.addActionListener(new CheckInActionListener(this));
         btCortesias.addActionListener(new CortesiasActionListener(this));

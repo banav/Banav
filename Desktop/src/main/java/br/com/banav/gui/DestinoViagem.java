@@ -8,9 +8,12 @@ import br.com.banav.model.Viagem;
 import br.com.banav.util.Util;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -23,7 +26,9 @@ public class DestinoViagem extends JPanel {
     private JPanel panelViagens;
     private JButton btVoltar;
     private JPanel painelOpcoes;
+    private JFormattedTextField tfData;
     private Main main;
+    private Porto portoDestino;
 
 
     public DestinoViagem(Main main) {
@@ -36,6 +41,7 @@ public class DestinoViagem extends JPanel {
         panelViagens.setLayout(new BoxLayout(panelViagens, BoxLayout.Y_AXIS));
 
         btVoltar.addActionListener(new VoltarActionListener(main));
+        tfData.addActionListener(new AlterarDataActionListener(this));
     }
 
     public void carregarDestinos() {
@@ -64,6 +70,7 @@ public class DestinoViagem extends JPanel {
     }
 
     public void carregarViagens(Porto destino) {
+        portoDestino = destino;
         panelViagens.removeAll();
 
         JLabel labelViagens = new JLabel("Viagem:");
@@ -71,7 +78,7 @@ public class DestinoViagem extends JPanel {
         panelViagens.add(labelViagens);
 
         ViagemDAO viagemDAO = new ViagemDAO();
-        List<Viagem> viagens = viagemDAO.listarPorDestino(destino.getId());
+        List<Viagem> viagens = viagemDAO.listarPorDestino(portoDestino.getId(), tfData.getText());
 
         for (Viagem viagem : viagens) {
             JButtonData butViagem = new JButtonData(
@@ -94,8 +101,37 @@ public class DestinoViagem extends JPanel {
             panelViagens.add(butViagem);
         }
 
+        if(viagens == null || viagens.isEmpty()) {
+            JPanel jSpace = new JPanel();
+            jSpace.setPreferredSize(new Dimension(100, 20));
+
+            JButton botao = new JButton("Nenhuma viagem encontrada.");
+            botao.setEnabled(false);
+
+            panelViagens.add(jSpace);
+            panelViagens.add(botao);
+        }
+
         panelViagens.revalidate();
         panelViagens.repaint();
+    }
+
+    public void carregarViagens() {
+        carregarViagens(portoDestino);
+    }
+
+    private void createUIComponents() {
+        try {
+            SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
+            final Calendar hoje = Calendar.getInstance();
+
+            MaskFormatter formatter = new MaskFormatter("##/##/####");
+            tfData = new JFormattedTextField(formatter);
+            tfData.setColumns(10);
+            tfData.setText(formatData.format(hoje.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private static class VoltarActionListener implements ActionListener {
@@ -141,6 +177,20 @@ public class DestinoViagem extends JPanel {
             Viagem viagem = (Viagem) butViagem.getData();
 
             main.abrirPassagens(viagem);
+        }
+    }
+
+    private static class AlterarDataActionListener implements ActionListener {
+
+        private final DestinoViagem destinoViagem;
+
+        public AlterarDataActionListener(DestinoViagem destinoViagem) {
+            this.destinoViagem = destinoViagem;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            destinoViagem.carregarViagens();
         }
     }
 }
