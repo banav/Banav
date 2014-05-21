@@ -258,7 +258,13 @@ public class Passagem extends JPanel {
 
                     br.com.banav.model.Passagem _passagem = new br.com.banav.model.Passagem();
                     _passagem.setGratuidade(valor == 0);
-                    _passagem.setValor(valor);
+
+                    if(valor != 0) {
+                        _passagem.setValor(valor / quantidade);
+                    } else {
+                        _passagem.setValor(valor);
+                    }
+
                     _passagem.setCheckin(false);
                     _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
 
@@ -276,7 +282,7 @@ public class Passagem extends JPanel {
 
                     passagemHistoricoDAO.salvar(passagemHistorico);
 
-                    Ticket.imprimir(
+                    /*Ticket.imprimir(
                         viagem.getOrigem().getNome(),
                         viagem.getDestino().getNome(),
                         dataPadrao.format(viagem.getHoraSaida()),
@@ -285,7 +291,7 @@ public class Passagem extends JPanel {
                         String.format("%.2f", valor),
                         _passagem.getCodigoBarras(),
                         null
-                    );
+                    );*/
                 }
             }
 

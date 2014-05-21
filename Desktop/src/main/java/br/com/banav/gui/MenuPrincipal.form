@@ -13,10 +13,12 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <actionCommand value="F1 - Emitir Passagem"/>
           <enabled value="true"/>
           <font size="24"/>
           <hideActionText value="true"/>
-          <text value="F1 - Emitir Passagem"/>
+          <label value="Emitir Passagem"/>
+          <text value="Emitir Passagem"/>
         </properties>
       </component>
       <component id="7e0a2" class="javax.swing.JButton" binding="btEfetuarCheckIn">
@@ -27,7 +29,8 @@
         <properties>
           <enabled value="true"/>
           <font size="24"/>
-          <text value="F2 - Efetuar Check-in"/>
+          <label value="Efetuar Check-in"/>
+          <text value="Efetuar Check-in"/>
         </properties>
       </component>
       <component id="1c517" class="javax.swing.JButton" binding="btCortesias">
@@ -38,8 +41,8 @@
         <properties>
           <enabled value="true"/>
           <font size="24"/>
-          <label value="F3 - Cortesias"/>
-          <text value="F3 - Cortesias"/>
+          <label value="Cortesias"/>
+          <text value="Cortesias"/>
         </properties>
       </component>
       <vspacer id="890fd">
@@ -68,8 +71,8 @@
         <properties>
           <enabled value="true"/>
           <font size="24"/>
-          <label value="F4 - Cancelamento de Passagem"/>
-          <text value="F4 - Cancelamento de Passagem"/>
+          <label value="Cancelamento de Passagem"/>
+          <text value="Cancelamento de Passagem"/>
         </properties>
       </component>
     </children>
