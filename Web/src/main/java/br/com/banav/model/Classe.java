@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "classe")
-@SequenceGenerator(name = "ClasseGenerator_SEQ", initialValue = 1, sequenceName = "seq_classe")
+@SequenceGenerator(name = "ClasseGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_classe")
 public class Classe implements Serializable {
 
 

@@ -9,7 +9,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "passagem")
-@SequenceGenerator(name = "PassagemGenerator_SEQ", initialValue = 1, sequenceName = "seq_passagem")
+@SequenceGenerator(name = "PassagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_passagem")
 public class Passagem implements Serializable{
 
     @Id

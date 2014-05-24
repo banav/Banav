@@ -282,7 +282,7 @@ public class Passagem extends JPanel {
 
                     passagemHistoricoDAO.salvar(passagemHistorico);
 
-                    /*Ticket.imprimir(
+                    Ticket.imprimir(
                         viagem.getOrigem().getNome(),
                         viagem.getDestino().getNome(),
                         dataPadrao.format(viagem.getHoraSaida()),
@@ -291,7 +291,7 @@ public class Passagem extends JPanel {
                         String.format("%.2f", valor),
                         _passagem.getCodigoBarras(),
                         null
-                    );*/
+                    );
                 }
             }
 

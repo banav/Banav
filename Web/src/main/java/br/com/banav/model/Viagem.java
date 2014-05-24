@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "viagem")
-@SequenceGenerator(name = "ViagemGenerator_SEQ", initialValue = 1, sequenceName = "seq_viagem")
+@SequenceGenerator(name = "ViagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_viagem")
 public class Viagem implements Serializable {
 
     @Id
