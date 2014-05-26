@@ -9,36 +9,22 @@
 <ui:composition template="../../pages/template/principal.xhtml">
 
     <ui:define name="conteudo">
-        <p:panel id="panel" header="Relatório > Todas as Passagens">
+        <p:panel id="panel" header="Relatório > Relatório Sintético de Passagens">
 
             <h:form id="formConteudo" prependId="false">
 
                 <h:panelGrid columns="1" cellspacing="2">
+                    <p:outputLabel value="Data da Viagem:" for="dataInicio" />
+                    <p:calendar id="dataInicio" value="#{passagemListaBean.dataInicio}"/>
+                    <p:message for="dataInicio" />
                 </h:panelGrid>
 
-                <p:dataTable id="tbPassagem" var="p" value="#{passagemListaBean.passagens}"
-                             paginator="true" rows="10" paginatorPosition="bottom" currentPageReportTemplate="Página {currentPage} de {totalPages}"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="10,20,30" emptyMessage="Nenhuma registro encontrado.">
+                <p:separator />
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Valor (R$)" />
-                        </f:facet>
-                        <h:outputText value="#{p.valor}" >
-                            <f:convertNumber maxFractionDigits="2"></f:convertNumber>
-                        </h:outputText>
-                    </p:column>
+                <p:commandButton ajax="false" value="Gerar Relatório" icon="ui-icon-disk">
+                    <p:fileDownload value="#{passagemListaBean.gerarRelatorio()}" />
+                </p:commandButton>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Gratuidade" />
-                        </f:facet>
-                        <h:outputText value="SIM" rendered="#{p.gratuidade}"/>
-                        <h:outputText value="Não" rendered="#{!p.gratuidade}"/>
-                    </p:column>
-
-                </p:dataTable>
             </h:form>
 
         </p:panel>

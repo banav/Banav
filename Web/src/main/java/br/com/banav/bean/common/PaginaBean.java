@@ -4,6 +4,7 @@ import br.com.banav.model.Usuario;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
@@ -86,5 +87,14 @@ public class PaginaBean implements Serializable {
             return null;
 
         return (Usuario) obj;
+    }
+
+    /**
+     * Retorna uma referência do HttpServletRequest.
+     *
+     * @return HttpServletRequest
+     */
+    protected HttpServletRequest getRequest() {
+        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
     }
 }

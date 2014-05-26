@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="74"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicio" class="java.lang.String"/>
+	<parameter name="dataFim" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+	vvc.viagem_id,
+	(select pt.nome from public.porto pt where pt.id = v.porto_origem) as origem,
+	(select pt.nome from public.porto pt where pt.id = v.porto_destino) as destino,
+	to_char(v.horaSaida, 'DD/MM/YYYY HH24:MI') as data,
+	p.valor,
+	vvc.classe as classe_id,
+	(select c.nome from public.classe c where c.id = vvc.classe) as classe,
+	p.gratuidade
+FROM
+	public.passagem p,
+	public.viagem_valor_classe vvc,
+	public.viagem v
+WHERE
+	p.viagem_valor_classe_id = vvc.id and
+	p.id not in (select ph.passagem_id from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA') and
+	vvc.viagem_id = v.id and
+	to_char(v.horaSaida, 'DD/MM/YYYY') = $P{dataInicio}
+ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
+	</queryString>
+	<field name="viagem_id" class="java.lang.Long"/>
+	<field name="origem" class="java.lang.String"/>
+	<field name="destino" class="java.lang.String"/>
+	<field name="data" class="java.lang.String"/>
+	<field name="valor" class="java.lang.Double"/>
+	<field name="classe_id" class="java.lang.Long"/>
+	<field name="classe" class="java.lang.String"/>
+	<field name="gratuidade" class="java.lang.Boolean"/>
+	<variable name="SOMA_CLASSE" class="java.lang.Double" resetType="Group" resetGroup="Classe" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_TOTAL" class="java.lang.Double" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_QTD" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$V{Classe_COUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<group name="GrupoVIagem">
+		<groupExpression><![CDATA[$F{viagem_id}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<rectangle>
+					<reportElement uuid="2cdd04a7-5d84-4134-a234-49e4d8b39184" x="0" y="0" width="555" height="18" backcolor="#1D1D1D"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement uuid="524869df-43cc-4f8b-bcdf-c86fd0a9652a" x="0" y="0" width="100" height="18" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="4862c90e-6678-4bbb-a2b3-9fb0fe1ba695" x="127" y="0" width="127" height="18" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{destino}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="dad9e5b2-825c-4a19-a186-cfccfad1f927" x="255" y="0" width="135" height="18" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{destino}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="e8021fd4-3b90-4e07-99fa-7083d18a163a" x="390" y="0" width="74" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new String("Qtd.")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="810fcb66-a7de-47ce-8381-dfd9488a1c14" x="464" y="0" width="80" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new String("Valor")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="19">
+				<textField pattern="#,##0.00">
+					<reportElement uuid="201e2b23-bcf9-4c7b-949d-c3abde88058a" x="464" y="0" width="91" height="19"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOMA_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="89cd3741-c24a-4259-873d-34d1fac07f13" x="390" y="0" width="74" height="19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GrupoVIagem_COUNT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="4d1e7f47-78e4-41d2-99b4-a0568bf1dffd" x="475" y="0" width="80" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="63b3e1a1-7c9a-4b9a-9ae7-8bfe84311f6e" x="395" y="0" width="60" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Classe">
+		<groupExpression><![CDATA[$F{classe_id}]]></groupExpression>
+		<groupFooter>
+			<band height="19">
+				<textField>
+					<reportElement uuid="7db30610-ca1d-456d-8034-7638db08d7dd" x="390" y="0" width="74" height="19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{Classe_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement uuid="f4612ec7-6e86-4bcb-87c0-847095f379d6" x="464" y="0" width="91" height="19"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SOMA_CLASSE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="7e7ef3ab-b057-4aaf-abcc-e7c9a620a132" x="0" y="0" width="390" height="19"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{classe}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4b3e5a9d-5c0b-42ac-8f41-38775bf99037" x="227" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANAV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53f3874d-95a1-420b-824d-e7d319156373" x="0" y="22" width="555" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Passagens Sintético]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9aa4d74c-6b32-4a3e-904b-bd78217e2844" x="0" y="41" width="555" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="464b2f94-84f0-4600-a079-b7e5552b9d0b" x="424" y="21" width="131" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement uuid="680674dd-272e-454f-b4dd-bde01cf8d909" x="0" y="15" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nenhum registro encontrado para o período informado.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

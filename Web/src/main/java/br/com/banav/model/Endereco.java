@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "endereco")
-@SequenceGenerator(name = "EnderecoGenerator_SEQ", initialValue = 1, sequenceName = "seq_endereco")
+@SequenceGenerator(name = "EnderecoGenerator_SEQ", initialValue = 1, sequenceName = "public.seq_endereco", allocationSize = 50)
 public class Endereco implements Serializable {
 
     @Id
