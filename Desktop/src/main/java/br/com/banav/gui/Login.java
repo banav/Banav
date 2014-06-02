@@ -31,6 +31,7 @@ public class Login extends JFrame {
         setVisible(true);
 
         btEntrar.addActionListener(new EntrarListener(this));
+        tfSenha.addActionListener(new EntrarListener(this));
     }
 
     public static void main(String args[]) {

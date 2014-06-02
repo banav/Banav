@@ -6,8 +6,11 @@ import br.com.banav.model.Passagem;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -17,6 +20,7 @@ public class CheckIn extends JPanel {
     private JPanel mainPanel;
     private JTextField tfCodigoBarras;
     private JLabel lbStatus;
+    private JButton btVoltar;
     private Main main;
 
     public CheckIn(Main main) {
@@ -25,6 +29,8 @@ public class CheckIn extends JPanel {
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
         tfCodigoBarras.addKeyListener(new EnterKeyAdapter(this));
+        tfCodigoBarras.requestFocus();
+        btVoltar.addActionListener(new VoltarActionListener(this));
     }
 
     private static class EnterKeyAdapter extends KeyAdapter {
@@ -42,12 +48,17 @@ public class CheckIn extends JPanel {
                 java.util.List<br.com.banav.model.Passagem> passagens = passagemDAO.listarPorCodigoBarras(checkIn.tfCodigoBarras.getText());
 
                 if(passagens == null || passagens.isEmpty()) {
-                    checkIn.lbStatus.setText("Passagem não encontrada. Tente digitar o código e tecle ENTER.");
+                    checkIn.lbStatus.setText("Passagem não encontrada.");
                 } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                     Passagem passagem = passagens.get(0);
+
+                    final Date horaSaida = passagem.getViagemValorClasse().getViagem().getHoraSaida();
 
                     if(passagem.getCheckin()) {
                         checkIn.lbStatus.setText(String.format("Entrada %s já registrada anteriormente.", passagem.getCodigoBarras()));
+                    } else if(!sdf.format(horaSaida).equals(sdf.format(new Date()))) {
+                        checkIn.lbStatus.setText("Data irregular.");
                     } else {
                         passagem.setCheckin(true);
                         passagemDAO.atualizar(passagem);
@@ -58,6 +69,20 @@ public class CheckIn extends JPanel {
                 checkIn.tfCodigoBarras.setText("");
                 checkIn.tfCodigoBarras.requestFocus();
             }
+        }
+    }
+
+    private static class VoltarActionListener implements ActionListener {
+
+        private CheckIn checkIn;
+
+        private VoltarActionListener(CheckIn checkIn) {
+            this.checkIn = checkIn;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            checkIn.main.abrir(MenuPrincipal.class.getCanonicalName());
         }
     }
 }

@@ -48,7 +48,7 @@ public class CancelarPassagem extends JPanel {
                 java.util.List<br.com.banav.model.Passagem> passagens = passagemDAO.listarPorCodigoBarras(cancelarPassagem.tfCodigoBarras.getText());
 
                 if(passagens == null || passagens.isEmpty()) {
-                    cancelarPassagem.lbStatus.setText("Passagem não encontrada. Tente digitar o código e tecle ENTER.");
+                    cancelarPassagem.lbStatus.setText("Passagem não encontrada.");
                 } else {
                     br.com.banav.model.Passagem passagem = passagens.get(0);
 
@@ -59,6 +59,8 @@ public class CancelarPassagem extends JPanel {
                         for (PassagemHistorico passagemHistorico : historico) {
                             if(passagemHistorico.getPassagemMovimento().equals(PassagemMovimento.CANCELADA)) {
                                 cancelarPassagem.lbStatus.setText(String.format("Passagem %s já foi cancelada anteriormente.", passagem.getCodigoBarras()));
+                                cancelarPassagem.tfCodigoBarras.setText("");
+                                cancelarPassagem.tfCodigoBarras.requestFocus();
                                 return;
                             }
                         }

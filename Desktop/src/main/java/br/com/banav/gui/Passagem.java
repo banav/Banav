@@ -287,7 +287,7 @@ public class Passagem extends JPanel {
                         viagem.getDestino().getNome(),
                         dataPadrao.format(viagem.getHoraSaida()),
                         horaPadrao.format(viagem.getHoraSaida()),
-                        row.get(1).toString(),
+                        row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""),
                         String.format("%.2f", valor),
                         _passagem.getCodigoBarras(),
                         null
