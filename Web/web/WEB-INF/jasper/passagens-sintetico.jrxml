@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
-	<property name="ireport.zoom" value="2.5937424601000023"/>
-	<property name="ireport.x" value="74"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dataInicio" class="java.lang.String"/>
 	<parameter name="dataFim" class="java.lang.String"/>
@@ -68,7 +68,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 					<textElement verticalAlignment="Middle">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{destino}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{origem}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement uuid="dad9e5b2-825c-4a19-a186-cfccfad1f927" x="255" y="0" width="135" height="18" forecolor="#FFFFFF"/>

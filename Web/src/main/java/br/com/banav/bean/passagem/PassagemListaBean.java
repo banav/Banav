@@ -55,7 +55,7 @@ public class PassagemListaBean extends PaginaBean {
 
         InputStream relatorio = null;
         ByteArrayOutputStream relat = new ByteArrayOutputStream();
-        String arquivo = getRequest().getServletContext().getRealPath("/WEB-INF/jasper/passagens-sintetico.jasper");
+        String arquivo = getRequest().getServletContext().getRealPath("/WEB-INF/jasper/relatorio-viagem.jasper");
 
         Session session = passagemDAO.getEm().unwrap(Session.class);
         SessionFactoryImplementor sfi = (SessionFactoryImplementor) session.getSessionFactory();
@@ -69,7 +69,7 @@ public class PassagemListaBean extends PaginaBean {
         exporter.exportReport();
         relatorio = new ByteArrayInputStream(relat.toByteArray());
 
-        return new DefaultStreamedContent(relatorio, "application/pdf", "Relatorio_Sintetico.pdf");
+        return new DefaultStreamedContent(relatorio, "application/pdf", "Relatorio_Viagem.pdf");
     }
 
     public Date getDataInicio() {
