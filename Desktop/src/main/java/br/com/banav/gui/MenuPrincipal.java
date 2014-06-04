@@ -1,5 +1,9 @@
 package br.com.banav.gui;
 
+import br.com.banav.model.Perfil;
+import br.com.banav.model.Usuario;
+import br.com.banav.util.Session;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +31,13 @@ public class MenuPrincipal extends JPanel {
         btEfetuarCheckIn.addActionListener(new CheckInActionListener(this));
         btCortesias.addActionListener(new CortesiasActionListener(this));
         btCancelamento.addActionListener(new CancelamentoActionListener(this));
+
+        Usuario usuario = (Usuario) Session.get("usuario");
+        if(usuario.getPerfil().equals(Perfil.CHECKIN)) {
+            btEmitirPassagem.setEnabled(false);
+            btCortesias.setEnabled(false);
+            btCancelamento.setEnabled(false);
+        }
     }
 
     private static class EmitirPassagemActionListener implements ActionListener {

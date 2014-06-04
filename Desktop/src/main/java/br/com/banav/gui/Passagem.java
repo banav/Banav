@@ -90,6 +90,7 @@ public class Passagem extends JPanel {
 
         for (Classe classe : classesMeiaPassagem) {
             JButtonData butClasse = new JButtonData(classe.getNome());
+            butClasse.setBackground(Color.YELLOW);
             butClasse.setData(classe);
             butClasse.setFont(new Font("Arial", Font.BOLD, 20));
             butClasse.addActionListener(new AddPassagemActionListener(this));
@@ -106,6 +107,7 @@ public class Passagem extends JPanel {
 
         for (Classe classe : classes) {
             JButtonData butClasse = new JButtonData(classe.getNome());
+            butClasse.setBackground(Color.GREEN);
             butClasse.setData(classe);
             butClasse.setFont(new Font("Arial", Font.BOLD, 20));
             butClasse.addActionListener(new AddPassagemActionListener(this));
@@ -122,6 +124,7 @@ public class Passagem extends JPanel {
 
         for (Classe classe : classesMeiaPassagem) {
             JButtonData butClasse = new JButtonData(classe.getNome());
+            butClasse.setBackground(Color.RED);
             butClasse.setData(classe);
             butClasse.setFont(new Font("Arial", Font.BOLD, 20));
             butClasse.addActionListener(new AddPassagemActionListener(this));
