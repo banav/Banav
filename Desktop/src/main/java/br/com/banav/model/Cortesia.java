@@ -22,6 +22,10 @@ public class Cortesia implements Serializable {
 
     private String cpf;
 
+    private String solicitante;
+
+    private String autorizante;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "data_criacao", nullable = false)
     private Date dataCriacao;
@@ -100,6 +104,22 @@ public class Cortesia implements Serializable {
 
     public void setPassagem(Passagem passagem) {
         this.passagem = passagem;
+    }
+
+    public String getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(String solicitante) {
+        this.solicitante = solicitante;
+    }
+
+    public String getAutorizante() {
+        return autorizante;
+    }
+
+    public void setAutorizante(String autorizante) {
+        this.autorizante = autorizante;
     }
 
     @Override

@@ -24,8 +24,16 @@
                         <p:inputText id="tfNome" value="#{cortesiaFormularioBean.cortesia.nome}" required="true" requiredMessage="Campo obrigatório." maxlength="50" size="50"/>
                         <p:message for="tfNome" />
 
+                        <p:outputLabel value="Solicitante:" for="tfSolicitante"/>
+                        <p:inputText id="tfSolicitante" value="#{cortesiaFormularioBean.cortesia.solicitante}"  maxlength="50" size="50"/>
+                        <p:message for="tfSolicitante" />
+
+                        <p:outputLabel value="Autorizante:" for="tfAutorizante"/>
+                        <p:inputText id="tfAutorizante" value="#{cortesiaFormularioBean.cortesia.solicitante}"  maxlength="50" size="50"/>
+                        <p:message for="tfAutorizante" />
+
                         <p:outputLabel value="RG:" for="tfRG"/>
-                        <p:inputText id="tfRG" value="#{cortesiaFormularioBean.cortesia.rg}" required="true" requiredMessage="Campo obrigatório." maxlength="10" size="10"/>
+                        <p:inputText id="tfRG" value="#{cortesiaFormularioBean.cortesia.rg}" maxlength="10" size="10"/>
                         <p:message for="tfRG" />
 
                         <p:outputLabel value="CPF:" for="tfCpf"/>

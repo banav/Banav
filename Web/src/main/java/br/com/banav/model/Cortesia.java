@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "cortesia")
-@SequenceGenerator(name = "CortesiaGenerator_SEQ", initialValue = 1, sequenceName = "public.seq_cortesia", allocationSize = 50)
+@SequenceGenerator(name = "CortesiaGenerator_SEQ", initialValue = 1, sequenceName = "seq_cortesia")
 public class Cortesia implements Serializable {
 
     @Id
@@ -21,6 +21,10 @@ public class Cortesia implements Serializable {
     private String rg;
 
     private String cpf;
+
+    private String solicitante;
+
+    private String autorizante;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_criacao", nullable = false)
@@ -100,6 +104,22 @@ public class Cortesia implements Serializable {
 
     public void setPassagem(Passagem passagem) {
         this.passagem = passagem;
+    }
+
+    public String getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(String solicitante) {
+        this.solicitante = solicitante;
+    }
+
+    public String getAutorizante() {
+        return autorizante;
+    }
+
+    public void setAutorizante(String autorizante) {
+        this.autorizante = autorizante;
     }
 
     @Override

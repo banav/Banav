@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="203"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dataInicio" class="java.lang.String"/>
 	<parameter name="dataFim" class="java.lang.String"/>
@@ -9,6 +9,7 @@
 		<![CDATA[SELECT
 	vvc.viagem_id,
  	p.codigobarras,
+	p.checkin,
 	(select pt.nome from public.porto pt where pt.id = v.porto_origem) as origem,
 	(select pt.nome from public.porto pt where pt.id = v.porto_destino) as destino,
 	to_char(v.horaSaida, 'DD/MM/YYYY HH24:MI') as data_saida,
@@ -31,6 +32,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 	</queryString>
 	<field name="viagem_id" class="java.lang.Long"/>
 	<field name="codigobarras" class="java.lang.String"/>
+	<field name="checkin" class="java.lang.Boolean"/>
 	<field name="origem" class="java.lang.String"/>
 	<field name="destino" class="java.lang.String"/>
 	<field name="data_saida" class="java.lang.String"/>
@@ -67,6 +69,10 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 	</variable>
 	<variable name="TOTAL_CANCELAMENTO" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_CHECKIN" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{checkin} ? new Integer("1") : new Integer("0")]]></variableExpression>
 		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
 	</variable>
 	<group name="GrupoVIagem">
@@ -154,6 +160,13 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 					<textElement/>
 					<text><![CDATA[Resumo Geral]]></text>
 				</staticText>
+				<textField>
+					<reportElement uuid="f487d982-b9cc-4792-85e1-e20971845879" x="154" y="3" width="138" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Check-in:" + $V{TOTAL_CHECKIN}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -244,7 +257,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cancelada} ? "CANCELADA em " + $F{data_cancelamento} : ($F{gratuidade} ? "GRATUIDADE" : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cancelada} ? "CANCELADA em " + $F{data_cancelamento} : ($F{gratuidade} && $F{checkin} ? "CHECKIN/GRATUIDADE" : ($F{gratuidade} && !$F{checkin} ? "GRATUIDADE" : ($F{checkin} ? "CHECKIN" : "")))]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bba1d608-98e6-4484-92df-fb3813553e16" x="80" y="0" width="101" height="14"/>

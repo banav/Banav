@@ -31,6 +31,20 @@
 
                     <p:column>
                         <f:facet name="header">
+                            <h:outputText value="Solicitante" />
+                        </f:facet>
+                        <h:outputText value="#{c.solicitante}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Autorizante" />
+                        </f:facet>
+                        <h:outputText value="#{c.autorizante}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
                             <h:outputText value="RG" />
                         </f:facet>
                         <h:outputText value="#{c.rg}" />
