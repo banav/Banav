@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicio" class="java.lang.String"/>
+	<parameter name="dataFim" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+	vvc.viagem_id,
+ 	p.codigobarras,
+	(select pt.nome from public.porto pt where pt.id = v.porto_origem) as origem,
+	(select pt.nome from public.porto pt where pt.id = v.porto_destino) as destino,
+	to_char(v.horaSaida, 'DD/MM/YYYY HH24:MI') as data_saida,
+	p.valor,
+	(select to_char(ph.data, 'DD/MM/YYYY HH24:MI') from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'MARCADA') as data_emissao,
+	(select to_char(ph.data, 'DD/MM/YYYY HH24:MI') from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA') as data_cancelamento,
+	(p.id in (select ph.passagem_id from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA')) as cancelada,
+	vvc.classe as classe_id,
+	(select c.nome from public.classe c where c.id = vvc.classe) as classe,
+	p.gratuidade
+FROM
+	public.passagem p,
+	public.viagem_valor_classe vvc,
+	public.viagem v
+WHERE
+	p.viagem_valor_classe_id = vvc.id and
+	vvc.viagem_id = v.id and
+	to_char(v.horaSaida, 'DD/MM/YYYY') = $P{dataInicio}
+ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
+	</queryString>
+	<field name="viagem_id" class="java.lang.Long"/>
+	<field name="codigobarras" class="java.lang.String"/>
+	<field name="origem" class="java.lang.String"/>
+	<field name="destino" class="java.lang.String"/>
+	<field name="data_saida" class="java.lang.String"/>
+	<field name="valor" class="java.lang.Double"/>
+	<field name="data_emissao" class="java.lang.String"/>
+	<field name="data_cancelamento" class="java.lang.String"/>
+	<field name="cancelada" class="java.lang.Boolean"/>
+	<field name="classe_id" class="java.lang.Long"/>
+	<field name="classe" class="java.lang.String"/>
+	<field name="gratuidade" class="java.lang.Boolean"/>
+	<variable name="SOMA_CLASSE" class="java.lang.Double" resetType="Group" resetGroup="Classe" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Double("0") : $F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_TOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Double("0") : $F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_QTD" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$V{Classe_COUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="QTD_GRATUIDADE" class="java.lang.Integer" resetType="Group" resetGroup="Classe" calculation="Sum">
+		<variableExpression><![CDATA[$F{gratuidade} && !$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="QTD_CANCELAMENTO" class="java.lang.Integer" resetType="Group" resetGroup="Classe" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_GRATUIDADE" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{gratuidade} && !$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_CANCELAMENTO" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<group name="GrupoVIagem">
+		<groupExpression><![CDATA[$F{viagem_id}]]></groupExpression>
+		<groupHeader>
+			<band height="38">
+				<textField>
+					<reportElement uuid="4862c90e-6678-4bbb-a2b3-9fb0fe1ba695" x="1" y="1" width="552" height="18" forecolor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Viagem: " + $F{origem} + " > " + $F{destino} + "          Data/Hora: " + $F{data_saida}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement uuid="2cdd04a7-5d84-4134-a234-49e4d8b39184" x="0" y="20" width="555" height="18" backcolor="#1D1D1D"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement uuid="e8021fd4-3b90-4e07-99fa-7083d18a163a" x="4" y="20" width="74" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new String("Classe")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="810fcb66-a7de-47ce-8381-dfd9488a1c14" x="464" y="20" width="80" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new String("Valor")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="8c8ac8a3-0e9c-4af5-87a0-638b5d77d32d" x="80" y="20" width="74" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Emissao"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="465d11c4-81ae-457c-805c-242bf271785d" x="181" y="19" width="90" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Cod. de Barras"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<rectangle>
+					<reportElement uuid="de276dd6-e8ce-4d6f-b5c4-a926ef0c9991" x="2" y="3" width="552" height="38"/>
+				</rectangle>
+				<textField pattern="#,##0.00">
+					<reportElement uuid="201e2b23-bcf9-4c7b-949d-c3abde88058a" x="464" y="21" width="80" height="19"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOMA_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="89cd3741-c24a-4259-873d-34d1fac07f13" x="154" y="20" width="138" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Gratuidades:" + $V{TOTAL_GRATUIDADE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="7d941246-f772-49bd-aeb8-2094694885ee" x="292" y="20" width="172" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Canceladas:" + $V{TOTAL_CANCELAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="1fdd2a8a-c236-412f-927e-fca2d9a063b4" x="4" y="20" width="150" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Vendidas: " + ($V{GrupoVIagem_COUNT}- $V{TOTAL_CANCELAMENTO} - $V{TOTAL_GRATUIDADE})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="43b228e4-7acc-42c0-8a50-ef7fb01c5211" x="4" y="5" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Resumo Geral]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Classe">
+		<groupExpression><![CDATA[$F{classe_id}]]></groupExpression>
+		<groupFooter>
+			<band height="29">
+				<textField>
+					<reportElement uuid="7db30610-ca1d-456d-8034-7638db08d7dd" x="2" y="4" width="152" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Vendidas: " + ($V{Classe_COUNT} - $V{QTD_CANCELAMENTO} - $V{QTD_GRATUIDADE})]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement uuid="f4612ec7-6e86-4bcb-87c0-847095f379d6" x="464" y="4" width="80" height="19"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOMA_CLASSE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="752d1c7c-4533-4d18-b752-8cd164b17a70" x="154" y="4" width="138" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Gratuidades:" + $V{QTD_GRATUIDADE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="d3834494-f37c-4aac-b4c8-494992c2e862" x="292" y="4" width="172" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Canceladas:" + $V{QTD_CANCELAMENTO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4b3e5a9d-5c0b-42ac-8f41-38775bf99037" x="227" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANAV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53f3874d-95a1-420b-824d-e7d319156373" x="0" y="22" width="555" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Viagem]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9aa4d74c-6b32-4a3e-904b-bd78217e2844" x="0" y="41" width="555" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement uuid="464b2f94-84f0-4600-a079-b7e5552b9d0b" x="424" y="21" width="131" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="14">
+			<textField>
+				<reportElement uuid="d0d1e359-b6ae-4325-84e9-ab9881c364e8" x="4" y="0" width="74" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9a2a8d65-1e6e-4656-81c7-be4dbf07a760" x="464" y="0" width="80" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a41c7508-f0fb-4613-a79e-feca662d9c0a" x="271" y="0" width="193" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cancelada} ? "CANCELADA em " + $F{data_cancelamento} : ($F{gratuidade} ? "GRATUIDADE" : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bba1d608-98e6-4484-92df-fb3813553e16" x="80" y="0" width="101" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{data_emissao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="84d45550-2a83-4cbc-a539-46ae051ec0b3" x="466" y="6" width="78" height="1">
+					<printWhenExpression><![CDATA[$F{cancelada}]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement uuid="ee3c8475-bca3-45bc-89af-03713292e82a" x="181" y="0" width="90" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigobarras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement uuid="680674dd-272e-454f-b4dd-bde01cf8d909" x="0" y="15" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nenhum registro encontrado para o período informado.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
