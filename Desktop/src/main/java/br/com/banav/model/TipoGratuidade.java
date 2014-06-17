@@ -1,6 +1,7 @@
 package br.com.banav.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by gilson on 4/18/14.
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tipo_gratuidade")
 @SequenceGenerator(name = "TipoGratuidadeGenerator_SEQ", initialValue = 1, sequenceName = "seq_tipo_gratuidade")
-public class TipoGratuidade {
+public class TipoGratuidade implements Serializable {
 
     @Id
     @GeneratedValue(generator = "TipoGratuidadeGenerator_SEQ", strategy = GenerationType.SEQUENCE)

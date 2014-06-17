@@ -8,22 +8,22 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "viagem_valor_classe")
-@SequenceGenerator(name = "ViagemValorClasseGenerator_SEQ", initialValue = 1, sequenceName = "seq_via_val_cla")
+@SequenceGenerator(name = "ViagemValorClasseGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_via_val_cla")
 public class ViagemValorClasse implements Serializable {
 
     @Id
     @GeneratedValue(generator = "ViagemValorClasseGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "viagem_id")
     private Viagem viagem;
 
     @JoinColumns({
-       @JoinColumn(name = "navio", referencedColumnName = "navio"),
-       @JoinColumn(name = "classe", referencedColumnName = "classe")
+            @JoinColumn(name = "navio", referencedColumnName = "navio"),
+            @JoinColumn(name = "classe", referencedColumnName = "classe")
     })
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private NavioClasse navioClasse;
 
     private Double valor;
@@ -99,8 +99,15 @@ public class ViagemValorClasse implements Serializable {
         return id != null ? id.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public ViagemValorClasse clone() {
+        ViagemValorClasse _viagemValorClasse = new ViagemValorClasse();
+        _viagemValorClasse.id = this.id;
+        _viagemValorClasse.viagem = this.viagem;
+        _viagemValorClasse.navioClasse = this.navioClasse;
+        _viagemValorClasse.valor = this.valor;
+        _viagemValorClasse.valorMeia = this.valorMeia;
+        _viagemValorClasse.aceitaGratuidade = this.aceitaGratuidade;
+
+        return _viagemValorClasse;
     }
 }

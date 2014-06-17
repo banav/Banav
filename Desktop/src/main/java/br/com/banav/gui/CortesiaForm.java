@@ -40,6 +40,7 @@ public class CortesiaForm extends JPanel {
         columns.add("Nome");
         columns.add("RG");
         columns.add("CPF");
+        columns.add("Data/Hora Viagem");
 
         tableCortesia.setFont(new Font("Arial", Font.BOLD, 20));
         tableCortesia.setRowHeight(40);
@@ -49,6 +50,8 @@ public class CortesiaForm extends JPanel {
     }
 
     public void carregar() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
         CortesiaDAO cortesiaDAO = new CortesiaDAO();
         final List<Cortesia> cortesias = cortesiaDAO.listar();
 
@@ -57,7 +60,7 @@ public class CortesiaForm extends JPanel {
 
         DefaultTableModel model = (DefaultTableModel) tableCortesia.getModel();
         for (Cortesia cortesia : cortesias) {
-            model.addRow(new Object[]{cortesia.getId(), cortesia.getNome(), cortesia.getRg(), cortesia.getCpf()});
+            model.addRow(new Object[]{cortesia.getId(), cortesia.getNome(), cortesia.getRg(), cortesia.getCpf(), dateFormat.format(cortesia.getViagem().getHoraSaida())});
         }
     }
 
