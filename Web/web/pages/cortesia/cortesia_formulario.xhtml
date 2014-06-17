@@ -29,7 +29,7 @@
                         <p:message for="tfSolicitante" />
 
                         <p:outputLabel value="Autorizante:" for="tfAutorizante"/>
-                        <p:inputText id="tfAutorizante" value="#{cortesiaFormularioBean.cortesia.solicitante}"  maxlength="50" size="50"/>
+                        <p:inputText id="tfAutorizante" value="#{cortesiaFormularioBean.cortesia.autorizante}"  maxlength="50" size="50"/>
                         <p:message for="tfAutorizante" />
 
                         <p:outputLabel value="RG:" for="tfRG"/>
@@ -37,7 +37,7 @@
                         <p:message for="tfRG" />
 
                         <p:outputLabel value="CPF:" for="tfCpf"/>
-                        <p:inputText id="tfCpf" value="#{cortesiaFormularioBean.cortesia.cpf}" required="true" requiredMessage="Campo obrigatório." maxlength="14" size="14"/>
+                        <p:inputText id="tfCpf" value="#{cortesiaFormularioBean.cortesia.cpf}" maxlength="14" size="14"/>
                         <p:message for="tfCpf" />
 
                     </h:panelGrid>
