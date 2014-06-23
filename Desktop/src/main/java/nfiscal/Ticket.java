@@ -32,8 +32,10 @@ public class Ticket {
         }
 		//iRetorno = cupom.FormataTX("                   VALOR: R$ " + valor + " \r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("\r\r\r", 2, 0, 0, 0, 0);
-		cupom.ConfiguraCodigoBarras(50, 1, 1, 1, 200);
-		iRetorno = cupom.ImprimeCodigoBarrasEAN8(codigoBarras);
+		//cupom.ConfiguraCodigoBarras(50, 1, 1, 1, 200);
+        cupom.ConfiguraCodigoBarras(100, 0, 2, 0, 180);
+		//iRetorno = cupom.ImprimeCodigoBarrasEAN8(codigoBarras);
+        iRetorno = cupom.ImprimeCodigoBarrasCODE128(codigoBarras);
 		System.out.println(iRetorno);
 		iRetorno = cupom.FormataTX("\r\n", 1, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("                    BOA VIAGEM!\r\n\r\n\r\n", 2, 0, 0, 0, 0);

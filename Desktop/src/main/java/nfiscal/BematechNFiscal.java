@@ -16,4 +16,7 @@ public interface BematechNFiscal extends Library {
     public int ConfiguraCodigoBarras(int altura, int largura, int posicaoCaracteres, int fonte, int margem);
     public int ImprimeCodigoBarrasUPCA(String codigo);
     public int ImprimeCodigoBarrasEAN8(String codigo);
+    public int ImprimeCodigoBarrasCODE39(String codigo);
+    public int ImprimeCodigoBarrasCODE93(String codigo);
+    public int ImprimeCodigoBarrasCODE128(String codigo);
 }
