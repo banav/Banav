@@ -1,6 +1,7 @@
 package br.com.banav.gui;
 
 import br.com.banav.dao.UsuarioDAO;
+import br.com.banav.gui.jobs.EnvioCheckInJob;
 import br.com.banav.model.Usuario;
 import br.com.banav.util.Session;
 
@@ -21,6 +22,8 @@ public class Login extends JFrame {
     private JPanel mainPanel;
     private JLabel status;
 
+    private EnvioCheckInJob envioCheckInJob;
+
     public Login() {
         setContentPane(mainPanel);
         setTitle("Acesso ao sistema");
@@ -32,6 +35,16 @@ public class Login extends JFrame {
 
         btEntrar.addActionListener(new EntrarListener(this));
         tfSenha.addActionListener(new EntrarListener(this));
+    }
+
+    public void iniciarJobs() {
+        if(envioCheckInJob == null) {
+            envioCheckInJob = new EnvioCheckInJob();
+        }
+
+        if(!envioCheckInJob.isAlive()) {
+            envioCheckInJob.start();
+        }
     }
 
     public static void main(String args[]) {
@@ -69,7 +82,9 @@ public class Login extends JFrame {
                 } else {
                     Session.put("usuario", usuario);
 
+                    login.iniciarJobs();
                     login.dispose();
+
                     new Main();
                 }
             } catch (UnsupportedEncodingException e1) {
