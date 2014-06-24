@@ -53,14 +53,6 @@ public class EnvioCheckInJob extends Thread {
     }
 
     private Boolean enviaCodigo(String codigoBarras) {
-        try {
-            return checkInWS.enviar(codigoBarras);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        return checkInWS.enviar(codigoBarras);
     }
 }
