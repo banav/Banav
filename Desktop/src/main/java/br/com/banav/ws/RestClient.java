@@ -14,60 +14,60 @@ import java.util.Set;
 
 public abstract class RestClient {
 
-	private Properties properties;
-	
-	private HashMap<String, String> parameters;
-	
-	protected String getBaseURL() throws FileNotFoundException, IOException {
+    private Properties properties;
+
+    private HashMap<String, String> parameters;
+
+    protected String getBaseURL() throws FileNotFoundException, IOException {
         //return "http://173.230.137.47:8080/banav"; // PRODUÇÃO
-		return "http://localhost:8080/banav"; // DESENVOLVIMENTO
-	}
-	
-	@SuppressWarnings("unchecked")
-	protected <T> T get(String serviceUrl, JAXBContext jaxbContext) throws IOException, JAXBException {
-		URL url = getUrlWithParameters(getBaseURL() + serviceUrl);
+        return "http://localhost:8080/banav"; // DESENVOLVIMENTO
+    }
 
-		HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-		httpURLConnection.setRequestMethod("GET");
+    @SuppressWarnings("unchecked")
+    protected <T> T get(String serviceUrl, JAXBContext jaxbContext) throws IOException, JAXBException {
+        URL url = getUrlWithParameters(getBaseURL() + serviceUrl);
 
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("GET");
 
-		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-		Object obj = unmarshaller.unmarshal(bufferedReader);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
 
-		bufferedReader.close();
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        Object obj = unmarshaller.unmarshal(bufferedReader);
 
-		return (T) obj;
-	}
-	
-	protected void limparParametros() {
-		parameters = new HashMap<String, String>();
-	}
-	
-	protected void addParametro(String chave, String valor) {
-		if(parameters == null) {
-			limparParametros();
-		}
-		
-		if(valor != null) {
-			parameters.put(chave, valor);
-		}
-	}
-	
-	private URL getUrlWithParameters(String serviceUrl) throws MalformedURLException, UnsupportedEncodingException {
-		StringBuffer url = new StringBuffer(serviceUrl);
-		
-		if(parameters != null && parameters.size() > 0) {
-			url.append("?");
-			
-			Set<String> keySet = parameters.keySet();
-			for (String key : keySet) {
-				url.append(String.format("%s=%s&", key, parameters.get(key)));
-			}
-			
-			url.append(String.format("%s=%s", "time", Calendar.getInstance().getTimeInMillis()));
-		}
+        bufferedReader.close();
 
-		return new URL(url.toString());
-	}
+        return (T) obj;
+    }
+
+    protected void limparParametros() {
+        parameters = new HashMap<String, String>();
+    }
+
+    protected void addParametro(String chave, String valor) {
+        if(parameters == null) {
+            limparParametros();
+        }
+
+        if(valor != null) {
+            parameters.put(chave, valor);
+        }
+    }
+
+    private URL getUrlWithParameters(String serviceUrl) throws MalformedURLException, UnsupportedEncodingException {
+        StringBuffer url = new StringBuffer(serviceUrl);
+
+        if(parameters != null && parameters.size() > 0) {
+            url.append("?");
+
+            Set<String> keySet = parameters.keySet();
+            for (String key : keySet) {
+                url.append(String.format("%s=%s&", key, parameters.get(key)));
+            }
+
+            url.append(String.format("%s=%s", "time", Calendar.getInstance().getTimeInMillis()));
+        }
+
+        return new URL(url.toString());
+    }
 }

@@ -1,4 +1,3 @@
-
 package br.com.banav.ws;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -8,9 +7,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for respostaDTO complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="respostaDTO">
  *   &lt;complexContent>
@@ -23,13 +22,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "respostaDTO", propOrder = {
-    "mensagem",
-    "sucesso"
+        "mensagem",
+        "sucesso"
 })
 public class RespostaDTO {
 
@@ -38,11 +37,11 @@ public class RespostaDTO {
 
     /**
      * Gets the value of the mensagem property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getMensagem() {
         return mensagem;
@@ -50,11 +49,11 @@ public class RespostaDTO {
 
     /**
      * Sets the value of the mensagem property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setMensagem(String value) {
         this.mensagem = value;
@@ -62,11 +61,11 @@ public class RespostaDTO {
 
     /**
      * Gets the value of the sucesso property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Boolean }
-     *     
+     *
      */
     public Boolean isSucesso() {
         return sucesso;
@@ -74,11 +73,11 @@ public class RespostaDTO {
 
     /**
      * Sets the value of the sucesso property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Boolean }
-     *     
+     *
      */
     public void setSucesso(Boolean value) {
         this.sucesso = value;
