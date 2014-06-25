@@ -110,4 +110,9 @@ public class ViagemValorClasse implements Serializable {
 
         return _viagemValorClasse;
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }

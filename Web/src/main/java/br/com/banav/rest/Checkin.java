@@ -1,22 +1,13 @@
 package br.com.banav.rest;
 
-import br.com.banav.model.Navio;
 import br.com.banav.service.CheckinSrv;
-import br.com.banav.service.NavioSrv;
-import javafx.application.Application;
-
-import java.io.IOException;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 /**
  * Created by Microsoft on 23/06/2014.

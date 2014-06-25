@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
-          <factory-entry name="BanavLocalPU" value="a3be9691-b988-4c6c-9be2-fb912abfae8f" />
+          <factory-entry name="BanavLocalPU" value="508c4b92-9266-4767-9ff2-c9a455ae7c0e" />
           <factory-entry name="BanavPU" value="a9932941-403d-43f2-8e5d-fb169449db9b" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />

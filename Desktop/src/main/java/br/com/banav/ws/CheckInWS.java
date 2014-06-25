@@ -42,6 +42,8 @@ public class CheckInWS extends RestClient {
 
             if(!respostaDTO.isSucesso()) {
                 LOGGER.warning(String.format("Erro do servidor para o código %s: %s.", codigoBarras, respostaDTO.getMensagem()));
+            } else {
+                return true;
             }
         } catch (UnsupportedEncodingException e) {
             StringWriter sw = new StringWriter();

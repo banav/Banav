@@ -70,6 +70,10 @@ public class Passagem extends JPanel {
         painelMeia();
         painelGratuidade();
 
+        for( ActionListener al : butFinalizar.getActionListeners() ) {
+            butFinalizar.removeActionListener(al);
+        }
+
         butFinalizar.setFont(new Font("Arial", Font.BOLD, 28));
         butFinalizar.addActionListener(new FinalizarActionListener(this, viagem, main));
 
@@ -269,14 +273,10 @@ public class Passagem extends JPanel {
                     _passagem.setCheckin(false);
                     _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
 
+                    Integer nextval = passagemDAO.nextval(viagem.getId());
+                    _passagem.setCodigoBarras(Passagem.gerarCodigoDeBarras(viagem,passagem, nextval));
+
                     passagemDAO.salvar(_passagem);
-
-                    //String number = String.format("%07d", _passagem.getId());
-                    //_passagem.setCodigoBarras(number);// + barcodeEAN.calculateEANParity(number));
-
-                    _passagem.setCodigoBarras(Passagem.gerarCodigoDeBarras(viagem,passagem,"0001"));
-
-                    passagemDAO.atualizar(_passagem);
 
                     PassagemHistorico passagemHistorico = new PassagemHistorico();
                     passagemHistorico.setData(new Date());
@@ -323,7 +323,7 @@ public class Passagem extends JPanel {
         }
     }
 
-    private static String gerarCodigoDeBarras(Viagem viagem, Passagem passagem, String sequencial){
+    private static String gerarCodigoDeBarras(Viagem viagem, Passagem passagem, Integer sequencial){
 
         StringBuilder codigo = new StringBuilder();
 
@@ -331,14 +331,13 @@ public class Passagem extends JPanel {
         calendar.setTime(viagem.getHoraSaida());
 
         String ano = Integer.toString(calendar.get(Calendar.YEAR)).substring(2);
-        String mes = String.format("%02d",calendar.get(Calendar.MONTH) );
+        String mes = String.format("%02d",calendar.get(Calendar.MONTH) + 1);
         String dia = String.format("%02d",calendar.get(Calendar.DAY_OF_MONTH));
 
         String origem = String.format("%02d",viagem.getOrigem().getId());
         String destino = String.format("%02d",viagem.getDestino().getId());
 
-        String _sequencial = String.format("%04d",sequencial);
-
+        String _sequencial = String.format("%04d", sequencial);
 
         codigo.append(ano);
         codigo.append(mes);
