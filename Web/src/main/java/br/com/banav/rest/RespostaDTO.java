@@ -1,4 +1,4 @@
-package br.com.banav.ws;
+package br.com.banav.rest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

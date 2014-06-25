@@ -33,6 +33,15 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <!--<servlet>
+        <servlet-name>Resteasy</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>br.com.banav.rest.JaxRsActivator</param-value>
+        </init-param>
+    </servlet>-->
+
     <!-- Map these files with JSF -->
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

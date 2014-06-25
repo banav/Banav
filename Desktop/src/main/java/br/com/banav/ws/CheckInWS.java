@@ -37,7 +37,7 @@ public class CheckInWS extends RestClient {
 
     public Boolean enviar(String codigoBarras) {
         try {
-            addParametro("codidoBarras", URLEncoder.encode(codigoBarras, "UTF-8"));
+            addParametro("codigoBarras", URLEncoder.encode(codigoBarras, "UTF-8"));
             RespostaDTO respostaDTO = get("/ws/checkin", JAXBContext.newInstance(RespostaDTO.class));
 
             if(!respostaDTO.isSucesso()) {

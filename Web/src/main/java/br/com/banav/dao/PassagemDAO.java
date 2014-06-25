@@ -3,7 +3,10 @@ package br.com.banav.dao;
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.Passagem;
 
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -14,5 +17,29 @@ public class PassagemDAO extends DAO<Passagem> {
     public List<Passagem> listar() {
         Query query = getEm().createQuery("select p from Passagem as p order by p.id");
         return query.getResultList();
+    }
+
+
+    public Passagem efetuarCheckinCodigoBarras(String codigoBarras) throws Exception {
+        Query query = getEm().createQuery("select p from Passagem p where p.codigoBarras = :codigoBarras");
+        query.setParameter("codigoBarras", codigoBarras);
+
+        Passagem passagem = null;
+
+        try {
+            passagem = (Passagem) query.getSingleResult();
+        }
+        catch (NoResultException e){
+            throw new Exception("Passagem não existe na base de dados!");
+        }
+        catch (NonUniqueResultException e){
+            throw new Exception("Varias passagem com o mesmo codigo de barras na base de dados!");
+        }
+
+        passagem.setCheckin(true);
+
+        super.atualizar(passagem);
+
+        return passagem;
     }
 }

@@ -222,15 +222,15 @@ public class Passagem extends JPanel {
     }
 
     private static class FinalizarActionListener implements ActionListener {
-        private final Passagem passagem;
-        private final Viagem viagem;
-        private final Main main;
+            private final Passagem passagem;
+            private final Viagem viagem;
+            private final Main main;
 
-        public FinalizarActionListener(Passagem passagem, Viagem viagem, Main main) {
-            this.passagem = passagem;
-            this.viagem = viagem;
-            this.main = main;
-        }
+            public FinalizarActionListener(Passagem passagem, Viagem viagem, Main main) {
+                this.passagem = passagem;
+                this.viagem = viagem;
+                this.main = main;
+            }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
