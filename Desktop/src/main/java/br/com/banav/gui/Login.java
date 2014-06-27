@@ -92,7 +92,8 @@ public class Login extends JFrame {
             } catch (NoSuchAlgorithmException e1) {
                 login.status.setText(e1.getMessage());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(login, "Não foi possível conectar com o servidor. Tente novamente.");
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(login, "Não foi possível conectar com o servidor. Tente novamente. " + ex.getMessage());
             }
         }
     }

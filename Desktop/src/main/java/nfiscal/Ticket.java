@@ -36,7 +36,7 @@ public class Ticket {
         cupom.ConfiguraCodigoBarras(100, 0, 2, 0, 180);
 		//iRetorno = cupom.ImprimeCodigoBarrasEAN8(codigoBarras);
         iRetorno = cupom.ImprimeCodigoBarrasCODE128(codigoBarras);
-		System.out.println(iRetorno);
+		//System.out.println(iRetorno);
 		iRetorno = cupom.FormataTX("\r\n", 1, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("                    BOA VIAGEM!\r\n\r\n\r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.AcionaGuilhotina(0);
