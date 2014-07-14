@@ -330,9 +330,14 @@ public class Passagem extends JPanel {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(viagem.getHoraSaida());
 
+        //calendar.get(Calendar.)
+
         String ano = Integer.toString(calendar.get(Calendar.YEAR)).substring(2);
         String mes = String.format("%02d",calendar.get(Calendar.MONTH) + 1);
         String dia = String.format("%02d",calendar.get(Calendar.DAY_OF_MONTH));
+        String hora = String.format("%02d",calendar.get(Calendar.HOUR_OF_DAY));
+        String minuto = String.format("%02d",calendar.get(Calendar.MINUTE));
+
 
         String origem = String.format("%02d",viagem.getOrigem().getId());
         String destino = String.format("%02d",viagem.getDestino().getId());
@@ -342,6 +347,8 @@ public class Passagem extends JPanel {
         codigo.append(ano);
         codigo.append(mes);
         codigo.append(dia);
+        codigo.append(hora);
+        codigo.append(minuto);
         codigo.append(origem);
         codigo.append(destino);
         codigo.append(_sequencial);
