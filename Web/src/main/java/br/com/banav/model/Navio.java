@@ -1,6 +1,8 @@
 package br.com.banav.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class Navio implements Serializable{
     @Column(name = "id")
     private Long navioID;
 
+    @NotNull
+//    @Pattern(regexp = "[^|]", message = "Nome não pode ser vazio!")
     private String nome;
 
     @OneToMany(mappedBy = "navio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
