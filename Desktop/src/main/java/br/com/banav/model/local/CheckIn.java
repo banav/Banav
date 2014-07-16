@@ -9,7 +9,7 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "checkin")
+@Table(name = "checkin", schema = "offline")
 public class CheckIn implements Serializable {
 
     @Id

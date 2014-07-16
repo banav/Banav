@@ -16,7 +16,7 @@ import java.util.List;
  * Created by gustavocosta on 14/07/14.
  */
 
-@Path("/Usuario")
+@Path("/usuario")
 public class UsuarioRest implements Serializable {
 
     @Inject
