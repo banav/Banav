@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1206270710">
+    <data-source source="LOCAL" name="PostgreSQL - banav@banco-pc" uuid="4884d19b-37e8-4475-bcfd-a56042ea4f08">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>dfc0df9edfd8dfdcdf9bdfd9</user-password>
+      <schema-pattern>banav.public</schema-pattern>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
