@@ -6,6 +6,7 @@ import br.com.banav.dao.PassagemHistoricoDAO;
 import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.gui.component.JButtonData;
 import br.com.banav.model.*;
+import br.com.banav.util.Util;
 import com.lowagie.text.pdf.BarcodeEAN;
 import nfiscal.Ticket;
 
@@ -274,7 +275,7 @@ public class Passagem extends JPanel {
                     _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
 
                     Integer nextval = passagemDAO.nextval(viagem.getId());
-                    _passagem.setCodigoBarras(Passagem.gerarCodigoDeBarras(viagem,passagem, nextval));
+                    _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval));
 
                     passagemDAO.salvar(_passagem);
 
@@ -321,47 +322,6 @@ public class Passagem extends JPanel {
         public void actionPerformed(ActionEvent actionEvent) {
             passagem.main.abrirDestinos();
         }
-    }
-
-    private static String gerarCodigoDeBarras(Viagem viagem, Passagem passagem, Integer sequencial){
-
-        StringBuilder codigo = new StringBuilder();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(viagem.getHoraSaida());
-
-        //calendar.get(Calendar.)
-
-        String ano = Integer.toString(calendar.get(Calendar.YEAR)).substring(2);
-        String mes = String.format("%02d",calendar.get(Calendar.MONTH) + 1);
-        String dia = String.format("%02d",calendar.get(Calendar.DAY_OF_MONTH));
-        String hora = String.format("%02d",calendar.get(Calendar.HOUR_OF_DAY));
-        String minuto = String.format("%02d",calendar.get(Calendar.MINUTE));
-
-
-        String origem = String.format("%02d",viagem.getOrigem().getId());
-        String destino = String.format("%02d",viagem.getDestino().getId());
-
-        String _sequencial = String.format("%04d", sequencial);
-
-        codigo.append(ano);
-        codigo.append(mes);
-        codigo.append(dia);
-        codigo.append(hora);
-        codigo.append(minuto);
-        codigo.append(origem);
-        codigo.append(destino);
-        codigo.append(_sequencial);
-        //Ano -        14
-        //Mes -        06
-        //Dia -        20
-        //Origem -     01
-        //Destino -    02
-        //Sequencial - 0001
-
-
-        //201406200102010001
-        return codigo.toString();
     }
 
     private static class DeletarKeyAdapter extends KeyAdapter {
