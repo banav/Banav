@@ -17,7 +17,7 @@
             -->
 
             <!-- Desenvolvimento
-                <property name="hibernate.connection.url" value="jdbc:postgresql://banco-pc:5432/banav" />
+                <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/banav" />
                 <property name="hibernate.connection.username" value="postgres" />
                 <property name="hibernate.connection.password" value="j4rv1s" />
             -->
@@ -48,7 +48,7 @@
             -->
 
             <!-- Desenvolvimento
-                <property name="hibernate.connection.url" value="jdbc:postgresql://banco-pc:5432/banav" />
+                <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/banav" />
                 <property name="hibernate.connection.username" value="postgres" />
                 <property name="hibernate.connection.password" value="j4rv1s" />
             -->

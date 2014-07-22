@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
  */
 // The Java class will be hosted at the URI path "/helloworld"
 @Path("/checkin")
-public class Checkin {
+public class  Checkin {
     // The Java method will process HTTP GET requests
 
 

@@ -5,6 +5,9 @@ import java.io.Serializable;
 
 /**
  * Created by GilsonRocha on 12/01/14.
+ * ######### IMPORTANTE #################
+ * Retirar a unique constraint das colunas classe e navio diretamente no banco
+ * ######################################
  */
 @Entity
 @Table(name = "navio_classe")

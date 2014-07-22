@@ -60,7 +60,8 @@ public class NaviosFormularioBean extends PaginaBean implements Serializable {
         beginConversation();
 
         if(id != null){
-            navio = navioSrv.getUm(id);
+            navio = navioSrv.getUmComClasses(id);
+
         }
         else{
             navio = new Navio();

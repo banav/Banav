@@ -66,6 +66,15 @@
 
                     <p:column>
                         <f:facet name="header">
+                            <h:outputText value="Data/Hora"/>
+                        </f:facet>
+                        <h:outputText value="#{c.viagem.horaSaida}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
                             <h:outputText value="Passagem"/>
                         </f:facet>
                         <h:outputText rendered="#{c.passagem ne null}" value="Emitida"/>
