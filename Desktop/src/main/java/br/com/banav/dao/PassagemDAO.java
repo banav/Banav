@@ -2,8 +2,6 @@ package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.Passagem;
-import br.com.banav.model.PassagemHistorico;
-import com.lowagie.text.pdf.BarcodeEAN;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -18,12 +16,23 @@ public class PassagemDAO extends DAO<Passagem> {
         return query.getResultList();
     }
 
-    public List<Passagem> listarPorCodigoBarras(String codigoBarras) {
-        BarcodeEAN barcodeEAN = new BarcodeEAN();
-        barcodeEAN.setCodeType(BarcodeEAN.EAN8);
+    public List<Passagem> listarPorCodigoBarras(String codigoBarras) {Query query = getEM().createQuery("select p from Passagem as p where p.codigoBarras = :codigoBarras");
+        query.setParameter("codigoBarras", codigoBarras);
 
-        Query query = getEM().createQuery("select p from Passagem as p where p.codigoBarras = :codigoBarras");
-        query.setParameter("codigoBarras", codigoBarras.substring(0,7));
         return query.getResultList();
+    }
+
+    public Integer nextval(Long viagemId) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(" select count(*) from passagem p where p.viagem_valor_classe_id in ( ");
+        sb.append(" select vvc.id from viagem_valor_classe vvc where vvc.viagem_id = :viagemId ");
+        sb.append(" ) ");
+
+        Query nativeQuery = getEM().createNativeQuery(sb.toString());
+        nativeQuery.setParameter("viagemId", viagemId);
+
+        Object singleResult = nativeQuery.getSingleResult();
+
+        return Integer.parseInt(singleResult.toString()) + 1;
     }
 }

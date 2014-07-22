@@ -30,7 +30,7 @@ public class EnvioCheckInJob extends Thread {
     public void run() {
         try {
             while(true) {
-                sleep(3000);
+                sleep(5000);
                 enviaCodigosPendentes();
             }
         } catch (InterruptedException e) {

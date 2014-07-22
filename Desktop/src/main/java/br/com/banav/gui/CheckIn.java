@@ -1,6 +1,7 @@
 package br.com.banav.gui;
 
 import br.com.banav.dao.PassagemDAO;
+import br.com.banav.dao.local.CheckInDAO;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
 
@@ -12,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by GilsonRocha on 10/03/14.
@@ -44,30 +46,34 @@ public class CheckIn extends JPanel {
         @Override
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                PassagemDAO passagemDAO = new PassagemDAO();
-                java.util.List<br.com.banav.model.Passagem> passagens = passagemDAO.listarPorCodigoBarras(checkIn.tfCodigoBarras.getText());
+                try {
+                    checkIn.lbStatus.setText("");
 
-                if(passagens == null || passagens.isEmpty()) {
-                    checkIn.lbStatus.setText("Passagem não encontrada.");
-                } else {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-                    Passagem passagem = passagens.get(0);
+                    CheckInDAO checkInDAO = new CheckInDAO();
 
-                    final Date horaSaida = passagem.getViagemValorClasse().getViagem().getHoraSaida();
+                    String _codigo = checkIn.tfCodigoBarras.getText();
+                    if(checkInDAO.isValido(_codigo)) {
+                        List<br.com.banav.model.local.CheckIn> checkIns = checkInDAO.listarPor(_codigo);
+                        if(checkIns != null && !checkIns.isEmpty()) {
+                            checkIn.lbStatus.setText(String.format("%s já registrado anteriormente.", _codigo));
+                        } else {
+                            br.com.banav.model.local.CheckIn novoCheckIn = new br.com.banav.model.local.CheckIn();
+                            novoCheckIn.setDataCadastro(Calendar.getInstance().getTime());
+                            novoCheckIn.setCodigoBarras(_codigo);
+                            novoCheckIn.setEnviado(false);
 
-                    if(passagem.getCheckin()) {
-                        checkIn.lbStatus.setText(String.format("Entrada %s já registrada anteriormente.", passagem.getCodigoBarras()));
-                    } else if(!sdf.format(horaSaida).equals(sdf.format(new Date()))) {
-                        checkIn.lbStatus.setText("Data irregular.");
+                            checkInDAO.salvar(novoCheckIn);
+                            checkIn.lbStatus.setText(String.format("%s registrado com sucesso.", _codigo));
+                        }
                     } else {
-                        passagem.setCheckin(true);
-                        passagemDAO.atualizar(passagem);
-                        checkIn.lbStatus.setText(String.format("Controle %s registrado com sucesso.", passagem.getCodigoBarras()));
+                        checkIn.lbStatus.setText("Passagem ou Data inválida.");
                     }
+                } catch (Exception ex) {
+                    checkIn.lbStatus.setText("Erro. Tente fechar e depois abrir o sistema novamente.");
+                } finally {
+                    checkIn.tfCodigoBarras.setText("");
+                    checkIn.tfCodigoBarras.requestFocus();
                 }
-
-                checkIn.tfCodigoBarras.setText("");
-                checkIn.tfCodigoBarras.requestFocus();
             }
         }
     }

@@ -48,6 +48,14 @@ public class NavioSrv implements Serializable{
         return navioDAO.getUm(id, Navio.class);
     }
 
+    public Navio getUmComClasses(Long id){
+
+        Navio navio = navioDAO.getUmComClasse(id);
+
+        return navio;
+    }
+
+
     public void salvarNavioClasse(NavioClasse navioClasse){
         navioClasseDAO.salvar(navioClasse);
     }

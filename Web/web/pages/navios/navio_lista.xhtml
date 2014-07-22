@@ -30,6 +30,18 @@
                         <h:outputText value="#{n.nome}" />
                     </p:column>
 
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Opções" />
+                        </f:facet>
+
+                        <h:link outcome="pretty:naviosEditar" value="Editar">
+                            <f:param name="id" value="#{n.navioID}"/>
+                        </h:link>
+                    </p:column>
+
+
+
 
 
                 </p:dataTable>

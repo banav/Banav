@@ -19,8 +19,8 @@ public abstract class RestClient {
     private HashMap<String, String> parameters;
 
     protected String getBaseURL() throws FileNotFoundException, IOException {
-        //return "http://173.230.137.47:8080/banav"; // PRODUÇÃO
-        return "http://localhost:8080/banav"; // DESENVOLVIMENTO
+        return "http://173.230.137.47:8080/banav"; // PRODUÇÃO
+        //return "http://localhost:8080/banav"; // DESENVOLVIMENTO
     }
 
     @SuppressWarnings("unchecked")

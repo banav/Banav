@@ -1,16 +1,17 @@
 package br.com.banav.gui;
 
-import br.com.banav.dao.UsuarioDAO;
 import br.com.banav.gui.jobs.EnvioCheckInJob;
+import br.com.banav.gui.jobs.UsuariosJob;
 import br.com.banav.model.Usuario;
+import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.util.Session;
+import br.com.banav.ws.UsuarioWS;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 /**
  * Created by GilsonRocha on 05/03/14.
@@ -23,6 +24,7 @@ public class Login extends JFrame {
     private JLabel status;
 
     private EnvioCheckInJob envioCheckInJob;
+    private UsuariosJob usuariosJob;
 
     public Login() {
         setContentPane(mainPanel);
@@ -44,6 +46,14 @@ public class Login extends JFrame {
 
         if(!envioCheckInJob.isAlive()) {
             envioCheckInJob.start();
+        }
+
+        if(usuariosJob == null) {
+            usuariosJob = new UsuariosJob();
+        }
+
+        if(!usuariosJob.isAlive()) {
+            usuariosJob.start();
         }
     }
 
@@ -74,12 +84,30 @@ public class Login extends JFrame {
                     login.tfSenha.requestFocus();
                 }
 
-                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                // Tenta fazer conexão local
+                br.com.banav.dao.local.UsuarioDAO usuarioDAOLocal = new br.com.banav.dao.local.UsuarioDAO();
+                UsuarioLocal usuarioLocal = usuarioDAOLocal.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
+                if(usuarioLocal == null) {
+                    br.com.banav.dao.UsuarioDAO usuarioDAO = new br.com.banav.dao.UsuarioDAO();
+                    Usuario usuario = usuarioDAO.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
+                    if(usuario == null) {
+                        login.status.setText("Usuário não encontrado.");
+                    } else {
+                        Session.put("usuario", usuario);
 
-                Usuario usuario = usuarioDAO.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
-                if(usuario == null) {
-                    login.status.setText("Usuário não encontrado.");
+                        login.iniciarJobs();
+                        login.dispose();
+
+                        new Main();
+                    }
                 } else {
+                    Usuario usuario = new Usuario();
+                    usuario.setNome(usuarioLocal.getNome());
+                    usuario.setPerfil(usuarioLocal.getPerfil());
+                    usuario.setSenha(usuarioLocal.getSenha());
+                    usuario.setId(usuarioLocal.getId());
+                    usuario.setLogin(usuarioLocal.getLogin());
+
                     Session.put("usuario", usuario);
 
                     login.iniciarJobs();
@@ -87,12 +115,14 @@ public class Login extends JFrame {
 
                     new Main();
                 }
+
             } catch (UnsupportedEncodingException e1) {
                 login.status.setText(e1.getMessage());
             } catch (NoSuchAlgorithmException e1) {
                 login.status.setText(e1.getMessage());
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(login, "Não foi possível conectar com o servidor. Tente novamente.");
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(login, "Não foi possível conectar com o servidor. Tente novamente. " + ex.getMessage());
             }
         }
     }
