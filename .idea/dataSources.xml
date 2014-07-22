@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="472311703">
+    <data-source source="LOCAL" name="PostgreSQL - banav@localhost" uuid="28b38768-8256-498b-bfb1-fb0eaa5c734c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/banav</jdbc-url>
+      <user-name>postgre</user-name>
+      <user-password>df9adf9fdf9adf9fdf9fdf92</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="BanavLocalPU" uuid="a3be9691-b988-4c6c-9be2-fb912abfae8f">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>dfc0df9edfd8dfdcdf9bdfd9</user-password>
+      <libraries>
+        <library>
+          <url>file://C:\Users\Microsoft\.m2\repository\postgresql\postgresql\9.1-901.jdbc4\postgresql-9.1-901.jdbc4.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+
