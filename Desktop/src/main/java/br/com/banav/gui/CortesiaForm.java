@@ -4,6 +4,7 @@ import br.com.banav.dao.*;
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
+import br.com.banav.util.Util;
 import nfiscal.Ticket;
 
 import javax.swing.*;
@@ -112,12 +113,15 @@ public class CortesiaForm extends JPanel {
                         passagem.setValor(0D);
                         passagem.setGratuidade(true);
 
+                        Integer nextval = passagemDAO.nextval(viagem.getId());
+                        passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval));
+
                         passagemDAO.salvar(passagem);
 
-                        String number = String.format("%07d", passagem.getId());
-                        passagem.setCodigoBarras(number);
-
-                        passagemDAO.atualizar(passagem);
+//                        String number = String.format("%07d", passagem.getId());
+//                        passagem.setCodigoBarras(number);
+//
+//                        passagemDAO.atualizar(passagem);
 
                         cortesia.setPassagem(passagem);
                         cortesiaDAO.atualizar(cortesia);
