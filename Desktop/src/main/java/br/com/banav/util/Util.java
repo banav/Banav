@@ -75,11 +75,11 @@ public class Util {
         String hora = String.format("%02d",calendar.get(Calendar.HOUR_OF_DAY));
         String minuto = String.format("%02d",calendar.get(Calendar.MINUTE));
 
-
         String origem = String.format("%02d",viagem.getOrigem().getId());
         String destino = String.format("%02d",viagem.getDestino().getId());
-
+        System.out.println(sequencial);
         String _sequencial = String.format("%04d", sequencial);
+        System.out.println(_sequencial);
 
         codigo.append(ano);
         codigo.append(mes);
