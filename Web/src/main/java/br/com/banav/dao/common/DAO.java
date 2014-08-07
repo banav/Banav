@@ -40,6 +40,8 @@ public abstract class DAO<T> implements DAOLocal<T> {
 		return em.createQuery("Select t from " + clazz.getSimpleName() + " t").getResultList();
 	}
 
+
+
 	public EntityManager getEm() {
 		return em;
 	}

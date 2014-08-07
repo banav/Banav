@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "porto")
 @SequenceGenerator(name = "PortoGenerator_SEQ", initialValue = 1, sequenceName = "public.seq_porto", allocationSize = 1)
-public class Porto implements Serializable{
+public class Porto extends EntidadeBasica implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PortoGenerator_SEQ")

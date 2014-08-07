@@ -7,12 +7,10 @@ import java.io.Serializable;
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "viagem_valor_classe")
-@SequenceGenerator(name = "ViagemValorClasseGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_via_val_cla")
-public class ViagemValorClasse implements Serializable {
+@Table(name = "viagem_valor_classe", schema = "offline")
+public class ViagemValorClasse extends EntidadeBasica implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "ViagemValorClasseGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @OneToOne(cascade = CascadeType.PERSIST)

@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "navio")
 @SequenceGenerator(name = "NavioGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_navio")
-public class Navio implements Serializable{
+public class Navio extends EntidadeBasica implements Serializable{
 
     @Id
     @GeneratedValue(generator = "NavioGenerator_SEQ", strategy = GenerationType.SEQUENCE)

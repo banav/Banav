@@ -8,19 +8,13 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "porto")
-@SequenceGenerator(name = "PortoGenerator_SEQ", initialValue = 1, sequenceName = "seq_porto")
-public class Porto implements Serializable{
+@Table(name = "porto", schema = "offline")
+public class Porto extends EntidadeBasica implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PortoGenerator_SEQ")
     private Long id;
 
     private String nome;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
 
     public Long getId() {
         return id;
@@ -38,13 +32,6 @@ public class Porto implements Serializable{
         this.nome = nome;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
 
     @Override
     public boolean equals(Object o) {

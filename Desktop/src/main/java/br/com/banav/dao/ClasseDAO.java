@@ -1,6 +1,7 @@
 package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
+import br.com.banav.dao.common.DAOLocalEntidadeBasica;
 import br.com.banav.model.Classe;
 import br.com.banav.model.Viagem;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by gustavocosta on 01/02/14.
  */
-public class ClasseDAO extends DAO<Classe> {
+public class ClasseDAO extends DAOLocalEntidadeBasica<Classe> {
 
     public List<Classe> listar(){
         Query query = getEM().createQuery("select c from Classe c order by c.nome");
@@ -29,5 +30,36 @@ public class ClasseDAO extends DAO<Classe> {
         query.setParameter("viagemId", viagem.getId());
 
         return query.getResultList();
+    }
+
+    @Override
+    public void sincronizar(Classe entidadeBasica) {
+
+        String exists = "select count(1) from offline.classe where id = :id";
+
+        Integer count = (Integer) getEM().createNativeQuery(exists)
+                .setParameter("id", entidadeBasica.getClasseID())
+                .getSingleResult();
+
+        String queryStr = "";
+
+        if(count.equals(0)){
+            queryStr = "INSERT INTO offline.classe(" +
+                    " id, nome, datamovimentacao, ativo) " +
+                    " VALUES (:id, :nome, :data, :ativo)";
+        }
+        else{
+            queryStr = "UPDATE offline.classe" +
+                    " SET  nome= :nome, datamovimentacao= :data, ativo= :ativo" +
+                    " WHERE id= :id";
+        }
+
+        Query q = getEM().createNativeQuery(queryStr);
+        q.setParameter("id", entidadeBasica.getClasseID());
+        q.setParameter("nome", entidadeBasica.getNome());
+        q.setParameter("data", entidadeBasica.getDataMovimentacao());
+        q.setParameter("ativo", entidadeBasica.isAtivo());
+
+        q.executeUpdate();
     }
 }

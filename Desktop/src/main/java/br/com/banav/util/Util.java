@@ -1,6 +1,7 @@
 package br.com.banav.util;
 
 import br.com.banav.gui.Passagem;
+import br.com.banav.model.Usuario;
 import br.com.banav.model.Viagem;
 
 import java.io.UnsupportedEncodingException;
@@ -60,7 +61,7 @@ public class Util {
 
     }
 
-    public static String gerarCodigoDeBarras(Viagem viagem, Integer sequencial){
+    public static String gerarCodigoDeBarras(Viagem viagem, Integer sequencial, Usuario usuario){
 
         StringBuilder codigo = new StringBuilder();
 
@@ -75,6 +76,8 @@ public class Util {
         String hora = String.format("%02d",calendar.get(Calendar.HOUR_OF_DAY));
         String minuto = String.format("%02d",calendar.get(Calendar.MINUTE));
 
+        String user = String.format("%02d", usuario.getId());
+
         String origem = String.format("%02d",viagem.getOrigem().getId());
         String destino = String.format("%02d",viagem.getDestino().getId());
         System.out.println(sequencial);
@@ -86,6 +89,7 @@ public class Util {
         codigo.append(dia);
         codigo.append(hora);
         codigo.append(minuto);
+        codigo.append(user);
         codigo.append(origem);
         codigo.append(destino);
         codigo.append(_sequencial);

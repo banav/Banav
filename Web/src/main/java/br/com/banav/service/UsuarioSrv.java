@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -45,6 +46,10 @@ public class UsuarioSrv {
 
     public List<Usuario> listar() {
         return usuarioDAO.listar();
+    }
+
+    public List<Usuario> listar(Long time){
+        return usuarioDAO.listar(new Date(time));
     }
 
     public Usuario logar(Usuario usuario) {

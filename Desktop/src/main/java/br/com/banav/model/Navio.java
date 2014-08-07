@@ -9,12 +9,10 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "navio")
-@SequenceGenerator(name = "NavioGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_navio")
-public class Navio implements Serializable{
+@Table(name = "navio", schema = "offline")
+public class Navio extends EntidadeBasica implements Serializable{
 
     @Id
-    @GeneratedValue(generator = "NavioGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long navioID;
 
@@ -22,6 +20,7 @@ public class Navio implements Serializable{
 
     @OneToMany(mappedBy = "navio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<NavioClasse> classes;
+
 
     public Long getNavioID() {
         return navioID;

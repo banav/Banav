@@ -1,6 +1,7 @@
 package br.com.banav.model.local;
 
 import br.com.banav.model.Endereco;
+import br.com.banav.model.EntidadeBasica;
 import br.com.banav.model.Perfil;
 
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "usuario", schema = "offline")
-public class UsuarioLocal implements Serializable{
+public class UsuarioLocal extends EntidadeBasica implements Serializable{
 
     @Id
     private Long id;

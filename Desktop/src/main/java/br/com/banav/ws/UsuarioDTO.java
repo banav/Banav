@@ -4,14 +4,16 @@ import br.com.banav.model.Perfil;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by gustavocosta on 14/07/14.
  */
 @XmlRootElement(name = "usuario")
-@XmlType( propOrder={ "id", "nome", "login", "senha", "perfil" } )
+@XmlType( propOrder={ "id", "nome", "login", "senha", "perfil", "time", "ativo" } )
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UsuarioDTO implements Serializable {
+
 
     @XmlElement
     private Long id;
@@ -27,6 +29,12 @@ public class UsuarioDTO implements Serializable {
 
     @XmlElement
     private Perfil perfil;
+
+    @XmlElement
+    private Date time;
+
+    @XmlElement
+    private Boolean ativo;
 
     public Long getId() {
         return id;
@@ -67,4 +75,16 @@ public class UsuarioDTO implements Serializable {
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
     }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Boolean getAtivo() {return ativo;}
+
+    public void setAtivo(Boolean ativo) {this.ativo = ativo;}
 }
