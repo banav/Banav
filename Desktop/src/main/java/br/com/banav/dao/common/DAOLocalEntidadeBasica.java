@@ -16,7 +16,9 @@ public abstract class DAOLocalEntidadeBasica<T extends EntidadeBasica> extends D
         Query query = getEM().createQuery("select max(ul.dataMovimentacao) from " +  clazz.getCanonicalName() + " ul");
 
         try{
-            return (Date)query.getSingleResult();
+            Date data = (Date)query.getSingleResult();
+            data = new Date(data.getTime());
+            return data;
         }
         catch (NoResultException e){
             return null;

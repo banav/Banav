@@ -5,6 +5,7 @@ import br.com.banav.dao.common.DAOLocalEntidadeBasica;
 import br.com.banav.model.Porto;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class PortoDAO extends DAOLocalEntidadeBasica<Porto> {
     public void sincronizar(Porto entidadeBasica) {
         String exists = "select count(1) from offline.porto where id = :id";
 
-        Integer count = (Integer) getEM().createNativeQuery(exists)
+        BigInteger count = (BigInteger) getEM().createNativeQuery(exists)
                 .setParameter("id", entidadeBasica.getId())
                 .getSingleResult();
 
@@ -43,13 +44,20 @@ public class PortoDAO extends DAOLocalEntidadeBasica<Porto> {
                     " WHERE id= :id";
         }
 
+        getEM().getTransaction().begin();
         Query q = getEM().createNativeQuery(queryStr);
+
         q.setParameter("id", entidadeBasica.getId());
         q.setParameter("nome", entidadeBasica.getNome());
         q.setParameter("data", entidadeBasica.getDataMovimentacao());
         q.setParameter("ativo", entidadeBasica.isAtivo());
 
-        q.executeUpdate();
+        try{
+            q.executeUpdate();
+            getEM().getTransaction().commit();
+        }catch (Exception ex){
+            getEM().getTransaction().rollback();
+        }
     }
 
 }

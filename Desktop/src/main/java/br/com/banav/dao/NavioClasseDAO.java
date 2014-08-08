@@ -6,6 +6,7 @@ import br.com.banav.model.Navio;
 import br.com.banav.model.NavioClasse;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -26,14 +27,14 @@ public class NavioClasseDAO extends DAOLocalEntidadeBasica<NavioClasse> {
 
         String count = "select count(1) from offline.navio_classe where classe = :classe and navio = :navio";
 
-        Integer exists = (Integer) getEM().createNativeQuery(count)
+        BigInteger exists = (BigInteger) getEM().createNativeQuery(count)
                 .setParameter("classe", entidadeBasica.getClasse().getClasseID())
                 .setParameter("navio", entidadeBasica.getNavio().getNavioID())
                 .getSingleResult();
 
         String query = "";
 
-        if(exists.equals(0))
+        if(exists.intValue() == 0)
             query = "INSERT INTO offline.navio_classe(" +
                     "            classe, navio, quantidade, ativo, datamovimentacao)" +
                     "    VALUES (:classe, :navio, :quantidade, :ativo, :data)";
@@ -42,6 +43,8 @@ public class NavioClasseDAO extends DAOLocalEntidadeBasica<NavioClasse> {
                     "   SET quantidade=:quantidade, ativo=:ativo, datamovimentacao=:data" +
                     " WHERE classe=:classe and navio=:navio";
 
+
+        getEM().getTransaction().begin();
         Query q = getEM().createNativeQuery(query);
         q.setParameter("classe", entidadeBasica.getClasse().getClasseID());
         q.setParameter("navio", entidadeBasica.getNavio().getNavioID());
@@ -49,6 +52,11 @@ public class NavioClasseDAO extends DAOLocalEntidadeBasica<NavioClasse> {
         q.setParameter("ativo", entidadeBasica.isAtivo());
         q.setParameter("data", entidadeBasica.getDataMovimentacao());
 
-        q.executeUpdate();
+        try{
+            q.executeUpdate();
+            getEM().getTransaction().commit();
+        }catch (Exception ex){
+            getEM().getTransaction().rollback();
+        }
     }
 }

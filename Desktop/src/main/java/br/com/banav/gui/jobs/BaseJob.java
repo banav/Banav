@@ -127,6 +127,9 @@ public class BaseJob extends Thread {
         Date date = portoDAO.ultimaAtualizacao(Porto.class);
         List<PortoDTO> portosDTO = portoWS.listar(date);
 
+        if (portosDTO == null)
+            return;
+
         for(PortoDTO portoDTO : portosDTO){
             Porto porto = new Porto();
             porto.setNome(portoDTO.getNome());
@@ -143,6 +146,9 @@ public class BaseJob extends Thread {
         Date date = navioClasseDAO.ultimaAtualizacao(NavioClasse.class);
 
         List<NavioClasseDTO> navioClasseDTOs = navioClasseWS.listar(date);
+
+        if(navioClasseDTOs == null)
+            return;
 
         for(NavioClasseDTO dto : navioClasseDTOs){
             NavioClasse navioClasse = new NavioClasse();
@@ -167,6 +173,9 @@ public class BaseJob extends Thread {
         Date date = viagemDAO.ultimaAtualizacao(Viagem.class);
 
         List<ViagemDTO> viagemDTOs = viagemWS.listar(date);
+
+        if( viagemDTOs == null)
+            return;
 
         for(ViagemDTO dto : viagemDTOs){
             Viagem viagem = new Viagem();
@@ -199,6 +208,9 @@ public class BaseJob extends Thread {
         Date date = viagemValorClasseDAO.ultimaAtualizacao(ViagemValorClasse.class);
 
         List<ViagemValorClasseDTO> viagemValorClasseDTOs = viagemValorClasseWS.listar(date);
+
+        if( viagemValorClasseDTOs == null)
+            return;
 
         for(ViagemValorClasseDTO dto : viagemValorClasseDTOs){
             ViagemValorClasse viagemValorClasse = new ViagemValorClasse();

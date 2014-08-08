@@ -4,6 +4,7 @@ import br.com.banav.exception.AcessoDBError;
 import br.com.banav.model.EntidadeBasica;
 
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -28,8 +29,8 @@ public class DAOEntidadeBasica<T extends EntidadeBasica> extends DAO<T> {
 
         String className = clazz.getCanonicalName();
 
-        Query q = getEm().createQuery("select eb from " + className + " eb where eb.dataMovimentacao >= :time");
-        q.setParameter("time", time);
+        Query q = getEm().createQuery("select eb from " + className + " eb where eb.dataMovimentacao > :time");
+        q.setParameter("time", time, TemporalType.TIMESTAMP);
 
         return q.getResultList();
 

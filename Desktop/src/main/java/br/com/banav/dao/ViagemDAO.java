@@ -6,6 +6,7 @@ import br.com.banav.model.Usuario;
 import br.com.banav.model.Viagem;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -44,13 +45,13 @@ public class ViagemDAO extends DAOLocalEntidadeBasica<Viagem> {
     public void sincronizar(Viagem entidadeBasica) {
         String exists = "select count(1) from offline.viagem where id = :id";
 
-        Integer count = (Integer) getEM().createNativeQuery(exists)
+        BigInteger count = (BigInteger) getEM().createNativeQuery(exists)
                 .setParameter("id", entidadeBasica.getId())
                 .getSingleResult();
 
         String queryStr = "";
 
-        if(count.equals(0)){
+        if(count.intValue() == 0){
             queryStr = "INSERT INTO offline.viagem(" +
                     "            id, horachegada, horasaida, porto_destino, navio_id, porto_origem, " +
                     "            ativo, datamovimentacao)" +
@@ -63,6 +64,8 @@ public class ViagemDAO extends DAOLocalEntidadeBasica<Viagem> {
                     " WHERE id = :id";
         }
 
+        getEM().getTransaction().begin();
+
         Query q = getEM().createNativeQuery(queryStr);
         q.setParameter("id", entidadeBasica.getId());
         q.setParameter("horachegada", entidadeBasica.getHoraChegada());
@@ -73,6 +76,11 @@ public class ViagemDAO extends DAOLocalEntidadeBasica<Viagem> {
         q.setParameter("ativo", entidadeBasica.isAtivo());
         q.setParameter("datamovimentacao", entidadeBasica.getDataMovimentacao());
 
-        q.executeUpdate();
+        try{
+            q.executeUpdate();
+            getEM().getTransaction().commit();
+        }catch (Exception ex){
+            getEM().getTransaction().rollback();
+        }
     }
 }
