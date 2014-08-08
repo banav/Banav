@@ -21,7 +21,8 @@ public class ClasseSrv implements Serializable{
     private ClasseDAO classeDAO;
 
     public List<Classe> listar(){
-        return classeDAO.listar();
+        List<Classe> classes = classeDAO.listar();
+        return classes;
     }
 
 

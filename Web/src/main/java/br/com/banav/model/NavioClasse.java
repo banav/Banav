@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "navio_classe")
 @IdClass(NavioClassePK.class)
-public class NavioClasse implements Serializable{
+public class NavioClasse extends EntidadeBasica implements Serializable{
 
     @Id
     @OneToOne(cascade = CascadeType.ALL)

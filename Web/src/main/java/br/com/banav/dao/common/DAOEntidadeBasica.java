@@ -29,6 +29,7 @@ public class DAOEntidadeBasica<T extends EntidadeBasica> extends DAO<T> {
         String className = clazz.getCanonicalName();
 
         Query q = getEm().createQuery("select eb from " + className + " eb where eb.dataMovimentacao >= :time");
+        q.setParameter("time", time);
 
         return q.getResultList();
 

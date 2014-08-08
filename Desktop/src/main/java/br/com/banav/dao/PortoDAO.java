@@ -51,5 +51,5 @@ public class PortoDAO extends DAOLocalEntidadeBasica<Porto> {
 
         q.executeUpdate();
     }
-    }
+
 }

@@ -1,4 +1,4 @@
-package br.com.banav.ws.dto;
+package br.com.banav.rest.dto;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,7 +33,7 @@ public class ViagemValorClasseDTO implements Serializable{
     private Double valorMeia;
 
     @XmlElement
-    private Boolean aceitaMeia;
+    private Boolean aceitaGratuidade;
 
     @XmlElement
     private Date dataMovimentacao;
@@ -89,12 +89,12 @@ public class ViagemValorClasseDTO implements Serializable{
         this.valorMeia = valorMeia;
     }
 
-    public Boolean getAceitaMeia() {
-        return aceitaMeia;
+    public Boolean getAceitaGratuidade() {
+        return aceitaGratuidade;
     }
 
-    public void setAceitaMeia(Boolean aceitaMeia) {
-        this.aceitaMeia = aceitaMeia;
+    public void setAceitaGratuidade(Boolean aceitaGratuidade) {
+        this.aceitaGratuidade = aceitaGratuidade;
     }
 
     public Date getDataMovimentacao() {

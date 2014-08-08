@@ -13,7 +13,7 @@ import java.util.List;
 public class Passagem implements Serializable{
 
     @Id
-    @GeneratedValue(generator = "PassagemGenerator_SEQ", strategy = GenerationType.SEQUENCE)
+    //@GeneratedValue(generator = "PassagemGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
 

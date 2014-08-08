@@ -29,4 +29,8 @@ public class UsuarioDAO extends DAOLocalEntidadeBasica<UsuarioLocal> {
     }
 
 
+    @Override
+    public void sincronizar(UsuarioLocal entidadeBasica) {
+
+    }
 }

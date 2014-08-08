@@ -1,7 +1,7 @@
 package br.com.banav.ws;
 
-import br.com.banav.ws.dto.ClasseDTO;
-import br.com.banav.ws.dto.ClasseListDTO;
+import br.com.banav.ws.dto.NavioClasseDTO;
+import br.com.banav.ws.dto.NavioClasseListDTO;
 import br.com.banav.ws.dto.PortoDTO;
 import br.com.banav.ws.dto.PortoListDTO;
 
@@ -21,15 +21,15 @@ import java.util.logging.Logger;
 /**
  * Created by gilson on 6/24/14.
  */
-public class PortoWS extends RestClient {
+public class NavioClasseWS extends RestClient {
 
     private static FileHandler fileTxt;
 
-    private final static Logger LOGGER = Logger.getLogger(PortoWS.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(NavioClasseWS.class.getName());
 
-    public PortoWS() {
+    public NavioClasseWS() {
         Calendar hoje = Calendar.getInstance();
-        String logFile = String.format("%s-%s-%s-porto-ws.txt", hoje.get(Calendar.DAY_OF_MONTH), hoje.get(Calendar.MONTH), hoje.get(Calendar.YEAR));
+        String logFile = String.format("%s-%s-%s-navioclasse-ws.txt", hoje.get(Calendar.DAY_OF_MONTH), hoje.get(Calendar.MONTH), hoje.get(Calendar.YEAR));
 
         try {
             fileTxt = new FileHandler(logFile);
@@ -41,14 +41,14 @@ public class PortoWS extends RestClient {
         LOGGER.addHandler(fileTxt);
     }
 
-    public List<PortoDTO> listar(Date date) {
+    public List<NavioClasseDTO> listar(Date date) {
         try {
-            PortoListDTO listDTO = new PortoListDTO();
+            NavioClasseListDTO listDTO = new NavioClasseListDTO();
             if(date == null)
-                listDTO = get("/ws/porto/list", JAXBContext.newInstance(PortoListDTO.class));
+                listDTO = get("/ws/navioclasse/list", JAXBContext.newInstance(NavioClasseListDTO.class));
             else{
-                String url = "/ws/porto/list/" + date.getTime();
-                listDTO = get(url, JAXBContext.newInstance(PortoListDTO.class));
+                String url = "/ws/navioclasse/list/" + date.getTime();
+                listDTO = get(url, JAXBContext.newInstance(NavioClasseListDTO.class));
             }
             return listDTO.getCollection();
         } catch (UnsupportedEncodingException e) {

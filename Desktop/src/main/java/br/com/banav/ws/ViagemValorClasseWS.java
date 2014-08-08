@@ -1,9 +1,9 @@
 package br.com.banav.ws;
 
-import br.com.banav.ws.dto.ClasseDTO;
-import br.com.banav.ws.dto.ClasseListDTO;
-import br.com.banav.ws.dto.PortoDTO;
-import br.com.banav.ws.dto.PortoListDTO;
+import br.com.banav.rest.dto.ViagemValorClasseDTO;
+import br.com.banav.ws.dto.ViagemDTO;
+import br.com.banav.ws.dto.ViagemListDTO;
+import br.com.banav.ws.dto.ViagemValorClasseListDTO;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,15 +21,15 @@ import java.util.logging.Logger;
 /**
  * Created by gilson on 6/24/14.
  */
-public class PortoWS extends RestClient {
+public class ViagemValorClasseWS extends RestClient {
 
     private static FileHandler fileTxt;
 
-    private final static Logger LOGGER = Logger.getLogger(PortoWS.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ViagemValorClasseWS.class.getName());
 
-    public PortoWS() {
+    public ViagemValorClasseWS() {
         Calendar hoje = Calendar.getInstance();
-        String logFile = String.format("%s-%s-%s-porto-ws.txt", hoje.get(Calendar.DAY_OF_MONTH), hoje.get(Calendar.MONTH), hoje.get(Calendar.YEAR));
+        String logFile = String.format("%s-%s-%s-viagemvalorclasse-ws.txt", hoje.get(Calendar.DAY_OF_MONTH), hoje.get(Calendar.MONTH), hoje.get(Calendar.YEAR));
 
         try {
             fileTxt = new FileHandler(logFile);
@@ -41,14 +41,14 @@ public class PortoWS extends RestClient {
         LOGGER.addHandler(fileTxt);
     }
 
-    public List<PortoDTO> listar(Date date) {
+    public List<ViagemValorClasseDTO> listar(Date date) {
         try {
-            PortoListDTO listDTO = new PortoListDTO();
+            ViagemValorClasseListDTO listDTO = new ViagemValorClasseListDTO();
             if(date == null)
-                listDTO = get("/ws/porto/list", JAXBContext.newInstance(PortoListDTO.class));
+                listDTO = get("/ws/viagemvalorclasse/list", JAXBContext.newInstance(ViagemValorClasseListDTO.class));
             else{
-                String url = "/ws/porto/list/" + date.getTime();
-                listDTO = get(url, JAXBContext.newInstance(PortoListDTO.class));
+                String url = "/ws/viagemvalorclasse/list/" + date.getTime();
+                listDTO = get(url, JAXBContext.newInstance(ViagemValorClasseListDTO.class));
             }
             return listDTO.getCollection();
         } catch (UnsupportedEncodingException e) {

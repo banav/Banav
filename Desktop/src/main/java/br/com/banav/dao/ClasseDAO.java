@@ -6,6 +6,7 @@ import br.com.banav.model.Classe;
 import br.com.banav.model.Viagem;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -37,13 +38,13 @@ public class ClasseDAO extends DAOLocalEntidadeBasica<Classe> {
 
         String exists = "select count(1) from offline.classe where id = :id";
 
-        Integer count = (Integer) getEM().createNativeQuery(exists)
+        BigInteger count = (BigInteger) getEM().createNativeQuery(exists)
                 .setParameter("id", entidadeBasica.getClasseID())
                 .getSingleResult();
 
         String queryStr = "";
 
-        if(count.equals(0)){
+        if(count.intValue() == 0){
             queryStr = "INSERT INTO offline.classe(" +
                     " id, nome, datamovimentacao, ativo) " +
                     " VALUES (:id, :nome, :data, :ativo)";
@@ -54,12 +55,18 @@ public class ClasseDAO extends DAOLocalEntidadeBasica<Classe> {
                     " WHERE id= :id";
         }
 
+        getEM().getTransaction().begin();
         Query q = getEM().createNativeQuery(queryStr);
         q.setParameter("id", entidadeBasica.getClasseID());
         q.setParameter("nome", entidadeBasica.getNome());
         q.setParameter("data", entidadeBasica.getDataMovimentacao());
         q.setParameter("ativo", entidadeBasica.isAtivo());
 
-        q.executeUpdate();
+        try{
+            q.executeUpdate();
+            getEM().getTransaction().commit();
+        }catch (Exception ex){
+            getEM().getTransaction().rollback();
+        }
     }
 }
