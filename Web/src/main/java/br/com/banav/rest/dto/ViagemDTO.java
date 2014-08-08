@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by gustavocosta on 06/08/14.
  */
-@XmlRootElement(name = "viagem_valor_classe")
+@XmlRootElement(name = "viagem")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ViagemDTO implements Serializable {
 
