@@ -23,22 +23,43 @@ public class NavioRest {
     private NavioSrv navioSrv;
 
     @GET
+    @Path("/list")
+    @Produces(MediaType.APPLICATION_XML)
+    public List<NavioDTO> listar(){
+        List<Navio> navios = navioSrv.listar();
+
+
+        List<NavioDTO> dtos = new ArrayList<NavioDTO>();
+
+        for(Navio n : navios){
+            dtos.add(transformaNavioDTO(n));
+        }
+        return dtos;
+    }
+
+    @GET
     @Path("/list/{time}")
     @Produces(MediaType.APPLICATION_XML)
-    private List<NavioDTO> recuperarListaNavio(@PathParam("time") Long time){
+    public List<NavioDTO> recuperarListaNavio(@PathParam("time") Long time){
         List<Navio> navios = navioSrv.listar(time);
 
         List<NavioDTO> dtos = new ArrayList<NavioDTO>();
 
         for(Navio n : navios){
-            NavioDTO dto = new NavioDTO();
-            dto.setAtivo(n.isAtivo());
-            dto.setDataMovimentacao(n.getDataMovimentacao());
-            dto.setId(n.getNavioID());
-            dto.setNome(n.getNome());
-            dtos.add(dto);
+
+            dtos.add(transformaNavioDTO(n));
         }
 
         return dtos;
+    }
+
+    private NavioDTO transformaNavioDTO(Navio n){
+        NavioDTO dto = new NavioDTO();
+        dto.setAtivo(n.isAtivo());
+        dto.setDataMovimentacao(n.getDataMovimentacao());
+        dto.setId(n.getNavioID());
+        dto.setNome(n.getNome());
+
+        return dto;
     }
 }

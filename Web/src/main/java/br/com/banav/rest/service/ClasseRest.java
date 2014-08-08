@@ -26,12 +26,28 @@ public class ClasseRest {
     private ClasseSrv classeSrv;
 
     @GET
+    @Path("/list")
+    @Produces(MediaType.APPLICATION_XML)
+    public List<ClasseDTO> listar(){
+        List<Classe> objs = classeSrv.listar();
+        return montaDTOs(objs);
+    }
+
+    @GET
     @Path("/list/{time}")
     @Produces(MediaType.APPLICATION_XML)
-    private List<ClasseDTO> recuperarLista(@PathParam("time") Long time){
+    public List<ClasseDTO> recuperarLista(@PathParam("time") Long time){
         List<Classe> objs = classeSrv.listar(time);
 
+        return montaDTOs(objs);
+    }
+
+    private List<ClasseDTO> montaDTOs(List<Classe> objs){
+
         List<ClasseDTO> dtos = new ArrayList<ClasseDTO>();
+
+        if(objs == null)
+            return dtos;
 
         for(Classe n : objs){
             ClasseDTO dto = new ClasseDTO();
@@ -45,4 +61,5 @@ public class ClasseRest {
 
         return dtos;
     }
+
 }

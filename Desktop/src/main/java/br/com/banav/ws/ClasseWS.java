@@ -44,12 +44,12 @@ public class ClasseWS extends RestClient {
     public List<ClasseDTO> listar(Date date) {
         try {
             ClasseListDTO classeListDTO = new ClasseListDTO();
-            //if(date == null)
-              //  classeListDTO = get("/ws/classe/list", JAXBContext.newInstance(NavioListDTO.class));
-            //else{
+            if(date == null)
+                classeListDTO = get("/ws/classe/list", JAXBContext.newInstance(ClasseListDTO.class));
+            else{
             String url = "/ws/classe/list/" + date.getTime();
             classeListDTO = get(url, JAXBContext.newInstance(ClasseListDTO.class));
-            //}
+            }
             return classeListDTO.getCollection();
         } catch (UnsupportedEncodingException e) {
             StringWriter sw = new StringWriter();

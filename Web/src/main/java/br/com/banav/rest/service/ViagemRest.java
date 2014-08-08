@@ -1,11 +1,11 @@
 package br.com.banav.rest.service;
 
-import br.com.banav.model.Classe;
 import br.com.banav.model.Porto;
-import br.com.banav.rest.dto.ClasseDTO;
+import br.com.banav.model.Viagem;
 import br.com.banav.rest.dto.PortoDTO;
-import br.com.banav.service.ClasseSrv;
+import br.com.banav.rest.dto.ViagemDTO;
 import br.com.banav.service.PortoSrv;
+import br.com.banav.service.ViagemSrv;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -19,17 +19,17 @@ import java.util.List;
 /**
  * Created by gustavocosta on 06/08/14.
  */
-@Path("/porto")
-public class PortoRest {
+@Path("/viagem")
+public class ViagemRest {
 
     @Inject
-    private PortoSrv srv;
+    private ViagemSrv srv;
 
     @GET
     @Path("/list/{time}")
     @Produces(MediaType.APPLICATION_XML)
-    public List<PortoDTO> recuperarLista(@PathParam("time") Long time){
-        List<Porto> objs = srv.listar(time);
+    public List<ViagemDTO> recuperarLista(@PathParam("time") Long time){
+        List<Viagem> objs = srv.listar(time);
 
         return montaDTOs(objs);
     }
@@ -37,24 +37,27 @@ public class PortoRest {
     @GET
     @Path("/list")
     @Produces(MediaType.APPLICATION_XML)
-    public List<PortoDTO> listar(){
-        List<Porto> objs = srv.listar();
-
+    public List<ViagemDTO> listar(){
+        List<Viagem> objs = srv.listar();
         return montaDTOs(objs);
     }
 
-    private List<PortoDTO> montaDTOs(List<Porto> objs){
-        List<PortoDTO> dtos = new ArrayList<PortoDTO>();
+    private List<ViagemDTO> montaDTOs(List<Viagem> objs){
+        List<ViagemDTO> dtos = new ArrayList<ViagemDTO>();
 
         if(objs == null)
             return dtos;
 
-        for(Porto n : objs){
-            PortoDTO dto = new PortoDTO();
+        for(Viagem n : objs){
+            ViagemDTO dto = new ViagemDTO();
             dto.setAtivo(n.isAtivo());
             dto.setDataMovimentacao(n.getDataMovimentacao());
             dto.setId(n.getId());
-            dto.setNome(n.getNome());
+            dto.setHoraSaida(n.getHoraSaida());
+            dto.setHoraChegada(n.getHoraChegada());
+            dto.setDestinoID(n.getDestino().getId());
+            dto.setOrigemID(n.getOrigem().getId());
+            dto.setNavioID(n.getNavio().getNavioID());
 
             dtos.add(dto);
         }

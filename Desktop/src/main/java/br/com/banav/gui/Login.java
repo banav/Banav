@@ -1,5 +1,6 @@
 package br.com.banav.gui;
 
+import br.com.banav.gui.jobs.BaseJob;
 import br.com.banav.gui.jobs.EnvioCheckInJob;
 import br.com.banav.gui.jobs.UsuariosJob;
 import br.com.banav.model.Usuario;
@@ -25,6 +26,8 @@ public class Login extends JFrame {
 
     private EnvioCheckInJob envioCheckInJob;
     private UsuariosJob usuariosJob;
+
+    private BaseJob baseJob;
 
     public Login() {
         setContentPane(mainPanel);
@@ -54,6 +57,14 @@ public class Login extends JFrame {
 
         if(!usuariosJob.isAlive()) {
             usuariosJob.start();
+        }
+
+        if(baseJob == null){
+            baseJob = new BaseJob();
+        }
+
+        if(!baseJob.isAlive()){
+            baseJob.start();
         }
     }
 
