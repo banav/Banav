@@ -2,14 +2,14 @@ package br.com.banav.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "passagem")
-@SequenceGenerator(name = "PassagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_passagem")
+@Table(name = "passagem", schema = "offline")
 public class Passagem implements Serializable{
 
     @Id
@@ -25,10 +25,13 @@ public class Passagem implements Serializable{
     private Double valor;
     private Boolean gratuidade;
 
-    @OneToMany(mappedBy = "passagem")
-    private List<PassagemHistorico> historico;
+    //@OneToMany(mappedBy = "passagem")
+    //private List<PassagemHistorico> historico;
 
     private Boolean checkin;
+
+    private Date dataMovimentacao;
+
 
     public Long getId() {
         return id;
@@ -70,13 +73,13 @@ public class Passagem implements Serializable{
         this.gratuidade = gratuidade;
     }
 
-    public List<PassagemHistorico> getHistorico() {
-        return historico;
-    }
+    //public List<PassagemHistorico> getHistorico() {
+    //    return historico;
+    //}
 
-    public void setHistorico(List<PassagemHistorico> historico) {
-        this.historico = historico;
-    }
+    //public void setHistorico(List<PassagemHistorico> historico) {
+    //    this.historico = historico;
+    //}
 
     public Boolean getCheckin() {
         return checkin;
@@ -84,6 +87,19 @@ public class Passagem implements Serializable{
 
     public void setCheckin(Boolean checkin) {
         this.checkin = checkin;
+    }
+
+    public Date getDataMovimentacao() {
+        return dataMovimentacao;
+    }
+
+    public void setDataMovimentacao(Date dataMovimentacao) {
+        this.dataMovimentacao = dataMovimentacao;
+    }
+
+    @PrePersist
+    public void trigger(){
+        this.dataMovimentacao = new Date();
     }
 
     @Override

@@ -1,10 +1,12 @@
 package br.com.banav.gui.jobs;
 
 import br.com.banav.dao.local.UsuarioDAO;
+import br.com.banav.model.Usuario;
 import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.ws.UsuarioDTO;
 import br.com.banav.ws.UsuarioWS;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +39,8 @@ public class UsuariosJob extends Thread {
     }
 
     private void atualizarUsuarios() {
-        List<UsuarioDTO> usuariosDTO = usuarioWS.listar();
+        Date date = usuarioDAOLocal.ultimaAtualizacao(UsuarioLocal.class);
+        List<UsuarioDTO> usuariosDTO = usuarioWS.listar(date);
         for (UsuarioDTO usuarioDTO : usuariosDTO) {
             UsuarioLocal usuarioLocal = usuarioDAOLocal.getUm(UsuarioLocal.class, usuarioDTO.getId());
 
@@ -48,6 +51,8 @@ public class UsuariosJob extends Thread {
                 usuarioLocal.setSenha(usuarioDTO.getSenha());
                 usuarioLocal.setPerfil(usuarioDTO.getPerfil());
                 usuarioLocal.setNome(usuarioDTO.getNome());
+                usuarioLocal.setAtivo(usuarioDTO.getAtivo());
+                usuarioLocal.setDataMovimentacao(usuarioDTO.getTime());
 
                 usuarioDAOLocal.salvar(usuarioLocal);
             } else {
@@ -55,6 +60,8 @@ public class UsuariosJob extends Thread {
                 usuarioLocal.setSenha(usuarioDTO.getSenha());
                 usuarioLocal.setPerfil(usuarioDTO.getPerfil());
                 usuarioLocal.setNome(usuarioDTO.getNome());
+                usuarioLocal.setAtivo(usuarioDTO.getAtivo());
+                usuarioLocal.setDataMovimentacao(usuarioDTO.getTime());
 
                 usuarioDAOLocal.atualizar(usuarioLocal);
             }

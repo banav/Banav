@@ -7,9 +7,9 @@ import java.io.Serializable;
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "navio_classe")
+@Table(name = "navio_classe", schema = "offline")
 @IdClass(NavioClassePK.class)
-public class NavioClasse implements Serializable{
+public class NavioClasse extends EntidadeBasica implements Serializable{
 
     @Id
     @OneToOne(cascade = CascadeType.ALL)

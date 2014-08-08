@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -37,9 +38,16 @@ public class UsuarioWS extends RestClient {
         LOGGER.addHandler(fileTxt);
     }
 
-    public List<UsuarioDTO> listar() {
+    public List<UsuarioDTO> listar(Date date) {
         try {
-            UsuarioListDTO usuarioListDTO = get("/ws/usuario/list", JAXBContext.newInstance(UsuarioListDTO.class));
+            UsuarioListDTO usuarioListDTO = null;
+            if(date == null)
+
+                usuarioListDTO = get("/ws/usuario/list", JAXBContext.newInstance(UsuarioListDTO.class));
+            else{
+                String url = "/ws/usuario/list/" + date.getTime();
+                usuarioListDTO = get(url, JAXBContext.newInstance(UsuarioListDTO.class));
+            }
             return usuarioListDTO.getCollection();
         } catch (UnsupportedEncodingException e) {
             StringWriter sw = new StringWriter();

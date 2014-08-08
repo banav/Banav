@@ -29,4 +29,18 @@ public class UsuarioDAO extends DAO<Usuario> {
         List resultado = query.getResultList();
         return resultado == null || resultado.isEmpty() ? null : (Usuario) resultado.get(0);
     }
+
+    @Override
+    public void excluir(Class<Usuario> clazz, Object id) {
+        if(autoCommit) {
+            getEM().getTransaction().begin();
+            Usuario usu = getUm(clazz, id);
+            usu.setAtivo(false);
+
+            getEM().getTransaction().commit();
+        } else {
+            Usuario usu = getUm(clazz, id);
+            usu.setAtivo(false);
+        }
+    }
 }

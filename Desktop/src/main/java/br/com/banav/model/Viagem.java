@@ -8,12 +8,10 @@ import java.util.Date;
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "viagem")
-@SequenceGenerator(name = "ViagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_viagem")
-public class Viagem implements Serializable {
+@Table(name = "viagem", schema = "offline")
+public class Viagem  extends EntidadeBasica implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "ViagemGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)

@@ -26,4 +26,18 @@ public class ViagemValorClasseDAO extends DAO<ViagemValorClasse> {
 
         return null;
     }
+
+    @Override
+    public void excluir(Class<ViagemValorClasse> clazz, Object id) {
+        if(autoCommit) {
+            getEM().getTransaction().begin();
+            ViagemValorClasse viagemValorClasse = getUm(clazz, id);
+            viagemValorClasse.setAtivo(false);
+
+            getEM().getTransaction().commit();
+        } else {
+            ViagemValorClasse viagemValorClasse = getUm(clazz, id);
+            viagemValorClasse.setAtivo(false);
+        }
+    }
 }

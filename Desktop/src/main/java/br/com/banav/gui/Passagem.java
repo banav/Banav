@@ -6,6 +6,7 @@ import br.com.banav.dao.PassagemHistoricoDAO;
 import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.gui.component.JButtonData;
 import br.com.banav.model.*;
+import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import com.lowagie.text.pdf.BarcodeEAN;
 import nfiscal.Ticket;
@@ -275,7 +276,7 @@ public class Passagem extends JPanel {
                     _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
 
                     Integer nextval = passagemDAO.nextval(viagem.getId());
-                    _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval));
+                    _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, (Usuario)Session.get("usuario")));
 
                     passagemDAO.salvar(_passagem);
 

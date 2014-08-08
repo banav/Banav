@@ -10,6 +10,7 @@ import br.com.banav.model.NavioClasse;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,5 +59,9 @@ public class NavioSrv implements Serializable{
 
     public void salvarNavioClasse(NavioClasse navioClasse){
         navioClasseDAO.salvar(navioClasse);
+    }
+
+    public List<Navio> listar(Long time){
+        return navioDAO.listarPorDataMovimento(new Date(time), Navio.class);
     }
 }

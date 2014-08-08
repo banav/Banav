@@ -1,6 +1,7 @@
 package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
+import br.com.banav.model.Usuario;
 import br.com.banav.model.Viagem;
 
 import javax.persistence.Query;
@@ -22,5 +23,19 @@ public class ViagemDAO extends DAO<Viagem> {
         query.setParameter("data", data);
 
         return query.getResultList();
+    }
+
+    @Override
+    public void excluir(Class<Viagem> clazz, Object id) {
+        if(autoCommit) {
+            getEM().getTransaction().begin();
+            Viagem viagem = getUm(clazz, id);
+            viagem.setAtivo(false);
+
+            getEM().getTransaction().commit();
+        } else {
+            Viagem viagem = getUm(clazz, id);
+            viagem.setAtivo(false);
+        }
     }
 }
