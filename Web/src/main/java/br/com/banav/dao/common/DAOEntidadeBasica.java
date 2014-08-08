@@ -25,14 +25,11 @@ public class DAOEntidadeBasica<T extends EntidadeBasica> extends DAO<T> {
     }
 
     public List<T> listarPorDataMovimento(Date time, Class<T> clazz){
-
-
         String className = clazz.getCanonicalName();
 
         Query q = getEm().createQuery("select eb from " + className + " eb where eb.dataMovimentacao > :time");
         q.setParameter("time", time, TemporalType.TIMESTAMP);
 
         return q.getResultList();
-
     }
 }

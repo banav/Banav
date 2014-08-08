@@ -33,7 +33,7 @@ public class PortoDAO extends DAOLocalEntidadeBasica<Porto> {
 
         String queryStr = "";
 
-        if(count.equals(0)){
+        if(count.intValue() == 0){
             queryStr = "INSERT INTO offline.porto(" +
                     " id, nome, datamovimentacao, ativo) " +
                     " VALUES (:id, :nome, :data, :ativo)";
