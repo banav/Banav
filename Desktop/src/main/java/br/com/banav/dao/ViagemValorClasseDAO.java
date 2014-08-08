@@ -54,13 +54,13 @@ public class ViagemValorClasseDAO extends DAOLocalEntidadeBasica<ViagemValorClas
 
         String strQuery = "";
         if(count.intValue() == 0){
-            strQuery = "INSERT INTO viagem_valor_classe(" +
+            strQuery = "INSERT INTO offline.viagem_valor_classe(" +
                     "            id, valor, classe, navio, viagem_id, aceita_gratuidade, valor_meia, " +
                     "            ativo, datamovimentacao)" +
                     "    VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)";
         }
         else{
-            strQuery = "UPDATE viagem_valor_classe" +
+            strQuery = "UPDATE offline.viagem_valor_classe" +
                     "   SET valor=?2, classe=?3, navio=?4, viagem_id=?5, aceita_gratuidade=?6, " +
                     "       valor_meia=?7, ativo=?8, datamovimentacao=?9" +
                     " WHERE id = ?1";

@@ -2,7 +2,6 @@ package br.com.banav.dao.common;
 
 import br.com.banav.model.EntidadeBasica;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 
@@ -20,7 +19,7 @@ public abstract class DAOLocalEntidadeBasica<T extends EntidadeBasica> extends D
             data = new Date(data.getTime());
             return data;
         }
-        catch (NoResultException e){
+        catch (Exception e){
             return null;
         }
     }
