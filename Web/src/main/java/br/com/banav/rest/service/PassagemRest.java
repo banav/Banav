@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,8 +36,10 @@ public class PassagemRest  implements Serializable {
 
         Passagem passagem = new Passagem();
 
+        passagem.setHistorico(new ArrayList<PassagemHistorico>());
         passagem.setCodigoBarras(codigoBarras);
         passagem.setGratuidade(gratuidade);
+        passagem.setCheckin(false);
 
         ViagemValorClasse _viagemValorClasse = new ViagemValorClasse();
         _viagemValorClasse.setId(viagemValorClasse);
