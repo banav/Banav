@@ -29,11 +29,14 @@ public class Passagem implements Serializable{
     private UsuarioLocal usuario;
 
     private String codigoBarras;
+
     private Double valor;
+
     private Boolean gratuidade;
 
-    private Date dataMovimentacao;
+    private Boolean enviado;
 
+    private Date dataMovimentacao;
 
     public Long getId() {
         return id;
@@ -73,6 +76,14 @@ public class Passagem implements Serializable{
 
     public void setGratuidade(Boolean gratuidade) {
         this.gratuidade = gratuidade;
+    }
+
+    public Boolean getEnviado() {
+        return enviado;
+    }
+
+    public void setEnviado(Boolean enviado) {
+        this.enviado = enviado;
     }
 
     public Date getDataMovimentacao() {

@@ -114,6 +114,7 @@ CREATE TABLE offline.passagem (
   codigobarras varchar(255),
   gratuidade bool,
   valor float8,
+  enviado bool NOT NULL,
   datamovimentacao timestamp,
   viagem_valor_classe_id int8,
   usuario_id int8 NOT NULL,

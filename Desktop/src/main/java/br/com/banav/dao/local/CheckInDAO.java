@@ -14,7 +14,7 @@ public class CheckInDAO extends DAOLocal<CheckIn> {
 
     public List<CheckIn> listarNaoEnviados() {
         Query query = getEM().createQuery("select c from CheckIn as c where c.enviado = false");
-        query.setMaxResults(5);
+        //query.setMaxResults(5);
         return query.getResultList();
     }
 
