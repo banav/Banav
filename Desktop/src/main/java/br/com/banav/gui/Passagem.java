@@ -2,10 +2,10 @@ package br.com.banav.gui;
 
 import br.com.banav.dao.ClasseDAO;
 import br.com.banav.dao.PassagemDAO;
-import br.com.banav.dao.PassagemHistoricoDAO;
 import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.gui.component.JButtonData;
 import br.com.banav.model.*;
+import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import com.lowagie.text.pdf.BarcodeEAN;
@@ -241,7 +241,6 @@ public class Passagem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             PassagemDAO passagemDAO = new PassagemDAO();
-            PassagemHistoricoDAO passagemHistoricoDAO = new PassagemHistoricoDAO();
 
             BarcodeEAN barcodeEAN = new BarcodeEAN();
             barcodeEAN.setCodeType(BarcodeEAN.EAN8);
@@ -272,31 +271,28 @@ public class Passagem extends JPanel {
                         _passagem.setValor(valor);
                     }
 
-                    _passagem.setCheckin(false);
                     _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
+                    _passagem.setUsuario((UsuarioLocal) Session.get("usuario"));
 
                     Integer nextval = passagemDAO.nextval(viagem.getId());
-                    _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, (Usuario)Session.get("usuario")));
+                    _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, _passagem.getUsuario()));
 
                     passagemDAO.salvar(_passagem);
 
-                    PassagemHistorico passagemHistorico = new PassagemHistorico();
-                    passagemHistorico.setData(new Date());
-                    passagemHistorico.setPassagemMovimento(PassagemMovimento.MARCADA);
-                    passagemHistorico.setPassagem(_passagem);
-
-                    passagemHistoricoDAO.salvar(passagemHistorico);
-
-                    Ticket.imprimir(
-                        viagem.getOrigem().getNome(),
-                        viagem.getDestino().getNome(),
-                        dataPadrao.format(viagem.getHoraSaida()),
-                        horaPadrao.format(viagem.getHoraSaida()),
-                        row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""),
-                        String.format("%.2f", valor),
-                        _passagem.getCodigoBarras(),
-                        null
-                    );
+                    try {
+                        /*Ticket.imprimir(
+                            viagem.getOrigem().getNome(),
+                            viagem.getDestino().getNome(),
+                            dataPadrao.format(viagem.getHoraSaida()),
+                            horaPadrao.format(viagem.getHoraSaida()),
+                            row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""),
+                            String.format("%.2f", valor),
+                            _passagem.getCodigoBarras(),
+                            null
+                        );*/
+                    } catch(Exception e) {
+                        passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem);
+                    }
                 }
             }
 
@@ -304,10 +300,6 @@ public class Passagem extends JPanel {
             passagem.tablePassagem.setModel(tableModel);
             passagem.labelTotal.setText("Finalizado com sucesso.");
             passagem.labelQuantidade.setText("           ");
-
-            //JOptionPane.showMessageDialog(null, "Finalizado com sucesso.");
-
-            //main.abrir(MenuPrincipal.class.getCanonicalName());
         }
     }
 

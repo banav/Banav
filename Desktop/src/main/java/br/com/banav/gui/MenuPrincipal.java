@@ -1,7 +1,7 @@
 package br.com.banav.gui;
 
 import br.com.banav.model.Perfil;
-import br.com.banav.model.Usuario;
+import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.util.Session;
 
 import javax.swing.*;
@@ -32,7 +32,7 @@ public class MenuPrincipal extends JPanel {
         btCortesias.addActionListener(new CortesiasActionListener(this));
         btCancelamento.addActionListener(new CancelamentoActionListener(this));
 
-        Usuario usuario = (Usuario) Session.get("usuario");
+        UsuarioLocal usuario = (UsuarioLocal) Session.get("usuario");
         if(usuario.getPerfil().equals(Perfil.CHECKIN)) {
             btEmitirPassagem.setEnabled(false);
             btCortesias.setEnabled(false);

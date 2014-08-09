@@ -1,6 +1,5 @@
 package br.com.banav.model.local;
 
-import br.com.banav.model.Endereco;
 import br.com.banav.model.EntidadeBasica;
 import br.com.banav.model.Perfil;
 

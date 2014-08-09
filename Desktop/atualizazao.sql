@@ -58,6 +58,8 @@ OIDS=FALSE
 
 ALTER TABLE  offline.usuario ADD COLUMN ativo boolean;
 ALTER TABLE  offline.usuario ADD COLUMN datamovimentacao timestamp without time zone;
+update offline.usuario  set datamovimentacao = current_timestamp where datamovimentacao is null;
+update offline.usuario  set ativo = true where ativo is null;
 
 CREATE TABLE offline.viagem
 (
@@ -107,6 +109,26 @@ WITH (
 OIDS=FALSE
 );
 
+CREATE TABLE offline.passagem (
+  id int8 NOT NULL,
+  codigobarras varchar(255),
+  gratuidade bool,
+  valor float8,
+  datamovimentacao timestamp,
+  viagem_valor_classe_id int8,
+  usuario_id int8 NOT NULL,
+  PRIMARY KEY (id)
+);
+
+ALTER TABLE offline.passagem
+ADD FOREIGN KEY (viagem_valor_classe_id)
+REFERENCES viagem_valor_classe ("id");
+
+ALTER TABLE offline.passagem
+ADD FOREIGN KEY (usuario_id)
+REFERENCES usuario ("id");
+
+CREATE SEQUENCE offline.seq_passagem INCREMENT BY 1 MINVALUE 1 NO MAXVALUE START WITH 1 CACHE 1 NO CYCLE;
 
 /** Banco de Dados Online */
 

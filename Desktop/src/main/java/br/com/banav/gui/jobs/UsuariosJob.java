@@ -1,7 +1,6 @@
 package br.com.banav.gui.jobs;
 
 import br.com.banav.dao.local.UsuarioDAO;
-import br.com.banav.model.Usuario;
 import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.ws.UsuarioDTO;
 import br.com.banav.ws.UsuarioWS;

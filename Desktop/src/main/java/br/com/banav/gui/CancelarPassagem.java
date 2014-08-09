@@ -1,9 +1,6 @@
 package br.com.banav.gui;
 
 import br.com.banav.dao.PassagemDAO;
-import br.com.banav.dao.PassagemHistoricoDAO;
-import br.com.banav.model.PassagemHistorico;
-import br.com.banav.model.PassagemMovimento;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,7 +40,7 @@ public class CancelarPassagem extends JPanel {
         @Override
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                PassagemHistoricoDAO passagemHistoricoDAO = new PassagemHistoricoDAO();
+                /*PassagemHistoricoDAO passagemHistoricoDAO = new PassagemHistoricoDAO();
                 PassagemDAO passagemDAO = new PassagemDAO();
                 java.util.List<br.com.banav.model.Passagem> passagens = passagemDAO.listarPorCodigoBarras(cancelarPassagem.tfCodigoBarras.getText());
 
@@ -77,7 +74,7 @@ public class CancelarPassagem extends JPanel {
                 }
 
                 cancelarPassagem.tfCodigoBarras.setText("");
-                cancelarPassagem.tfCodigoBarras.requestFocus();
+                cancelarPassagem.tfCodigoBarras.requestFocus();*/
             }
         }
     }

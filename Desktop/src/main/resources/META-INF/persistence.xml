@@ -23,8 +23,8 @@
             -->
 
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/banav" />
-            <property name="hibernate.connection.username" value="gustavocosta" />
-            <property name="hibernate.connection.password" value="050558" />
+            <property name="hibernate.connection.username" value="postgres" />
+            <property name="hibernate.connection.password" value="j4rv1s" />
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

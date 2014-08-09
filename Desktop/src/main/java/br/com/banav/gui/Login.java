@@ -3,10 +3,8 @@ package br.com.banav.gui;
 import br.com.banav.gui.jobs.BaseJob;
 import br.com.banav.gui.jobs.EnvioCheckInJob;
 import br.com.banav.gui.jobs.UsuariosJob;
-import br.com.banav.model.Usuario;
 import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.util.Session;
-import br.com.banav.ws.UsuarioWS;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -99,27 +97,9 @@ public class Login extends JFrame {
                 br.com.banav.dao.local.UsuarioDAO usuarioDAOLocal = new br.com.banav.dao.local.UsuarioDAO();
                 UsuarioLocal usuarioLocal = usuarioDAOLocal.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
                 if(usuarioLocal == null) {
-                    br.com.banav.dao.UsuarioDAO usuarioDAO = new br.com.banav.dao.UsuarioDAO();
-                    Usuario usuario = usuarioDAO.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
-                    if(usuario == null) {
-                        login.status.setText("Usuário não encontrado.");
-                    } else {
-                        Session.put("usuario", usuario);
-
-                        login.iniciarJobs();
-                        login.dispose();
-
-                        new Main();
-                    }
+                    login.status.setText("Usuário não encontrado.");
                 } else {
-                    Usuario usuario = new Usuario();
-                    usuario.setNome(usuarioLocal.getNome());
-                    usuario.setPerfil(usuarioLocal.getPerfil());
-                    usuario.setSenha(usuarioLocal.getSenha());
-                    usuario.setId(usuarioLocal.getId());
-                    usuario.setLogin(usuarioLocal.getLogin());
-
-                    Session.put("usuario", usuario);
+                    Session.put("usuario", usuarioLocal);
 
                     login.iniciarJobs();
                     login.dispose();

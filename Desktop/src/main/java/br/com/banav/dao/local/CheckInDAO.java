@@ -1,7 +1,6 @@
 package br.com.banav.dao.local;
 
 import br.com.banav.dao.common.DAOLocal;
-import br.com.banav.model.Cidade;
 import br.com.banav.model.local.CheckIn;
 
 import javax.persistence.Query;
