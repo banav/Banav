@@ -46,7 +46,7 @@ public class PassagemWS extends RestClient {
             addParametro("valor", URLEncoder.encode(gratuidade.toString(), "UTF-8"));
             addParametro("data_emissao", URLEncoder.encode(new Long(dataLong.getTimeInMillis()).toString(), "UTF-8"));
 
-            RespostaDTO respostaDTO = get("/ws/checkin", JAXBContext.newInstance(RespostaDTO.class));
+            RespostaDTO respostaDTO = get("/ws/passagem/salvar", JAXBContext.newInstance(RespostaDTO.class));
 
             if(!respostaDTO.isSucesso()) {
                 LOGGER.warning(String.format("Erro do servidor para o código %s: %s.", codigoBarras, respostaDTO.getMensagem()));
