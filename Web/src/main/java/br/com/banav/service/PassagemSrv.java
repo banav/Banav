@@ -22,11 +22,14 @@ public class PassagemSrv {
         return passagemDAO.listar();
     }
 
-    public void salvar(Passagem passagem){
+    public void salvar(Passagem passagem) throws Exception {
 
-
-        passagemDAO.getEm().persist(passagem);
-
+        try{
+            passagemDAO.salvar(passagem);
+        }
+        catch (Exception e){
+            throw e;
+        }
 
     }
 }
