@@ -43,7 +43,8 @@ public class PassagemWS extends RestClient {
 
             addParametro("codigoBarras", URLEncoder.encode(codigoBarras, "UTF-8"));
             addParametro("vvc_id", URLEncoder.encode(idViagemValorClasse.toString(), "UTF-8"));
-            addParametro("valor", URLEncoder.encode(gratuidade.toString(), "UTF-8"));
+            addParametro("gratuidade", URLEncoder.encode(gratuidade.toString(), "UTF-8"));
+            addParametro("valor", URLEncoder.encode(valor.toString(), "UTF-8"));
             addParametro("data_emissao", URLEncoder.encode(new Long(dataLong.getTimeInMillis()).toString(), "UTF-8"));
 
             RespostaDTO respostaDTO = get("/ws/passagem/salvar", JAXBContext.newInstance(RespostaDTO.class));

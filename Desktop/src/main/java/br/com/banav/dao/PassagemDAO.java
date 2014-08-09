@@ -17,6 +17,11 @@ public class PassagemDAO extends DAOLocal<Passagem> {
         return query.getResultList();
     }
 
+    public List<Passagem> listarNaoEnviadas() {
+        Query query = getEM().createQuery("select p from Passagem as p where p.enviado = false");
+        return query.getResultList();
+    }
+
     public List<Passagem> listarPorCodigoBarras(String codigoBarras) {Query query = getEM().createQuery("select p from Passagem as p where p.codigoBarras = :codigoBarras");
         query.setParameter("codigoBarras", codigoBarras);
 

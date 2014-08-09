@@ -112,6 +112,7 @@ public class CortesiaForm extends JPanel {
                         passagem.setCodigoBarras(null);
                         passagem.setValor(0D);
                         passagem.setGratuidade(true);
+                        passagem.setEnviado(false);
 
                         Integer nextval = passagemDAO.nextval(viagem.getId());
                         passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, (UsuarioLocal) Session.get("usuario")));

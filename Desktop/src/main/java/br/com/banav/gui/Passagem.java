@@ -273,6 +273,7 @@ public class Passagem extends JPanel {
 
                     _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
                     _passagem.setUsuario((UsuarioLocal) Session.get("usuario"));
+                    _passagem.setEnviado(false);
 
                     Integer nextval = passagemDAO.nextval(viagem.getId());
                     _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, _passagem.getUsuario()));
