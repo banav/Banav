@@ -25,7 +25,7 @@ public class Passagem implements Serializable{
     private Double valor;
     private Boolean gratuidade;
 
-    @OneToMany(mappedBy = "passagem")
+    @OneToMany(mappedBy = "passagem", cascade = CascadeType.PERSIST)
     private List<PassagemHistorico> historico;
 
     private Boolean checkin;

@@ -81,6 +81,9 @@ public class Util {
         String destino = String.format("%02d",viagem.getDestino().getId());
         String _sequencial = String.format("%04d", sequencial);
 
+
+
+
         codigo.append(ano);
         codigo.append(mes);
         codigo.append(dia);

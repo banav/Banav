@@ -16,7 +16,17 @@ public class PassagemSrv {
     @Inject private PassagemDAO passagemDAO;
 
 
+
+
     public List<Passagem> listar() {
         return passagemDAO.listar();
+    }
+
+    public void salvar(Passagem passagem){
+
+
+        passagemDAO.getEm().persist(passagem);
+
+
     }
 }

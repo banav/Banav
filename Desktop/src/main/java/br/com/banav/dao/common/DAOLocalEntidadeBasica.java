@@ -25,5 +25,8 @@ public abstract class DAOLocalEntidadeBasica<T extends EntidadeBasica> extends D
     }
 
     public abstract void sincronizar(T entidadeBasica);
+
+
+
 }
 
