@@ -130,6 +130,8 @@ public class CortesiaForm extends JPanel {
                         SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
                         SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mm");
 
+
+
                         Ticket.imprimir(
                             viagem.getOrigem().getNome(),
                             viagem.getDestino().getNome(),

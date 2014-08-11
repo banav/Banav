@@ -3,7 +3,7 @@ package br.com.banav.exception;
 import javax.persistence.PersistenceException;
 
 
-public class ImpressoraError extends PersistenceException {
+public class ImpressoraError extends Exception {
 
 	private static final long serialVersionUID = -515133767490709254L;
 

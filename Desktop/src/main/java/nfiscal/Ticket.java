@@ -9,7 +9,7 @@ public class Ticket {
         System.setProperty("jna.library.path", "C:\\Windows\\SysWOW64");
     }
 	
-	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras, String nome) {
+	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras, String nome) throws ImpressoraError{
 		int iRetorno;
 		int iOpc = 1;
 
@@ -51,5 +51,19 @@ public class Ticket {
 		iRetorno = cupom.FormataTX("                    BOA VIAGEM!\r\n\r\n\r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.AcionaGuilhotina(0);
 		iRetorno = cupom.FechaPorta();
+
+
+        if(iRetorno < 0)
+            throw new ImpressoraError("Erro de impressão!");
+
+        switch (iRetorno){
+            case BematechNFiscal.PARAMETRO_INVALIDO:
+                throw new ImpressoraError("Parametro Inválido!");
+            case BematechNFiscal.ERRO_COMUNICACAO:
+                throw new ImpressoraError("Erro de comunicação!");
+            case BematechNFiscal.SEM_PAPEL:
+                throw new ImpressoraError("Sem Papel!");
+        }
+
 	}
 }
