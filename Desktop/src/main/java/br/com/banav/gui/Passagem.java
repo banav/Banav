@@ -300,7 +300,7 @@ public class Passagem extends JPanel {
                     passagemDAO.salvar(_passagem);
 
                     try {
-                        /*Ticket.imprimir(
+                        Ticket.imprimir(
                             viagem.getOrigem().getNome(),
                             viagem.getDestino().getNome(),
                             dataPadrao.format(viagem.getHoraSaida()),
@@ -309,7 +309,7 @@ public class Passagem extends JPanel {
                             String.format("%.2f", valor),
                             _passagem.getCodigoBarras(),
                             null
-                        );*/
+                        );
                     } catch(Exception e) {
                         passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem);
                     }
