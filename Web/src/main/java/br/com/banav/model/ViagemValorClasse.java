@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "viagem_valor_classe")
 @SequenceGenerator(name = "ViagemValorClasseGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_via_val_cla")
-public class ViagemValorClasse implements Serializable {
+public class ViagemValorClasse extends EntidadeBasica implements Serializable {
 
     @Id
     @GeneratedValue(generator = "ViagemValorClasseGenerator_SEQ", strategy = GenerationType.SEQUENCE)

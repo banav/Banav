@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "viagem")
 @SequenceGenerator(name = "ViagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_viagem")
-public class Viagem implements Serializable {
+public class Viagem extends EntidadeBasica implements Serializable {
 
     @Id
     @GeneratedValue(generator = "ViagemGenerator_SEQ", strategy = GenerationType.SEQUENCE)

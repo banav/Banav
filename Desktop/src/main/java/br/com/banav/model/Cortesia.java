@@ -1,5 +1,7 @@
 package br.com.banav.model;
 
+import br.com.banav.model.local.UsuarioLocal;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,7 +34,7 @@ public class Cortesia implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    private UsuarioLocal usuario;
 
     @ManyToOne
     @JoinColumn(name = "viagem_id", nullable = false)
@@ -82,11 +84,11 @@ public class Cortesia implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioLocal getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioLocal usuario) {
         this.usuario = usuario;
     }
 

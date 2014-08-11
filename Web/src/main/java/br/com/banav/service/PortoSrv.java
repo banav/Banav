@@ -7,6 +7,7 @@ import br.com.banav.model.Porto;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,5 +33,9 @@ public class PortoSrv {
 
     public Porto getUm(Long id) {
         return portoDAO.getUm(id, Porto.class);
+    }
+
+    public List<Porto> listar(Long time){
+        return portoDAO.listarPorDataMovimento(new Date(time), Porto.class);
     }
 }

@@ -4,6 +4,8 @@ import br.com.banav.dao.*;
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
+import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import nfiscal.Ticket;
 
@@ -99,7 +101,6 @@ public class CortesiaForm extends JPanel {
 
                     if(selectedValue != null) {
                         PassagemDAO passagemDAO = new PassagemDAO();
-                        PassagemHistoricoDAO passagemHistoricoDAO = new PassagemHistoricoDAO();
 
                         Classe classeSelecionada = (Classe) selectedValue;
 
@@ -108,13 +109,13 @@ public class CortesiaForm extends JPanel {
 
                         br.com.banav.model.Passagem passagem = new Passagem();
                         passagem.setViagemValorClasse(viagemValorClasse);
-                        passagem.setCheckin(false);
                         passagem.setCodigoBarras(null);
                         passagem.setValor(0D);
                         passagem.setGratuidade(true);
+                        passagem.setEnviado(false);
 
                         Integer nextval = passagemDAO.nextval(viagem.getId());
-                        passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval));
+                        passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, (UsuarioLocal) Session.get("usuario")));
 
                         passagemDAO.salvar(passagem);
 
@@ -125,13 +126,6 @@ public class CortesiaForm extends JPanel {
 
                         cortesia.setPassagem(passagem);
                         cortesiaDAO.atualizar(cortesia);
-
-                        PassagemHistorico passagemHistorico = new PassagemHistorico();
-                        passagemHistorico.setData(new Date());
-                        passagemHistorico.setPassagemMovimento(PassagemMovimento.MARCADA);
-                        passagemHistorico.setPassagem(passagem);
-
-                        passagemHistoricoDAO.salvar(passagemHistorico);
 
                         SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
                         SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mm");

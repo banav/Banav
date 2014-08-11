@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,5 +40,13 @@ public class ViagemValorClasseSrv implements Serializable {
 
     public List<ViagemValorClasse> listarPor(Viagem viagem) {
         return viagemValorClasseDAO.listarPor(viagem.getId());
+    }
+
+    public List<ViagemValorClasse> listar(Long time){
+        return viagemValorClasseDAO.listarPorDataMovimento(new Date(time), ViagemValorClasse.class);
+    }
+
+    public List<ViagemValorClasse> listar(){
+        return viagemValorClasseDAO.listar();
     }
 }

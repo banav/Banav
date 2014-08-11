@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.Query;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,5 +112,9 @@ public class ViagemSrv {
                 viagemValorClasseDAO.atualizar(viagemValorClasse);
             }
         }
+    }
+
+    public List<Viagem> listar(Long time){
+        return viagemDAO.listarPorDataMovimento(new Date(time), Viagem.class);
     }
 }

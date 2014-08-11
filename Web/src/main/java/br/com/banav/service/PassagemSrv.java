@@ -16,7 +16,20 @@ public class PassagemSrv {
     @Inject private PassagemDAO passagemDAO;
 
 
+
+
     public List<Passagem> listar() {
         return passagemDAO.listar();
+    }
+
+    public void salvar(Passagem passagem) throws Exception {
+
+        try{
+            passagemDAO.salvar(passagem);
+        }
+        catch (Exception e){
+            throw e;
+        }
+
     }
 }

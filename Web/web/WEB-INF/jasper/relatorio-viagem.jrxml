@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
 	<property name="ireport.zoom" value="1.771561000000001"/>
-	<property name="ireport.x" value="203"/>
+	<property name="ireport.x" value="193"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dataInicio" class="java.lang.String"/>
 	<parameter name="dataFim" class="java.lang.String"/>
@@ -253,7 +253,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a41c7508-f0fb-4613-a79e-feca662d9c0a" x="271" y="0" width="193" height="14"/>
+				<reportElement uuid="a41c7508-f0fb-4613-a79e-feca662d9c0a" x="302" y="0" width="162" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -270,7 +270,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 				</reportElement>
 			</line>
 			<textField>
-				<reportElement uuid="ee3c8475-bca3-45bc-89af-03713292e82a" x="181" y="0" width="90" height="14"/>
+				<reportElement uuid="ee3c8475-bca3-45bc-89af-03713292e82a" x="181" y="0" width="121" height="14"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigobarras}]]></textFieldExpression>
 			</textField>

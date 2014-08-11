@@ -1,15 +1,19 @@
 package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
+import br.com.banav.dao.common.DAOEntidadeBasica;
+import br.com.banav.exception.AcessoDBError;
 import br.com.banav.model.Usuario;
 
 import javax.persistence.Query;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by GilsonRocha on 22/01/14.
  */
-public class UsuarioDAO extends DAO<Usuario> {
+public class UsuarioDAO extends DAOEntidadeBasica<Usuario> {
 
     public List<Usuario> listar() {
         Query query = getEm().createQuery("select u from Usuario as u order by u.nome");
@@ -23,4 +27,14 @@ public class UsuarioDAO extends DAO<Usuario> {
 
         return query.getResultList();
     }
+
+    public List<Usuario> listar(Date time){
+
+        Query query = getEm().createQuery("select u from Usuario u where u.dataMovimentacao >= :time");
+        query.setParameter("time", time);
+        return query.getResultList();
+
+    }
+
+
 }

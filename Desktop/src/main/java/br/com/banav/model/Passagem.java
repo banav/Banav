@@ -1,18 +1,21 @@
 package br.com.banav.model;
 
+import br.com.banav.model.local.UsuarioLocal;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "passagem")
-@SequenceGenerator(name = "PassagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_passagem")
+@Table(name = "passagem", schema = "offline")
 public class Passagem implements Serializable{
 
     @Id
+    @SequenceGenerator(name = "PassagemGenerator_SEQ", initialValue = 1, allocationSize = 1, sequenceName = "offline.seq_passagem")
     @GeneratedValue(generator = "PassagemGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
@@ -21,14 +24,19 @@ public class Passagem implements Serializable{
     @JoinColumn(name = "viagem_valor_classe_id")
     private ViagemValorClasse viagemValorClasse;
 
+    @ManyToOne()
+    @JoinColumn(name = "usuario_id")
+    private UsuarioLocal usuario;
+
     private String codigoBarras;
+
     private Double valor;
+
     private Boolean gratuidade;
 
-    @OneToMany(mappedBy = "passagem")
-    private List<PassagemHistorico> historico;
+    private Boolean enviado;
 
-    private Boolean checkin;
+    private Date dataMovimentacao;
 
     public Long getId() {
         return id;
@@ -70,20 +78,33 @@ public class Passagem implements Serializable{
         this.gratuidade = gratuidade;
     }
 
-    public List<PassagemHistorico> getHistorico() {
-        return historico;
+    public Boolean getEnviado() {
+        return enviado;
     }
 
-    public void setHistorico(List<PassagemHistorico> historico) {
-        this.historico = historico;
+    public void setEnviado(Boolean enviado) {
+        this.enviado = enviado;
     }
 
-    public Boolean getCheckin() {
-        return checkin;
+    public Date getDataMovimentacao() {
+        return dataMovimentacao;
     }
 
-    public void setCheckin(Boolean checkin) {
-        this.checkin = checkin;
+    public void setDataMovimentacao(Date dataMovimentacao) {
+        this.dataMovimentacao = dataMovimentacao;
+    }
+
+    public UsuarioLocal getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioLocal usuario) {
+        this.usuario = usuario;
+    }
+
+    @PrePersist
+    public void trigger(){
+        this.dataMovimentacao = new Date();
     }
 
     @Override

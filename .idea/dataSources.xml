@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1206270710">
-    <data-source source="LOCAL" name="PostgreSQL - banav@banco-pc" uuid="4884d19b-37e8-4475-bcfd-a56042ea4f08">
+  <component name="DataSourceManagerImpl" format="xml" hash="1694562894">
+    <data-source source="LOCAL" name="Banav" uuid="cef88bb8-c0f5-4374-a181-680ef0239489">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
       <user-name>postgres</user-name>
       <user-password>dfc0df9edfd8dfdcdf9bdfd9</user-password>
-      <schema-pattern>banav.public</schema-pattern>
       <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="BanavLocalPU" uuid="508c4b92-9266-4767-9ff2-c9a455ae7c0e">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>dfc0df9edfd8dfdcdf9bdfd9</user-password>
+      <libraries>
+        <library>
+          <url>file://$MAVEN_REPOSITORY$/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>
