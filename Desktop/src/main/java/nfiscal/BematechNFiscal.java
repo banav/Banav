@@ -7,6 +7,15 @@ public interface BematechNFiscal extends Library {
 
     public BematechNFiscal Instance = (BematechNFiscal) Native.loadLibrary("mp2064", BematechNFiscal.class);
 
+
+    public static final int ERRO_COMUNICACAO = 0;
+    public static final int SUCESSO = 1;
+    public static final int PARAMETRO_INVALIDO = -2;
+    public static final int POUCO_PAPEL = 5;
+    public static final int TAMPA_ABERTA = 9;
+    public static final int FUNCIONANDO = 24;
+    public static final int SEM_PAPEL = 32;
+
     public int ConfiguraModeloImpressora(int modelo);
     public int IniciaPorta(String porta);
     public int FechaPorta();
@@ -19,4 +28,6 @@ public interface BematechNFiscal extends Library {
     public int ImprimeCodigoBarrasCODE39(String codigo);
     public int ImprimeCodigoBarrasCODE93(String codigo);
     public int ImprimeCodigoBarrasCODE128(String codigo);
+
+    public int Le_Status();
 }

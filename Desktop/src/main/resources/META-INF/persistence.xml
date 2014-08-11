@@ -22,7 +22,7 @@
                 <property name="hibernate.connection.password" value="j4rv1s" />
             -->
 
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/banav" />
+            <property name="hibernate.connection.url" value="jdbc:postgresql://192.168.0.12:5432/banav" />
             <property name="hibernate.connection.username" value="postgres" />
             <property name="hibernate.connection.password" value="j4rv1s" />
 
@@ -53,7 +53,7 @@
                 <property name="hibernate.connection.password" value="j4rv1s" />
             -->
 
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/banav" />
+            <property name="hibernate.connection.url" value="jdbc:postgresql://192.168.0.12:5432/banav" />
             <property name="hibernate.connection.username" value="postgres" />
             <property name="hibernate.connection.password" value="j4rv1s" />
 
