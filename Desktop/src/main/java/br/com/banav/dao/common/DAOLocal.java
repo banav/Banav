@@ -42,9 +42,13 @@ public abstract class DAOLocal<T> {
 
     public void salvar(T t) {
         if(autoCommit) {
-            getEM().getTransaction().begin();
-            getEM().persist(t);
-            getEM().getTransaction().commit();
+            if(getEM().getTransaction().isActive()) {
+                getEM().persist(t);
+            } else {
+                getEM().getTransaction().begin();
+                getEM().persist(t);
+                getEM().getTransaction().commit();
+            }
         } else {
             getEM().persist(t);
         }
@@ -52,9 +56,13 @@ public abstract class DAOLocal<T> {
 
     public void atualizar(T t) {
         if(autoCommit) {
-            getEM().getTransaction().begin();
-            getEM().merge(t);
-            getEM().getTransaction().commit();
+            if(getEM().getTransaction().isActive()) {
+                getEM().merge(t);
+            } else {
+                getEM().getTransaction().begin();
+                getEM().merge(t);
+                getEM().getTransaction().commit();
+            }
         } else {
             getEM().merge(t);
         }
