@@ -1,5 +1,6 @@
 package nfiscal;
 
+import br.com.banav.exception.ImpressoraError;
 import br.com.banav.util.Util;
 
 public class Ticket {
@@ -16,7 +17,16 @@ public class Ticket {
         destino = Util.removeAcentos(destino);
 
 		BematechNFiscal cupom = BematechNFiscal.Instance;
-		
+
+        iRetorno = cupom.Le_Status();
+
+        if(iRetorno == BematechNFiscal.ERRO_COMUNICACAO)
+            throw new ImpressoraError("Erro de Comunicação!");
+        else if(iRetorno == BematechNFiscal.SEM_PAPEL)
+            throw new ImpressoraError("Impressora sem Papel!");
+        else if(iRetorno == BematechNFiscal.TAMPA_ABERTA)
+            throw new ImpressoraError("Tampa Aberta!");
+
 		iRetorno = cupom.ConfiguraModeloImpressora(7);
 		iRetorno = cupom.IniciaPorta("USB");
 		iRetorno = cupom.FormataTX("          BANAV\r\n", 2, 0, 0, 1, 1);
