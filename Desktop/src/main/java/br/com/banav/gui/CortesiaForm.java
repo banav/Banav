@@ -2,11 +2,13 @@ package br.com.banav.gui;
 
 import br.com.banav.dao.*;
 import br.com.banav.dao.common.DAO;
+import br.com.banav.exception.ImpressoraError;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
 import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.util.Session;
 import br.com.banav.util.Util;
+import nfiscal.BematechNFiscal;
 import nfiscal.Ticket;
 
 import javax.swing.*;
@@ -77,6 +79,22 @@ public class CortesiaForm extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            try {
+                BematechNFiscal cupom = BematechNFiscal.Instance;
+
+                int iRetorno = cupom.Le_Status();
+
+                if(iRetorno == BematechNFiscal.ERRO_COMUNICACAO)
+                    throw new ImpressoraError("Erro de Comunicação com a Impressora!");
+                else if(iRetorno == BematechNFiscal.SEM_PAPEL)
+                    throw new ImpressoraError("Impressora sem Papel!");
+                else if(iRetorno == BematechNFiscal.TAMPA_ABERTA)
+                    throw new ImpressoraError("Tampa da Impressora Aberta!");
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(cortesiaForm, e.getMessage());
+                return;
+            }
+
             if(cortesiaForm.tableCortesia.getSelectedRow() != -1) {
                 try {
                     DAO.setAutoCommit(false);
