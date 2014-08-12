@@ -248,12 +248,17 @@ public class Passagem extends JPanel {
 
                 int iRetorno = cupom.Le_Status();
 
-                if(iRetorno == BematechNFiscal.ERRO_COMUNICACAO)
-                    throw new ImpressoraError("Erro de Comunicação com a Impressora!");
-                else if(iRetorno == BematechNFiscal.SEM_PAPEL)
-                    throw new ImpressoraError("Impressora sem Papel!");
-                else if(iRetorno == BematechNFiscal.TAMPA_ABERTA)
-                    throw new ImpressoraError("Tampa da Impressora Aberta!");
+                switch (iRetorno){
+                    case BematechNFiscal.ERRO_COMUNICACAO:
+                        throw new ImpressoraError("Erro de Comunicação com a Impressora!");
+                    case BematechNFiscal.SEM_PAPEL:
+                        throw new ImpressoraError("Impressora sem Papel!");
+                    case BematechNFiscal.TAMPA_ABERTA:
+                        throw new ImpressoraError("Tampa da Impressora Aberta!");
+                    case BematechNFiscal.POUCO_PAPEL:
+                        throw new ImpressoraError("Impressora com pouco papel! Favor trocar a bobina.");
+                }
+
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(main, e.getMessage());
                 return;
