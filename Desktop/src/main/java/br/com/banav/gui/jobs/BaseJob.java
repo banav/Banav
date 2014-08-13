@@ -63,7 +63,7 @@ public class BaseJob extends Thread {
         setPriority(NORM_PRIORITY);
 
         navioDAOLocal = new NavioDAO();
-        NavioDAO.setEM(em);
+        navioDAOLocal.setEM(em);
         navioWS = new NavioWS();
 
         classeDAO = new ClasseDAO();
