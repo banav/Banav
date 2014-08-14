@@ -10,13 +10,16 @@ public class Ticket {
     }
 	
 	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras, String nome) throws ImpressoraError{
-		int iRetorno;
+		int iRetorno = 0;
 		int iOpc = 1;
 
         origem = Util.removeAcentos(origem);
         destino = Util.removeAcentos(destino);
 
 		BematechNFiscal cupom = BematechNFiscal.Instance;
+
+        iRetorno = cupom.ConfiguraModeloImpressora(7);
+        iRetorno = cupom.IniciaPorta("USB");
 
         iRetorno = cupom.Le_Status();
 
@@ -27,8 +30,7 @@ public class Ticket {
         else if(iRetorno == BematechNFiscal.TAMPA_ABERTA)
             throw new ImpressoraError("Tampa Aberta!");
 
-		iRetorno = cupom.ConfiguraModeloImpressora(7);
-		iRetorno = cupom.IniciaPorta("USB");
+
 		iRetorno = cupom.FormataTX("          BANAV\r\n", 2, 0, 0, 1, 1);
 		iRetorno = cupom.FormataTX("               CONTROLE DE EMBARQUE\r\n", 2, 0, 0, 0, 0);
 		iRetorno = cupom.FormataTX("\r\n", 2, 0, 0, 0, 0);

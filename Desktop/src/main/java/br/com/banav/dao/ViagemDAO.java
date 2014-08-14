@@ -62,7 +62,10 @@ public class ViagemDAO extends DAOLocalEntidadeBasica<Viagem> {
                     " WHERE id = :id";
         }
 
-        getEM().getTransaction().begin();
+        boolean isAlive = getEM().getTransaction().isActive();
+        if(!isAlive) {
+            getEM().getTransaction().begin();
+        }
 
         Query q = getEM().createNativeQuery(queryStr);
         q.setParameter("id", entidadeBasica.getId());
@@ -76,9 +79,13 @@ public class ViagemDAO extends DAOLocalEntidadeBasica<Viagem> {
 
         try{
             q.executeUpdate();
-            getEM().getTransaction().commit();
-        }catch (Exception ex){
-            getEM().getTransaction().rollback();
+            if(!isAlive) {
+                getEM().getTransaction().commit();
+            }
+        }catch (Exception ex) {
+            if(!isAlive) {
+                getEM().getTransaction().rollback();
+            }
         }
     }
 }

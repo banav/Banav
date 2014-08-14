@@ -66,7 +66,10 @@ public class ViagemValorClasseDAO extends DAOLocalEntidadeBasica<ViagemValorClas
                     " WHERE id = ?1";
         }
 
-        getEM().getTransaction().begin();
+        boolean isAlive = getEM().getTransaction().isActive();
+        if(!isAlive) {
+            getEM().getTransaction().begin();
+        }
 
         Query query = getEM().createNativeQuery(strQuery);
         query.setParameter(1, entidadeBasica.getId());
@@ -75,15 +78,20 @@ public class ViagemValorClasseDAO extends DAOLocalEntidadeBasica<ViagemValorClas
         query.setParameter(4, entidadeBasica.getNavioClasse().getNavio().getNavioID());
         query.setParameter(5, entidadeBasica.getViagem().getId());
         query.setParameter(6, entidadeBasica.getAceitaGratuidade());
-        query.setParameter(7, entidadeBasica.getValorMeia());
+        query.setParameter(7, entidadeBasica.getValorMeia() == null ? 0 : entidadeBasica.getValorMeia());
         query.setParameter(8, entidadeBasica.isAtivo());
         query.setParameter(9, entidadeBasica.getDataMovimentacao());
 
         try{
             query.executeUpdate();
-            getEM().getTransaction().commit();
-        }catch (Exception ex){
-            getEM().getTransaction().rollback();
+            if(!isAlive) {
+                getEM().getTransaction().commit();
+            }
+        }catch (Exception ex) {
+            ex.printStackTrace();
+            if(!isAlive) {
+                getEM().getTransaction().rollback();
+            }
         }
 
 

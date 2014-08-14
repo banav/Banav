@@ -38,6 +38,14 @@ public class EnvioCheckInJob extends Thread {
         }
     }
 
+    public void esperar() {
+        interrupt();
+    }
+
+    public void retomar() {
+        start();
+    }
+
     private void enviaCodigosPendentes() {
         List<CheckIn> naoEnviados = checkInDAO.listarNaoEnviados();
         for (CheckIn checkIn : naoEnviados) {

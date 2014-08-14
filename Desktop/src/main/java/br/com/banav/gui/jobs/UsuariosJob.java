@@ -37,6 +37,14 @@ public class UsuariosJob extends Thread {
         }
     }
 
+    public void esperar() {
+        interrupt();
+    }
+
+    public void retomar() {
+        start();
+    }
+
     private void atualizarUsuarios() {
         Date date = usuarioDAOLocal.ultimaAtualizacao(UsuarioLocal.class);
         List<UsuarioDTO> usuariosDTO = usuarioWS.listar(date);

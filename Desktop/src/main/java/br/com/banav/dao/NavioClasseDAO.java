@@ -44,7 +44,11 @@ public class NavioClasseDAO extends DAOLocalEntidadeBasica<NavioClasse> {
                     " WHERE classe=:classe and navio=:navio";
 
 
-        getEM().getTransaction().begin();
+        boolean isAlive = getEM().getTransaction().isActive();
+        if(!isAlive) {
+            getEM().getTransaction().begin();
+        }
+
         Query q = getEM().createNativeQuery(query);
         q.setParameter("classe", entidadeBasica.getClasse().getClasseID());
         q.setParameter("navio", entidadeBasica.getNavio().getNavioID());
@@ -54,9 +58,13 @@ public class NavioClasseDAO extends DAOLocalEntidadeBasica<NavioClasse> {
 
         try{
             q.executeUpdate();
-            getEM().getTransaction().commit();
-        }catch (Exception ex){
-            getEM().getTransaction().rollback();
+            if(!isAlive) {
+                getEM().getTransaction().commit();
+            }
+        }catch (Exception ex) {
+            if(!isAlive) {
+                getEM().getTransaction().rollback();
+            }
         }
     }
 }

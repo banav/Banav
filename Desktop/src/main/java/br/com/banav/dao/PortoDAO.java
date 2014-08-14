@@ -44,9 +44,12 @@ public class PortoDAO extends DAOLocalEntidadeBasica<Porto> {
                     " WHERE id= :id";
         }
 
-        getEM().getTransaction().begin();
-        Query q = getEM().createNativeQuery(queryStr);
+        boolean isAlive = getEM().getTransaction().isActive();
+        if(!isAlive) {
+            getEM().getTransaction().begin();
+        }
 
+        Query q = getEM().createNativeQuery(queryStr);
         q.setParameter("id", entidadeBasica.getId());
         q.setParameter("nome", entidadeBasica.getNome());
         q.setParameter("data", entidadeBasica.getDataMovimentacao());
@@ -54,9 +57,13 @@ public class PortoDAO extends DAOLocalEntidadeBasica<Porto> {
 
         try{
             q.executeUpdate();
-            getEM().getTransaction().commit();
-        }catch (Exception ex){
-            getEM().getTransaction().rollback();
+            if(!isAlive) {
+                getEM().getTransaction().commit();
+            }
+        }catch (Exception ex) {
+            if(!isAlive) {
+                getEM().getTransaction().rollback();
+            }
         }
     }
 

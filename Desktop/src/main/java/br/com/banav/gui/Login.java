@@ -23,12 +23,6 @@ public class Login extends JFrame {
     private JPanel mainPanel;
     private JLabel status;
 
-    private EnvioCheckInJob envioCheckInJob;
-    private UsuariosJob usuariosJob;
-    private EnvioPassagemJob envioPassagemJob;
-
-    private BaseJob baseJob;
-
     public Login() {
         setContentPane(mainPanel);
         setTitle("Acesso ao sistema");
@@ -40,40 +34,6 @@ public class Login extends JFrame {
 
         btEntrar.addActionListener(new EntrarListener(this));
         tfSenha.addActionListener(new EntrarListener(this));
-    }
-
-    public void iniciarJobs() {
-        if(envioCheckInJob == null) {
-            envioCheckInJob = new EnvioCheckInJob();
-        }
-
-        if(!envioCheckInJob.isAlive()) {
-            envioCheckInJob.start();
-        }
-
-        if(envioPassagemJob == null) {
-            envioPassagemJob = new EnvioPassagemJob();
-        }
-
-        if(!envioPassagemJob.isAlive()) {
-            envioPassagemJob.start();
-        }
-
-        if(usuariosJob == null) {
-            usuariosJob = new UsuariosJob();
-        }
-
-        if(!usuariosJob.isAlive()) {
-            usuariosJob.start();
-        }
-
-        if(baseJob == null){
-            baseJob = new BaseJob();
-        }
-
-        if(!baseJob.isAlive()){
-            baseJob.start();
-        }
     }
 
     public static void main(String args[]) {
@@ -111,7 +71,7 @@ public class Login extends JFrame {
                 } else {
                     Session.put("usuario", usuarioLocal);
 
-                    login.iniciarJobs();
+                    //login.iniciarJobs();
                     login.dispose();
 
                     new Main();

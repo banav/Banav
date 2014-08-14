@@ -36,10 +36,6 @@ public abstract class DAOLocal<T> {
         return em;
     }
 
-    public void setEM(EntityManager entityManager){
-        em = entityManager;
-    }
-
     public static void setAutoCommit(boolean autoCommit) {
         DAOLocal.autoCommit = autoCommit;
     }

@@ -8,9 +8,6 @@ import br.com.banav.rest.dto.ViagemValorClasseDTO;
 import br.com.banav.ws.*;
 import br.com.banav.ws.dto.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.Date;
 import java.util.List;
 
@@ -18,21 +15,6 @@ import java.util.List;
  * Created by gilson on 6/21/14.
  */
 public class BaseJob extends Thread {
-
-    private static EntityManagerFactory emf;
-
-    private static EntityManager em;
-    static{
-
-
-        if(emf == null) {
-            emf = Persistence.createEntityManagerFactory("BanavLocalPU");
-        }
-
-        if(em == null) {
-            em = emf.createEntityManager();
-        }
-    }
 
     private NavioDAO navioDAOLocal;
 
@@ -63,7 +45,6 @@ public class BaseJob extends Thread {
         setPriority(NORM_PRIORITY);
 
         navioDAOLocal = new NavioDAO();
-        navioDAOLocal.setEM(em);
         navioWS = new NavioWS();
 
         classeDAO = new ClasseDAO();
@@ -80,8 +61,6 @@ public class BaseJob extends Thread {
 
         viagemValorClasseDAO = new ViagemValorClasseDAO();
         viagemValorClasseWS = new ViagemValorClasseWS();
-
-
     }
 
     @Override
@@ -100,6 +79,14 @@ public class BaseJob extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void esperar() {
+        interrupt();
+    }
+
+    public void retomar() {
+        start();
     }
 
     private void atualizarNavios() {

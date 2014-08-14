@@ -29,6 +29,9 @@ import java.util.List;
  * Created by gilson on 4/1/14.
  */
 public class Passagem extends JPanel {
+    static {
+        System.setProperty("jna.library.path", "C:\\Windows\\SysWOW64");
+    }
     private JPanel mainContent;
     private JButton btVoltar;
     private JPanel panelPassagens;
@@ -246,7 +249,11 @@ public class Passagem extends JPanel {
             try {
                 BematechNFiscal cupom = BematechNFiscal.Instance;
 
-                int iRetorno = cupom.Le_Status();
+                int iRetorno;
+                iRetorno = cupom.ConfiguraModeloImpressora(7);
+                iRetorno = cupom.IniciaPorta("USB");
+
+                iRetorno = cupom.Le_Status();
 
                 switch (iRetorno){
                     case BematechNFiscal.ERRO_COMUNICACAO:
@@ -263,6 +270,8 @@ public class Passagem extends JPanel {
                 JOptionPane.showMessageDialog(main, e.getMessage());
                 return;
             }
+
+            main.pausarJobs();
 
             PassagemDAO passagemDAO = new PassagemDAO();
 
@@ -316,7 +325,7 @@ public class Passagem extends JPanel {
                             null
                         );
                     } catch(Exception e) {
-                        passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem);
+                        passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
                     }
                 }
             }
@@ -325,6 +334,8 @@ public class Passagem extends JPanel {
             passagem.tablePassagem.setModel(tableModel);
             passagem.labelTotal.setText("Finalizado com sucesso.");
             passagem.labelQuantidade.setText("           ");
+
+            main.iniciarJobs();
         }
     }
 
