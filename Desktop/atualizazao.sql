@@ -131,6 +131,14 @@ REFERENCES usuario ("id");
 
 CREATE SEQUENCE offline.seq_passagem INCREMENT BY 1 MINVALUE 1 NO MAXVALUE START WITH 1 CACHE 1 NO CYCLE;
 
+CREATE TABLE banav.offline.passagem_cancelamento (
+  codigo_barras varchar(100) NOT NULL,
+  enviado bool NOT NULL,
+  data_cadastro timestamp NOT NULL,
+  data_envio timestamp,
+  PRIMARY KEY (codigo_barras)
+);
+
 /** Banco de Dados Online */
 
 ALTER TABLE classe ADD COLUMN datamovimentacao timestamp without time zone;

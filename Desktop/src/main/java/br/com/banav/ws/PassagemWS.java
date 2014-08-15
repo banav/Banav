@@ -73,4 +73,36 @@ public class PassagemWS extends RestClient {
 
         return false;
     }
+
+    public Boolean cancelar(String codigoBarras, Date dataCancelamento) {
+        try {
+            addParametro("codigoBarras", URLEncoder.encode(codigoBarras, "UTF-8"));
+            addParametro("data_cancelamento", URLEncoder.encode(new Long(dataCancelamento.getTime()).toString(), "UTF-8"));
+
+            RespostaDTO respostaDTO = get("/ws/passagem/cancelar", JAXBContext.newInstance(RespostaDTO.class));
+
+            if(!respostaDTO.isSucesso()) {
+                LOGGER.warning(String.format("Erro no cancelamento para o código %s: %s.", codigoBarras, respostaDTO.getMensagem()));
+            } else {
+                return true;
+            }
+        } catch (UnsupportedEncodingException e) {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            String exceptionDetails = sw.toString();
+            LOGGER.warning(exceptionDetails);
+        } catch (JAXBException e) {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            String exceptionDetails = sw.toString();
+            LOGGER.warning(exceptionDetails);
+        } catch (IOException e) {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            String exceptionDetails = sw.toString();
+            LOGGER.warning(exceptionDetails);
+        }
+
+        return false;
+    }
 }

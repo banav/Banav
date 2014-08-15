@@ -1,9 +1,6 @@
 package br.com.banav.gui;
 
-import br.com.banav.gui.jobs.BaseJob;
-import br.com.banav.gui.jobs.EnvioCheckInJob;
-import br.com.banav.gui.jobs.EnvioPassagemJob;
-import br.com.banav.gui.jobs.UsuariosJob;
+import br.com.banav.gui.jobs.*;
 import br.com.banav.model.Viagem;
 
 import javax.swing.*;
@@ -27,6 +24,7 @@ public class Main extends JFrame {
     private UsuariosJob usuariosJob;
     private EnvioPassagemJob envioPassagemJob;
     private BaseJob baseJob;
+    private EnvioCancelamentoJob envioCancelamentoJob;
 
     public Main() {
         setContentPane(mainContent);
@@ -85,6 +83,14 @@ public class Main extends JFrame {
 
         if(!baseJob.isAlive()){
             baseJob.start();
+        }
+
+        if(envioCancelamentoJob == null){
+            envioCancelamentoJob = new EnvioCancelamentoJob();
+        }
+
+        if(!envioCancelamentoJob.isAlive()){
+            envioCancelamentoJob.start();
         }
     }
 

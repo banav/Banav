@@ -1,9 +1,7 @@
 package br.com.banav.gui.jobs;
 
 import br.com.banav.dao.*;
-import br.com.banav.dao.local.UsuarioDAO;
 import br.com.banav.model.*;
-import br.com.banav.model.local.UsuarioLocal;
 import br.com.banav.rest.dto.ViagemValorClasseDTO;
 import br.com.banav.ws.*;
 import br.com.banav.ws.dto.*;

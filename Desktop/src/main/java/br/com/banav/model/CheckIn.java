@@ -1,4 +1,4 @@
-package br.com.banav.model.local;
+package br.com.banav.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

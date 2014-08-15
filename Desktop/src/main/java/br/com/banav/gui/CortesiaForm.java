@@ -5,7 +5,7 @@ import br.com.banav.dao.common.DAO;
 import br.com.banav.exception.ImpressoraError;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
-import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.model.UsuarioLocal;
 import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import nfiscal.BematechNFiscal;
@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

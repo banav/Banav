@@ -1,7 +1,5 @@
 package br.com.banav.model;
 
-import br.com.banav.model.local.UsuarioLocal;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

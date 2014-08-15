@@ -1,11 +1,8 @@
 package br.com.banav.model;
 
-import br.com.banav.model.local.UsuarioLocal;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by GilsonRocha on 12/01/14.

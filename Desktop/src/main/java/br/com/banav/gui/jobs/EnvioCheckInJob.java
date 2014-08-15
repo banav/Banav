@@ -1,11 +1,9 @@
 package br.com.banav.gui.jobs;
 
-import br.com.banav.dao.local.CheckInDAO;
-import br.com.banav.model.local.CheckIn;
+import br.com.banav.dao.CheckInDAO;
+import br.com.banav.model.CheckIn;
 import br.com.banav.ws.CheckInWS;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 

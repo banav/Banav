@@ -1,7 +1,7 @@
-package br.com.banav.dao.local;
+package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAOLocal;
-import br.com.banav.model.local.CheckIn;
+import br.com.banav.model.CheckIn;
 
 import javax.persistence.Query;
 import java.util.Calendar;

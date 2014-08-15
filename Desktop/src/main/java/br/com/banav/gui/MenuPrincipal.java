@@ -1,7 +1,7 @@
 package br.com.banav.gui;
 
 import br.com.banav.model.Perfil;
-import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.model.UsuarioLocal;
 import br.com.banav.util.Session;
 
 import javax.swing.*;

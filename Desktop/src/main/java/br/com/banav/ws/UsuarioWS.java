@@ -1,7 +1,5 @@
 package br.com.banav.ws;
 
-import br.com.banav.model.local.UsuarioLocal;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;

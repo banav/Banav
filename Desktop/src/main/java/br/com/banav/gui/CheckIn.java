@@ -1,9 +1,6 @@
 package br.com.banav.gui;
 
-import br.com.banav.dao.PassagemDAO;
-import br.com.banav.dao.local.CheckInDAO;
-import br.com.banav.model.*;
-import br.com.banav.model.Passagem;
+import br.com.banav.dao.CheckInDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -53,11 +49,11 @@ public class CheckIn extends JPanel {
 
                     String _codigo = checkIn.tfCodigoBarras.getText();
                     if(checkInDAO.isValido(_codigo)) {
-                        List<br.com.banav.model.local.CheckIn> checkIns = checkInDAO.listarPor(_codigo);
+                        List<br.com.banav.model.CheckIn> checkIns = checkInDAO.listarPor(_codigo);
                         if(checkIns != null && !checkIns.isEmpty()) {
                             checkIn.lbStatus.setText(String.format("%s já registrado anteriormente.", _codigo));
                         } else {
-                            br.com.banav.model.local.CheckIn novoCheckIn = new br.com.banav.model.local.CheckIn();
+                            br.com.banav.model.CheckIn novoCheckIn = new br.com.banav.model.CheckIn();
                             novoCheckIn.setDataCadastro(Calendar.getInstance().getTime());
                             novoCheckIn.setCodigoBarras(_codigo);
                             novoCheckIn.setEnviado(false);

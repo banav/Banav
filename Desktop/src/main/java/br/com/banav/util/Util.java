@@ -1,7 +1,7 @@
 package br.com.banav.util;
 
 import br.com.banav.model.Viagem;
-import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.model.UsuarioLocal;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

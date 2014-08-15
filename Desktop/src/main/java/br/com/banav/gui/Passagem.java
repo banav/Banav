@@ -6,7 +6,7 @@ import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.exception.ImpressoraError;
 import br.com.banav.gui.component.JButtonData;
 import br.com.banav.model.*;
-import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.model.UsuarioLocal;
 import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import com.lowagie.text.pdf.BarcodeEAN;

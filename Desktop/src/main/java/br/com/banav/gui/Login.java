@@ -1,10 +1,7 @@
 package br.com.banav.gui;
 
-import br.com.banav.gui.jobs.BaseJob;
-import br.com.banav.gui.jobs.EnvioCheckInJob;
-import br.com.banav.gui.jobs.EnvioPassagemJob;
-import br.com.banav.gui.jobs.UsuariosJob;
-import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.dao.UsuarioDAO;
+import br.com.banav.model.UsuarioLocal;
 import br.com.banav.util.Session;
 
 import javax.swing.*;
@@ -65,7 +62,7 @@ public class Login extends JFrame {
                 }
 
                 // Tenta fazer conexão local
-                br.com.banav.dao.local.UsuarioDAO usuarioDAOLocal = new br.com.banav.dao.local.UsuarioDAO();
+                UsuarioDAO usuarioDAOLocal = new UsuarioDAO();
                 UsuarioLocal usuarioLocal = usuarioDAOLocal.login(login.tfLogin.getText(), new String(login.tfSenha.getPassword()));
                 if(usuarioLocal == null) {
                     login.status.setText("Usuário não encontrado.");

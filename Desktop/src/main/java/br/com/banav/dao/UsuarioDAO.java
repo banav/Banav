@@ -1,15 +1,12 @@
-package br.com.banav.dao.local;
+package br.com.banav.dao;
 
-import br.com.banav.dao.common.DAOLocal;
 import br.com.banav.dao.common.DAOLocalEntidadeBasica;
-import br.com.banav.model.local.UsuarioLocal;
+import br.com.banav.model.UsuarioLocal;
 import br.com.banav.util.Util;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.List;
 
 /**
