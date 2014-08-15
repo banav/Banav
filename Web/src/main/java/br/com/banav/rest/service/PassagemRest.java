@@ -87,7 +87,7 @@ public class PassagemRest  implements Serializable {
             respostaDTO.setMensagem("Passagem " + codigoBarras +" nao foi cancelada! " + e.getMessage());
             respostaDTO.setSucesso(true);
         }
-        return null;
+        return respostaDTO;
     }
 
 }
