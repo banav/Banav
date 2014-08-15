@@ -2,6 +2,7 @@ package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
 import br.com.banav.model.Passagem;
+import br.com.banav.model.PassagemHistorico;
 
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -19,6 +20,23 @@ public class PassagemDAO extends DAO<Passagem> {
         return query.getResultList();
     }
 
+
+    public Passagem buscarPorCodigoBarras(String codigoBarras) throws Exception{
+        Passagem passagem = null;
+        Query query = getEm().createQuery("select p from Passagem p where p.codigoBarras = :codigoBarras");
+        query.setParameter("codigoBarras", codigoBarras);
+
+        try{
+            return (Passagem)query.getSingleResult();
+        }
+        catch (NoResultException e){
+            return passagem;
+        }
+        catch (NonUniqueResultException e2){
+            throw new Exception("Várias passagens com o mesmo codigo de barras. " +
+                    "Favor contactar o administrador do sistema.");
+        }
+    }
 
     public Passagem efetuarCheckinCodigoBarras(String codigoBarras) throws Exception {
         Query query = getEm().createQuery("select p from Passagem p where p.codigoBarras = :codigoBarras");
@@ -42,4 +60,6 @@ public class PassagemDAO extends DAO<Passagem> {
 
         return passagem;
     }
+
+
 }
