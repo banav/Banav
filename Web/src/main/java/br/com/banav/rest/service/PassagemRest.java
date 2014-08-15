@@ -66,11 +66,28 @@ public class PassagemRest  implements Serializable {
             respostaDTO.setSucesso(false);
         }
 
-
-
         return respostaDTO;
-
     }
 
+
+    @GET
+    @Path("/cancelar")
+    @Produces(MediaType.APPLICATION_XML)
+    public RespostaDTO cancelarPassagem(@QueryParam("codigoBarras") String codigoBarras,
+                                        @QueryParam("data_cancelamento") Long dataCancelamento){
+
+        RespostaDTO respostaDTO = new RespostaDTO();
+
+        try{
+            passagemSrv.cancelarPassagem(codigoBarras, new Date(dataCancelamento));
+            respostaDTO.setMensagem("Passagem " + codigoBarras +" cancelada com sucesso!");
+            respostaDTO.setSucesso(true);
+        }
+        catch (Exception e){
+            respostaDTO.setMensagem("Passagem " + codigoBarras +" nao foi cancelada! " + e.getMessage());
+            respostaDTO.setSucesso(true);
+        }
+        return null;
+    }
 
 }
