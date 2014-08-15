@@ -37,6 +37,7 @@ public class Login extends JFrame {
     }
 
     public static void main(String args[]) {
+        System.setProperty("file.encoding", "UTF-8");
         new Login();
     }
 

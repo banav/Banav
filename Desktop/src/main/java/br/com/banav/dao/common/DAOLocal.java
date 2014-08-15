@@ -18,13 +18,13 @@ public abstract class DAOLocal<T> {
 
     protected static EntityManagerFactory emf;
 
-    protected static EntityManager em;
+    protected  EntityManager em;
 
     protected static boolean autoCommit = true;
 
-    static { getEM(); }
+    //static { getEM(); }
 
-    public static EntityManager getEM() {
+    public  EntityManager getEM() {
         if(emf == null) {
             emf = Persistence.createEntityManagerFactory("BanavLocalPU");
         }

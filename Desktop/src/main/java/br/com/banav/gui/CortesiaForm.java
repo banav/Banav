@@ -96,13 +96,15 @@ public class CortesiaForm extends JPanel {
             }
 
             if(cortesiaForm.tableCortesia.getSelectedRow() != -1) {
+                CortesiaDAO cortesiaDAO = new CortesiaDAO();
                 try {
-                    DAO.setAutoCommit(false);
-                    DAO.getEM().getTransaction().begin();
+
+                    cortesiaDAO.setAutoCommit(false);
+                    cortesiaDAO.getEM().getTransaction().begin();
 
                     final Object valueAt = cortesiaForm.tableCortesia.getModel().getValueAt(cortesiaForm.tableCortesia.getSelectedRow(), 0);
 
-                    CortesiaDAO cortesiaDAO = new CortesiaDAO();
+
                     Cortesia cortesia = cortesiaDAO.getUm(Cortesia.class, new Long(valueAt.toString()));
                     Viagem viagem = cortesia.getViagem();
                     NavioClasseDAO navioClasseDAO = new NavioClasseDAO();
@@ -163,10 +165,10 @@ public class CortesiaForm extends JPanel {
 
                         cortesiaForm.carregar();
 
-                        DAO.getEM().getTransaction().commit();
+                        cortesiaDAO.getEM().getTransaction().commit();
                     }
                 } catch (Exception ex) {
-                    DAO.getEM().getTransaction().rollback();
+                    cortesiaDAO.getEM().getTransaction().rollback();
                     ex.printStackTrace();
                 } finally {
                     DAO.setAutoCommit(true);

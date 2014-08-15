@@ -271,7 +271,7 @@ public class Passagem extends JPanel {
                 return;
             }
 
-            main.pausarJobs();
+            //main.pausarJobs();
 
             PassagemDAO passagemDAO = new PassagemDAO();
 

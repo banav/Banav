@@ -67,6 +67,7 @@ public class BaseJob extends Thread {
     public void run() {
         try {
             while(true) {
+                //if(super.)
                 sleep(7000);
                 atualizarNavios();
                 atualizaClasses();

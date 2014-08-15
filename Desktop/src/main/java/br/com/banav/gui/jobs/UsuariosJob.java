@@ -48,6 +48,10 @@ public class UsuariosJob extends Thread {
     private void atualizarUsuarios() {
         Date date = usuarioDAOLocal.ultimaAtualizacao(UsuarioLocal.class);
         List<UsuarioDTO> usuariosDTO = usuarioWS.listar(date);
+
+        if(usuariosDTO == null)
+            return;
+
         for (UsuarioDTO usuarioDTO : usuariosDTO) {
             UsuarioLocal usuarioLocal = usuarioDAOLocal.getUm(UsuarioLocal.class, usuarioDTO.getId());
 

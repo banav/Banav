@@ -72,10 +72,5 @@ public class PassagemRest  implements Serializable {
 
     }
 
-    public static void  main (String args[]){
-        String codigoBarras = "14080906300101020001";
 
-
-        //System.out.print(calendar);
-    }
 }
