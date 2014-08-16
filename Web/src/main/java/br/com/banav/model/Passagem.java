@@ -8,7 +8,7 @@ import java.util.List;
  * Created by GilsonRocha on 12/01/14.
  */
 @Entity
-@Table(name = "passagem", uniqueConstraints = @UniqueConstraint(name = "uc_codigobarras", columnNames = {"codigobarras"}))
+@Table(name = "passagem")
 @SequenceGenerator(name = "PassagemGenerator_SEQ", initialValue = 1, allocationSize = 1, schema = "public", sequenceName = "seq_passagem")
 public class Passagem implements Serializable{
 
