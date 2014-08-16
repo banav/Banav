@@ -41,4 +41,18 @@ public class PassagemDAO extends DAOLocal<Passagem> {
 
         return Integer.parseInt(singleResult.toString()) + 1;
     }
+
+    public Passagem buscarPorCodigoBarras(String codigoBarras){
+        Query query = getEM().createQuery("select p from Passagem p where p.codigoBarras = :barras");
+        query.setParameter("barras", codigoBarras);
+
+        Passagem passagem = null;
+        try{
+            passagem = (Passagem)query.getSingleResult();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return passagem;
+    }
 }

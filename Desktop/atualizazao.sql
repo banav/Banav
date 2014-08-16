@@ -139,6 +139,37 @@ CREATE TABLE banav.offline.passagem_cancelamento (
   PRIMARY KEY (codigo_barras)
 );
 
+CREATE TABLE offline.cortesia
+(
+  id bigint NOT NULL,
+  autorizante character varying(255),
+  cpf character varying(255),
+  data_criacao date NOT NULL,
+  nome character varying(255),
+  rg character varying(255),
+  solicitante character varying(255),
+  passagem_id bigint,
+  usuario_id bigint NOT NULL,
+  viagem_id bigint NOT NULL,
+  datamovimentacao timestamp without time zone,
+  ativo boolean,
+  CONSTRAINT cortesia_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_cortesia_usuario FOREIGN KEY (usuario_id)
+  REFERENCES offline.usuario (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_cortesia_viagem FOREIGN KEY (viagem_id)
+  REFERENCES offline.viagem (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_cortesia_passagem FOREIGN KEY (passagem_id)
+  REFERENCES offline.passagem (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+OIDS=FALSE
+);
+
+
+
 /** Banco de Dados Online */
 
 ALTER TABLE classe ADD COLUMN datamovimentacao timestamp without time zone;
@@ -175,3 +206,8 @@ ALTER TABLE viagem_valor_classe ADD COLUMN datamovimentacao timestamp without ti
 ALTER TABLE viagem_valor_classe ADD COLUMN ativo boolean;
 update viagem_valor_classe  set datamovimentacao = current_timestamp where datamovimentacao is null;
 update viagem_valor_classe  set ativo = true where ativo is null;
+
+ALTER TABLE cortesia ADD COLUMN datamovimentacao timestamp without time zone;
+ALTER TABLE cortesia ADD COLUMN ativo boolean;
+UPDATE cortesia   set datamovimentacao = current_timestamp where datamovimentacao is null;
+UPDATE cortesia set ativo = true where ativo is null;

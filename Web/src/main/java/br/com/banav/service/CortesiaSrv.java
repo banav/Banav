@@ -6,6 +6,7 @@ import br.com.banav.model.Cortesia;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,5 +31,9 @@ public class CortesiaSrv {
 
     public Cortesia getUm(Long id) {
         return cortesiaDAO.getUm(id, Cortesia.class);
+    }
+
+    public List<Cortesia> listar(Long time){
+        return cortesiaDAO.listarPorDataMovimento(new Date(time), Cortesia.class);
     }
 }

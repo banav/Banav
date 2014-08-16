@@ -38,6 +38,10 @@ public class BaseJob extends Thread {
 
     private ViagemValorClasseWS viagemValorClasseWS;
 
+    private CortesiaDAO cortesiaDAO;
+
+    private CortesiaWS cortesiaWS;
+
     public BaseJob() {
         setDaemon(true);
         setPriority(NORM_PRIORITY);
@@ -59,6 +63,9 @@ public class BaseJob extends Thread {
 
         viagemValorClasseDAO = new ViagemValorClasseDAO();
         viagemValorClasseWS = new ViagemValorClasseWS();
+
+        cortesiaDAO = new CortesiaDAO();
+        cortesiaWS = new CortesiaWS();
     }
 
     @Override
@@ -245,5 +252,47 @@ public class BaseJob extends Thread {
             viagemValorClasseDAO.sincronizar(viagemValorClasse);
 
         }
+    }
+
+    private void atualizaCortesias(){
+        Date date = cortesiaDAO.ultimaAtualizacao(Cortesia.class);
+        List<CortesiaDTO> cortesiasDTO = cortesiaWS.listar(date);
+
+        if (cortesiasDTO == null)
+            return;
+
+        for(CortesiaDTO cortesiaDTO : cortesiasDTO){
+            Cortesia cortesia = new Cortesia();
+
+            cortesia.setNome(cortesiaDTO.getNome());
+            cortesia.setId(cortesiaDTO.getId());
+            cortesia.setDataMovimentacao(cortesiaDTO.getDataMovimentacao());
+            cortesia.setAtivo(cortesiaDTO.getAtivo());
+            cortesia.setRg(cortesiaDTO.getRg());
+            cortesia.setSolicitante(cortesiaDTO.getSolicitante());
+            cortesia.setCpf(cortesiaDTO.getCpf());
+            cortesia.setAutorizante(cortesiaDTO.getAutorizante());
+            cortesia.setDataCriacao(cortesiaDTO.getDataCriacao());
+
+            Viagem viagem = new Viagem();
+            viagem.setId(cortesiaDTO.getViagem());
+            cortesia.setViagem(viagem);
+
+            if(cortesiaDTO.getPassagemCodigoBarras() != null && !cortesiaDTO.getPassagemCodigoBarras().isEmpty()){
+                Passagem passagem = new Passagem();
+                passagem.setCodigoBarras(cortesiaDTO.getPassagemCodigoBarras());
+
+                cortesia.setPassagem(passagem);
+            }
+            else
+                cortesia.setPassagem(null);
+
+            UsuarioLocal usuario = new UsuarioLocal();
+            usuario.setId(cortesiaDTO.getId());
+            cortesia.setUsuario(usuario);
+
+            cortesiaDAO.sincronizar(cortesia);
+        }
+
     }
 }

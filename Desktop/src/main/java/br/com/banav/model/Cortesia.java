@@ -8,12 +8,10 @@ import java.util.Date;
  * Created by gilson on 4/18/14.
  */
 @Entity
-@Table(name = "cortesia")
-@SequenceGenerator(name = "CortesiaGenerator_SEQ", initialValue = 1, sequenceName = "seq_cortesia")
-public class Cortesia implements Serializable {
+@Table(name = "cortesia", schema = "offline")
+public class Cortesia extends EntidadeBasica implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "CortesiaGenerator_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String nome;
