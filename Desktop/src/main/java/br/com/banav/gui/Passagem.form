@@ -103,6 +103,12 @@
               <text value=""/>
             </properties>
           </component>
+          <component id="99ea" class="javax.swing.JCheckBox" binding="impressãoAntecipadaCheckBox" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Impressão Antecipada"/>
+            </properties>
+          </component>
           <component id="bc854" class="javax.swing.JButton" binding="butFinalizar">
             <constraints/>
             <properties>

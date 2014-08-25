@@ -36,16 +36,23 @@ public class PassagemWS extends RestClient {
         LOGGER.addHandler(fileTxt);
     }
 
-    public Boolean enviar(String codigoBarras, Long idViagemValorClasse, Boolean gratuidade, Double valor, Date dataEmissao, Long cortesiaID) {
+    public Boolean enviar(String codigoBarras, Long idViagemValorClasse, Boolean gratuidade, Double valor, Date dataEmissao, Long cortesiaID, Date dataVenda) {
         try {
             Calendar dataLong = Calendar.getInstance();
             dataLong.setTime(dataEmissao);
+
+
 
             addParametro("codigoBarras", URLEncoder.encode(codigoBarras, "UTF-8"));
             addParametro("vvc_id", URLEncoder.encode(idViagemValorClasse.toString(), "UTF-8"));
             addParametro("gratuidade", URLEncoder.encode(gratuidade.toString(), "UTF-8"));
             addParametro("valor", URLEncoder.encode(valor.toString(), "UTF-8"));
             addParametro("data_emissao", URLEncoder.encode(new Long(dataLong.getTimeInMillis()).toString(), "UTF-8"));
+
+            Calendar _dataVenda = Calendar.getInstance();
+            _dataVenda.setTime(dataVenda);
+            addParametro("datavenda", URLEncoder.encode(new Long(_dataVenda.getTimeInMillis()).toString(), "UTF-8"));
+
             if(cortesiaID != null)
                 addParametro("cortesia", URLEncoder.encode(cortesiaID.toString(), "UTF-8"));
 

@@ -33,7 +33,8 @@ public class PassagemRest  implements Serializable {
                                @QueryParam("gratuidade") Boolean gratuidade,
                                @QueryParam("valor") Double valor,
                                @QueryParam("data_emissao") Long dataEmissao,
-                               @QueryParam("cortesia") Long cortesia){
+                               @QueryParam("cortesia") Long cortesia,
+                               @QueryParam("datavenda") Long dataVenda){
 
         Passagem passagem = new Passagem();
 
@@ -41,6 +42,7 @@ public class PassagemRest  implements Serializable {
         passagem.setCodigoBarras(codigoBarras);
         passagem.setGratuidade(gratuidade);
         passagem.setCheckin(false);
+        passagem.setDataVenda(new Date(dataVenda));
 
         ViagemValorClasse _viagemValorClasse = new ViagemValorClasse();
         _viagemValorClasse.setId(viagemValorClasse);

@@ -45,6 +45,7 @@ public class Passagem extends JPanel {
     private JLabel labelQuantidade;
     private JLabel labelTotal;
     private JButton butFinalizar;
+    private JCheckBox impressãoAntecipadaCheckBox;
 
     public static final Integer INTEIRA = 0;
     public static final Integer MEIA = 1;
@@ -246,7 +247,7 @@ public class Passagem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
 
-            try {
+            /*try {
                 BematechNFiscal cupom = BematechNFiscal.Instance;
 
                 int iRetorno;
@@ -269,7 +270,7 @@ public class Passagem extends JPanel {
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(main, e.getMessage());
                 return;
-            }
+            }*/
 
             //main.pausarJobs();
 
@@ -304,16 +305,23 @@ public class Passagem extends JPanel {
                         _passagem.setValor(valor);
                     }
 
-                    _passagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
+                    ViagemValorClasse vvc = (ViagemValorClasse) row.get(4);
+                    _passagem.setViagemValorClasse(vvc);
                     _passagem.setUsuario((UsuarioLocal) Session.get("usuario"));
                     _passagem.setEnviado(false);
+
+                    if(passagem.impressãoAntecipadaCheckBox.isSelected()){
+                        _passagem.setDataVenda(vvc.getViagem().getHoraSaida());
+                    }
+                    else
+                        _passagem.setDataVenda(new Date());
 
                     Integer nextval = passagemDAO.nextval(viagem.getId());
                     _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, _passagem.getUsuario()));
 
                     passagemDAO.salvar(_passagem);
 
-                    try {
+                    /*try {
                         Ticket.imprimir(
                             viagem.getOrigem().getNome(),
                             viagem.getDestino().getNome(),
@@ -326,7 +334,7 @@ public class Passagem extends JPanel {
                         );
                     } catch(Exception e) {
                         passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
-                    }
+                    }*/
                 }
             }
 

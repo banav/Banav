@@ -51,7 +51,7 @@ public class EnvioPassagemJob extends Thread {
 
         for (br.com.banav.model.Passagem passagem : naoEnviados) {
             Long cortesiaID = passagemDAO.buscarCortesia(passagem);
-            Boolean enviado = passagemWS.enviar(passagem.getCodigoBarras(), passagem.getViagemValorClasse().getId(), passagem.getGratuidade(), passagem.getValor(), passagem.getDataMovimentacao(), cortesiaID);
+            Boolean enviado = passagemWS.enviar(passagem.getCodigoBarras(), passagem.getViagemValorClasse().getId(), passagem.getGratuidade(), passagem.getValor(), passagem.getDataMovimentacao(), cortesiaID, passagem.getDataVenda());
 
             if(enviado) {
                 passagem.setEnviado(true);

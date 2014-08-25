@@ -35,6 +35,9 @@ public class PassagemDTO implements Serializable {
     @XmlElement
     private Date dataMovimentacao;
 
+    @XmlElement
+    private Date dataVenda;
+
     public Long getId() {
         return id;
     }
@@ -89,5 +92,13 @@ public class PassagemDTO implements Serializable {
 
     public void setDataMovimentacao(Date dataMovimentacao) {
         this.dataMovimentacao = dataMovimentacao;
+    }
+
+    public Date getDataVenda() {
+        return dataVenda;
+    }
+
+    public void setDataVenda(Date dataVenda) {
+        this.dataVenda = dataVenda;
     }
 }

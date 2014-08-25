@@ -35,6 +35,10 @@ public class Passagem implements Serializable{
 
     private Date dataMovimentacao;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "datavenda")
+    private Date dataVenda;
+
     public Long getId() {
         return id;
     }
@@ -97,6 +101,14 @@ public class Passagem implements Serializable{
 
     public void setUsuario(UsuarioLocal usuario) {
         this.usuario = usuario;
+    }
+
+    public Date getDataVenda() {
+        return dataVenda;
+    }
+
+    public void setDataVenda(Date dataVenda) {
+        this.dataVenda = dataVenda;
     }
 
     @PrePersist

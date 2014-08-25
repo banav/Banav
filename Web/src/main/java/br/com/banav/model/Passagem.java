@@ -2,6 +2,7 @@ package br.com.banav.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +25,10 @@ public class Passagem implements Serializable{
     private String codigoBarras;
     private Double valor;
     private Boolean gratuidade;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "datavenda")
+    private Date dataVenda;
 
     @OneToMany(mappedBy = "passagem", cascade = CascadeType.PERSIST)
     private List<PassagemHistorico> historico;
@@ -84,6 +89,14 @@ public class Passagem implements Serializable{
 
     public void setCheckin(Boolean checkin) {
         this.checkin = checkin;
+    }
+
+    public Date getDataVenda() {
+        return dataVenda;
+    }
+
+    public void setDataVenda(Date dataVenda) {
+        this.dataVenda = dataVenda;
     }
 
     @Override
