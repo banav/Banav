@@ -16,4 +16,9 @@ public class CortesiaDAO extends DAOEntidadeBasica<Cortesia> {
         Query query = getEm().createQuery("select c from Cortesia as c order by c.dataCriacao desc");
         return query.getResultList();
     }
+
+    public List<Cortesia> listarSemPassagem() {
+        Query query = getEm().createQuery("select c from Cortesia as c where c.passagem is null order by c.dataCriacao desc");
+        return query.getResultList();
+    }
 }

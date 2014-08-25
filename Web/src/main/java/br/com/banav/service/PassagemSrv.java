@@ -1,7 +1,9 @@
 package br.com.banav.service;
 
+import br.com.banav.dao.CortesiaDAO;
 import br.com.banav.dao.PassagemDAO;
 import br.com.banav.dao.PassagemHistoricoDAO;
+import br.com.banav.model.Cortesia;
 import br.com.banav.model.Passagem;
 import br.com.banav.model.PassagemHistorico;
 import br.com.banav.model.PassagemMovimento;
@@ -18,6 +20,7 @@ import java.util.List;
 public class PassagemSrv {
 
     @Inject private PassagemDAO passagemDAO;
+    @Inject private CortesiaDAO cortesiaDAO;
 
     @Inject
     private PassagemHistoricoDAO passagemHistoricoDAO;
@@ -28,7 +31,7 @@ public class PassagemSrv {
         return passagemDAO.listar();
     }
 
-    public void salvar(Passagem passagem) throws Exception {
+    public void salvar(Passagem passagem, Long cortesia) throws Exception {
 
         Passagem _passagem = null;
         boolean existePassagemHistorico = false;
@@ -52,7 +55,15 @@ public class PassagemSrv {
                 }
             }
             else if(_passagem == null)
+
                 passagemDAO.salvar(passagem);
+
+                if(cortesia != null) {
+                    Cortesia _cortesia = cortesiaDAO.getUm(cortesia, Cortesia.class);
+                    _cortesia.setPassagem(passagem);
+                    cortesiaDAO.atualizar(_cortesia);
+                }
+
         }
 
         catch (Exception e){

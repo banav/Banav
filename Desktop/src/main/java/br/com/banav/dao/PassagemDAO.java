@@ -2,8 +2,11 @@ package br.com.banav.dao;
 
 import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOLocal;
+import br.com.banav.model.Cortesia;
 import br.com.banav.model.Passagem;
 
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -54,5 +57,22 @@ public class PassagemDAO extends DAOLocal<Passagem> {
             e.printStackTrace();
         }
         return passagem;
+    }
+
+    public Long buscarCortesia(Passagem passagem){
+        Query query = getEM().createQuery("select c from Cortesia c where c.passagem.id = :passagem");
+        query.setParameter("passagem", passagem.getId());
+
+        try{
+            return ((Cortesia)query.getSingleResult()).getId();
+        }
+        catch (NoResultException e){
+            //e.printStackTrace();
+            return null;
+        }
+        catch (NonUniqueResultException e){
+            //e.printStackTrace();
+            return null;
+        }
     }
 }

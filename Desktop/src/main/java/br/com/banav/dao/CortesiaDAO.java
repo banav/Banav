@@ -49,11 +49,11 @@ public class CortesiaDAO extends DAOLocalEntidadeBasica<Cortesia> {
 
         }
         else{
-            queryStr = "UPDATE cortesia" +
+            queryStr = "UPDATE offline.cortesia" +
                     "   SET autorizante=?2, cpf=?3, data_criacao=?4, nome=?5, rg=?6, solicitante=?7, " +
-                    "       ativo=?8, usuario_id=?9, viagem_id=?10, datamovimentacao=?11, ";
+                    "       ativo=?8, usuario_id=?9, viagem_id=?10, datamovimentacao=?11 ";
             if(entidadeBasica.getPassagem() != null)
-                queryStr = queryStr + " passagem_id =?12";
+                queryStr = queryStr + ", passagem_id =?12";
 
             queryStr = queryStr +" WHERE id = ?1";
 

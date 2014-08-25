@@ -18,7 +18,7 @@ public class CortesiaSrv {
     @Inject private CortesiaDAO cortesiaDAO;
 
     public List<Cortesia> listar() {
-        return cortesiaDAO.listar();
+        return cortesiaDAO.listarSemPassagem();
     }
 
     public void salvar(Cortesia cortesia) {
@@ -34,6 +34,6 @@ public class CortesiaSrv {
     }
 
     public List<Cortesia> listar(Long time){
-        return cortesiaDAO.listarPorDataMovimento(new Date(time), Cortesia.class);
+        return cortesiaDAO.listarCortesiaPorDataMovimentoSemPassagem(new Date(time), Cortesia.class);
     }
 }

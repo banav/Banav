@@ -79,9 +79,14 @@ public class CortesiaForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             try {
+
                 BematechNFiscal cupom = BematechNFiscal.Instance;
 
-                int iRetorno = cupom.Le_Status();
+                int iRetorno;
+                iRetorno = cupom.ConfiguraModeloImpressora(7);
+                iRetorno = cupom.IniciaPorta("USB");
+
+                iRetorno = cupom.Le_Status();
 
                 if(iRetorno == BematechNFiscal.ERRO_COMUNICACAO)
                     throw new ImpressoraError("Erro de Comunicação com a Impressora!");

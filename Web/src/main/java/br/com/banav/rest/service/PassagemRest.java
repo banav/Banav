@@ -32,7 +32,8 @@ public class PassagemRest  implements Serializable {
                                @QueryParam("vvc_id") Long viagemValorClasse,
                                @QueryParam("gratuidade") Boolean gratuidade,
                                @QueryParam("valor") Double valor,
-                               @QueryParam("data_emissao") Long dataEmissao){
+                               @QueryParam("data_emissao") Long dataEmissao,
+                               @QueryParam("cortesia") Long cortesia){
 
         Passagem passagem = new Passagem();
 
@@ -57,7 +58,7 @@ public class PassagemRest  implements Serializable {
 
         RespostaDTO respostaDTO = new RespostaDTO();
         try{
-            passagemSrv.salvar(passagem);
+            passagemSrv.salvar(passagem, cortesia);
             respostaDTO.setMensagem("Passagem" + codigoBarras+  "salva com sucesso");
             respostaDTO.setSucesso(true);
         }

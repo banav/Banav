@@ -32,4 +32,13 @@ public class DAOEntidadeBasica<T extends EntidadeBasica> extends DAO<T> {
 
         return q.getResultList();
     }
+
+    public List<T> listarCortesiaPorDataMovimentoSemPassagem(Date time, Class<T> clazz){
+        String className = clazz.getCanonicalName();
+
+        Query q = getEm().createQuery("select eb from Cortesia eb where eb.dataMovimentacao > :time and eb.passagem is null");
+        q.setParameter("time", time, TemporalType.TIMESTAMP);
+
+        return q.getResultList();
+    }
 }

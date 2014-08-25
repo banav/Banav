@@ -36,7 +36,7 @@ public class PassagemWS extends RestClient {
         LOGGER.addHandler(fileTxt);
     }
 
-    public Boolean enviar(String codigoBarras, Long idViagemValorClasse, Boolean gratuidade, Double valor, Date dataEmissao) {
+    public Boolean enviar(String codigoBarras, Long idViagemValorClasse, Boolean gratuidade, Double valor, Date dataEmissao, Long cortesiaID) {
         try {
             Calendar dataLong = Calendar.getInstance();
             dataLong.setTime(dataEmissao);
@@ -46,6 +46,8 @@ public class PassagemWS extends RestClient {
             addParametro("gratuidade", URLEncoder.encode(gratuidade.toString(), "UTF-8"));
             addParametro("valor", URLEncoder.encode(valor.toString(), "UTF-8"));
             addParametro("data_emissao", URLEncoder.encode(new Long(dataLong.getTimeInMillis()).toString(), "UTF-8"));
+            if(cortesiaID != null)
+                addParametro("cortesia", URLEncoder.encode(cortesiaID.toString(), "UTF-8"));
 
             RespostaDTO respostaDTO = get("/ws/passagem/salvar", JAXBContext.newInstance(RespostaDTO.class));
 

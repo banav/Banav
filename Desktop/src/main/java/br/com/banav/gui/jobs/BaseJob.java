@@ -80,6 +80,7 @@ public class BaseJob extends Thread {
                 atualizaNavioClasse();
                 atualizaViagem();
                 atualizaViagemValorClasse();
+                atualizaCortesias();
 
             }
         } catch (InterruptedException e) {
@@ -288,7 +289,7 @@ public class BaseJob extends Thread {
                 cortesia.setPassagem(null);
 
             UsuarioLocal usuario = new UsuarioLocal();
-            usuario.setId(cortesiaDTO.getId());
+            usuario.setId(cortesiaDTO.getUsuario());
             cortesia.setUsuario(usuario);
 
             cortesiaDAO.sincronizar(cortesia);
