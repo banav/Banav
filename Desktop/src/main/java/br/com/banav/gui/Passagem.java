@@ -5,8 +5,10 @@ import br.com.banav.dao.PassagemDAO;
 import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.exception.ImpressoraError;
 import br.com.banav.gui.component.JButtonData;
-import br.com.banav.model.*;
+import br.com.banav.model.Classe;
 import br.com.banav.model.UsuarioLocal;
+import br.com.banav.model.Viagem;
+import br.com.banav.model.ViagemValorClasse;
 import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import com.lowagie.text.pdf.BarcodeEAN;
@@ -22,8 +24,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by gilson on 4/1/14.
@@ -45,7 +49,7 @@ public class Passagem extends JPanel {
     private JLabel labelQuantidade;
     private JLabel labelTotal;
     private JButton butFinalizar;
-    private JCheckBox impressãoAntecipadaCheckBox;
+    private JCheckBox impressaoAntecipadaCheckBox;
 
     public static final Integer INTEIRA = 0;
     public static final Integer MEIA = 1;
@@ -247,7 +251,7 @@ public class Passagem extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
 
-            /*try {
+            try {
                 BematechNFiscal cupom = BematechNFiscal.Instance;
 
                 int iRetorno;
@@ -270,9 +274,9 @@ public class Passagem extends JPanel {
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(main, e.getMessage());
                 return;
-            }*/
+            }
 
-            //main.pausarJobs();
+            main.pausarJobs();
 
             PassagemDAO passagemDAO = new PassagemDAO();
 
@@ -310,18 +314,19 @@ public class Passagem extends JPanel {
                     _passagem.setUsuario((UsuarioLocal) Session.get("usuario"));
                     _passagem.setEnviado(false);
 
-                    if(passagem.impressãoAntecipadaCheckBox.isSelected()){
+                    if(passagem.impressaoAntecipadaCheckBox.isSelected()) {
                         _passagem.setDataVenda(vvc.getViagem().getHoraSaida());
                     }
-                    else
+                    else {
                         _passagem.setDataVenda(new Date());
+                    }
 
                     Integer nextval = passagemDAO.nextval(viagem.getId());
                     _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, _passagem.getUsuario()));
 
                     passagemDAO.salvar(_passagem);
 
-                    /*try {
+                    try {
                         Ticket.imprimir(
                             viagem.getOrigem().getNome(),
                             viagem.getDestino().getNome(),
@@ -334,7 +339,7 @@ public class Passagem extends JPanel {
                         );
                     } catch(Exception e) {
                         passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
-                    }*/
+                    }
                 }
             }
 

@@ -168,7 +168,7 @@ WITH (
 OIDS=FALSE
 );
 
-
+ALTER TABLE offline.passagem ADD COLUMN datavenda timestamp without time zone;
 
 /** Banco de Dados Online */
 
@@ -211,3 +211,5 @@ ALTER TABLE cortesia ADD COLUMN datamovimentacao timestamp without time zone;
 ALTER TABLE cortesia ADD COLUMN ativo boolean;
 UPDATE cortesia   set datamovimentacao = current_timestamp where datamovimentacao is null;
 UPDATE cortesia set ativo = true where ativo is null;
+
+ALTER TABLE passagem ADD COLUMN datavenda timestamp without time zone;

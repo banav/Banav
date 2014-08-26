@@ -103,7 +103,7 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="99ea" class="javax.swing.JCheckBox" binding="impressãoAntecipadaCheckBox" default-binding="true">
+          <component id="99ea" class="javax.swing.JCheckBox" binding="impressaoAntecipadaCheckBox">
             <constraints/>
             <properties>
               <text value="Impressão Antecipada"/>

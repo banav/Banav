@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../pages/template/principal.xhtml">
+
+    <ui:define name="conteudo">
+        <p:panel id="panel" header="Relatório > Relatório de Arrecadação">
+
+            <h:form id="formConteudo" prependId="false">
+
+                <h:panelGrid columns="1" cellspacing="2">
+                    <p:outputLabel value="Data:" for="dataInicio" />
+                    <p:calendar id="dataInicio" value="#{mapaArrecadacaoBean.dataInicio}"/>
+                    <p:message for="dataInicio" />
+                </h:panelGrid>
+
+                <p:separator />
+
+                <p:commandButton ajax="false" value="Gerar Relatório" icon="ui-icon-disk">
+                    <p:fileDownload value="#{mapaArrecadacaoBean.gerarRelatorio()}" />
+                </p:commandButton>
+
+            </h:form>
+
+        </p:panel>
+    </ui:define>
+</ui:composition>
+
+</html>
