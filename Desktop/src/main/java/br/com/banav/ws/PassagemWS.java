@@ -51,7 +51,7 @@ public class PassagemWS extends RestClient {
 
             Calendar _dataVenda = Calendar.getInstance();
             _dataVenda.setTime(dataVenda);
-            //addParametro("datavenda", URLEncoder.encode(new Long(_dataVenda.getTimeInMillis()).toString(), "UTF-8"));
+            addParametro("datavenda", URLEncoder.encode(new Long(_dataVenda.getTimeInMillis()).toString(), "UTF-8"));
 
             if(cortesiaID != null)
                 addParametro("cortesia", URLEncoder.encode(cortesiaID.toString(), "UTF-8"));
