@@ -84,14 +84,14 @@ public class PassagemRest  implements Serializable {
 
         RespostaDTO respostaDTO = new RespostaDTO();
 
-        try{
+        try {
             passagemSrv.cancelarPassagem(codigoBarras, new Date(dataCancelamento));
             respostaDTO.setMensagem("Passagem " + codigoBarras +" cancelada com sucesso!");
             respostaDTO.setSucesso(true);
         }
         catch (Exception e){
             respostaDTO.setMensagem("Passagem " + codigoBarras +" nao foi cancelada! " + e.getMessage());
-            respostaDTO.setSucesso(true);
+            respostaDTO.setSucesso(false);
         }
         return respostaDTO;
     }
