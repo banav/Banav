@@ -42,7 +42,10 @@ public class PassagemRest  implements Serializable {
         passagem.setCodigoBarras(codigoBarras);
         passagem.setGratuidade(gratuidade);
         passagem.setCheckin(false);
-        passagem.setDataVenda(new Date(dataVenda));
+
+        if(dataVenda != null) {
+            passagem.setDataVenda(new Date(dataVenda));
+        }
 
         ViagemValorClasse _viagemValorClasse = new ViagemValorClasse();
         _viagemValorClasse.setId(viagemValorClasse);
