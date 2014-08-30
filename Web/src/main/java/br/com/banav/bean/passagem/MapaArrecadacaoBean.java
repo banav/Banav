@@ -2,7 +2,10 @@ package br.com.banav.bean.passagem;
 
 import br.com.banav.bean.common.PaginaBean;
 import br.com.banav.dao.PassagemDAO;
+import br.com.banav.model.Usuario;
 import br.com.banav.service.PassagemSrv;
+import br.com.banav.service.UsuarioSrv;
+import com.ocpsoft.pretty.faces.annotation.URLAction;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
 import net.sf.jasperreports.engine.*;
@@ -23,6 +26,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,9 +43,21 @@ public class MapaArrecadacaoBean extends PaginaBean {
     @EJB
     private PassagemSrv passagemSrv;
 
+    @EJB
+    private UsuarioSrv usuarioSrv;
+
     @Inject private PassagemDAO passagemDAO;
 
     private Date dataInicio = new Date();
+
+    private List<Usuario> vendedores;
+
+    private Usuario vendedor;
+
+    @URLAction(mappingId = "mapaArrecadacao", onPostback = false)
+    public void init() {
+        vendedores = usuarioSrv.listarVendedores();
+    }
 
     public StreamedContent gerarRelatorio() throws FileNotFoundException, JRException, SQLException {
 
@@ -49,6 +65,7 @@ public class MapaArrecadacaoBean extends PaginaBean {
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("dataInicio", dataSimples.format(dataInicio));
+        parametros.put("idUsuario", vendedor.getId());
 
         InputStream relatorio = null;
         ByteArrayOutputStream relat = new ByteArrayOutputStream();
@@ -75,5 +92,21 @@ public class MapaArrecadacaoBean extends PaginaBean {
 
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
+    }
+
+    public List<Usuario> getVendedores() {
+        return vendedores;
+    }
+
+    public void setVendedores(List<Usuario> vendedores) {
+        this.vendedores = vendedores;
+    }
+
+    public Usuario getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Usuario vendedor) {
+        this.vendedor = vendedor;
     }
 }

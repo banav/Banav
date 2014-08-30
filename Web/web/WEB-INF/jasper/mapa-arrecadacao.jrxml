@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mapa-arrecadacao" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
 	<property name="ireport.zoom" value="1.4641000000000017"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dataInicio" class="java.lang.String"/>
 	<parameter name="dataFim" class="java.lang.String"/>
+	<parameter name="idUsuario" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
 	vvc.viagem_id,
  	p.codigobarras,
 	p.checkin,
+	(select u.nome from public.usuario u where u.id = cast(substring(p.codigobarras from 11 for 2) AS int8)) as usuario,
 	(select pt.nome from public.porto pt where pt.id = v.porto_origem) as origem,
 	(select pt.nome from public.porto pt where pt.id = v.porto_destino) as destino,
 	to_char(v.horaSaida, 'DD/MM/YYYY HH24:MI') as data_saida,
@@ -27,12 +31,14 @@ FROM
 WHERE
 	p.viagem_valor_classe_id = vvc.id and
 	vvc.viagem_id = v.id and
-	to_char(p.datavenda, 'DD/MM/YYYY') = $P{dataInicio}
+	to_char(p.datavenda, 'DD/MM/YYYY') = $P{dataInicio} and
+	cast(substring(p.codigobarras from 11 for 2) as int8) = $P{idUsuario}
 ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 	</queryString>
 	<field name="viagem_id" class="java.lang.Long"/>
 	<field name="codigobarras" class="java.lang.String"/>
 	<field name="checkin" class="java.lang.Boolean"/>
+	<field name="usuario" class="java.lang.String"/>
 	<field name="origem" class="java.lang.String"/>
 	<field name="destino" class="java.lang.String"/>
 	<field name="data_saida" class="java.lang.String"/>
@@ -258,6 +264,15 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="c1017597-e4ab-4b5d-a3b3-d0a42c691cb1" x="337" y="22" width="331" height="20">
+					<printWhenExpression><![CDATA[$P{idUsuario} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Vendedor: " + $F{usuario}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

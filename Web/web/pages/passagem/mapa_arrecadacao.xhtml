@@ -13,10 +13,17 @@
 
             <h:form id="formConteudo" prependId="false">
 
-                <h:panelGrid columns="1" cellspacing="2">
+                <h:panelGrid columns="3" cellspacing="2">
                     <p:outputLabel value="Data:" for="dataInicio" />
-                    <p:calendar id="dataInicio" value="#{mapaArrecadacaoBean.dataInicio}"/>
+                    <p:calendar id="dataInicio" required="true" requiredMessage="Campo obrigatório." value="#{mapaArrecadacaoBean.dataInicio}"/>
                     <p:message for="dataInicio" />
+
+                    <p:outputLabel value="Vendedor:" for="vendedor" />
+                    <p:selectOneMenu id="vendedor" value="#{mapaArrecadacaoBean.vendedor}" converter="objConverter" style="width: 250px;" required="true" requiredMessage="Campo obrigatório.">
+                        <f:selectItem itemLabel="Selecione" />
+                        <f:selectItems value="#{mapaArrecadacaoBean.vendedores}" />
+                    </p:selectOneMenu>
+                    <p:message for="vendedor" />
                 </h:panelGrid>
 
                 <p:separator />

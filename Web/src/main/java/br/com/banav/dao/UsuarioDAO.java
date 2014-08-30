@@ -3,6 +3,7 @@ package br.com.banav.dao;
 import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOEntidadeBasica;
 import br.com.banav.exception.AcessoDBError;
+import br.com.banav.model.Perfil;
 import br.com.banav.model.Usuario;
 
 import javax.persistence.Query;
@@ -36,5 +37,9 @@ public class UsuarioDAO extends DAOEntidadeBasica<Usuario> {
 
     }
 
-
+    public List<Usuario> listarPor(Perfil perfil){
+        Query query = getEm().createQuery("select u from Usuario u where u.perfil = :perfil");
+        query.setParameter("perfil", Perfil.VENDEDOR);
+        return query.getResultList();
+    }
 }

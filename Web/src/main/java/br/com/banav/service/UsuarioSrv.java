@@ -52,6 +52,10 @@ public class UsuarioSrv {
         return usuarioDAO.listar(new Date(time));
     }
 
+    public List<Usuario> listarVendedores(){
+        return usuarioDAO.listarPor(Perfil.VENDEDOR);
+    }
+
     public Usuario logar(Usuario usuario) {
         try {
             final List<Usuario> usuarios = usuarioDAO.listarPor(usuario.getLogin(), Util.toMD5(usuario.getSenha()));
