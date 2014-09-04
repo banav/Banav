@@ -59,7 +59,7 @@ public class MapaArrecadacaoBean extends PaginaBean {
         vendedores = usuarioSrv.listarVendedores();
     }
 
-    public StreamedContent gerarRelatorio() throws FileNotFoundException, JRException, SQLException {
+    public StreamedContent gerarRelatorio() throws FileNotFoundException, JRException, SQLException, Exception {
 
         SimpleDateFormat dataSimples = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -74,16 +74,44 @@ public class MapaArrecadacaoBean extends PaginaBean {
         Session session = passagemDAO.getEm().unwrap(Session.class);
         SessionFactoryImplementor sfi = (SessionFactoryImplementor) session.getSessionFactory();
         ConnectionProvider cp = sfi.getConnectionProvider();
-        Connection connection = cp.getConnection();
 
-        JasperPrint print = JasperFillManager.fillReport(new FileInputStream(new File(arquivo)), parametros, connection);
-        JRExporter exporter = new JRPdfExporter();
-        exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, relat);
-        exporter.exportReport();
-        relatorio = new ByteArrayInputStream(relat.toByteArray());
+        Connection connection = null;
 
-        return new DefaultStreamedContent(relatorio, "application/pdf", "Relatorio_Arrecadacao.pdf");
+        try{
+            connection = cp.getConnection();
+
+            JasperPrint print = JasperFillManager.fillReport(new FileInputStream(new File(arquivo)), parametros, connection);
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, relat);
+            exporter.exportReport();
+            relatorio = new ByteArrayInputStream(relat.toByteArray());
+
+            return new DefaultStreamedContent(relatorio, "application/pdf", "Relatorio_Arrecadacao.pdf");
+        }
+        catch (FileNotFoundException e){
+            throw e;
+        }
+        catch (JRException e){
+            throw e;
+        }
+        catch (SQLException e){
+            throw e;
+        }
+        catch (Exception e){
+            throw e;
+        }
+        finally {
+            if (connection != null){
+                try{
+                    if(!connection.isClosed())
+                        connection.close();
+                }
+                catch (SQLException e){
+                    throw e;
+                }
+            }
+        }
     }
 
     public Date getDataInicio() {
