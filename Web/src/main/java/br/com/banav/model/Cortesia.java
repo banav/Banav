@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "cortesia")
-@SequenceGenerator(name = "CortesiaGenerator_SEQ", initialValue = 1, sequenceName = "seq_cortesia")
+@SequenceGenerator(name = "CortesiaGenerator_SEQ", initialValue = 1, allocationSize = 1, sequenceName = "seq_cortesia",schema = "public")
 public class Cortesia extends EntidadeBasica implements Serializable {
 
     @Id
