@@ -12,7 +12,8 @@ import java.util.List;
 public class PassagemCancelamentoDAO extends DAOLocal<PassagemCancelamento> {
 
     public List<PassagemCancelamento> listarNaoEnviados() {
-        Query query = getEM().createQuery("select pc from PassagemCancelamento as pc where pc.enviado = false");
+        Query query = getEM().createQuery("select pc from PassagemCancelamento as pc, Passagem  p " +
+                "where p.codigoBarras = pc.codigoBarras and p.enviado = true and pc.enviado = false");
         return query.getResultList();
     }
 
