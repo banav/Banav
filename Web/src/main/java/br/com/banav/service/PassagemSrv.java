@@ -97,6 +97,9 @@ public class PassagemSrv {
                     passagemHistoricoDAO.salvar(passagemHistorico);
                 }
             }
+            else{
+                throw new Exception("Passagem não existe ou não sincronizada para a base de dados central!");
+            }
 
         }
         catch (Exception e){
