@@ -84,6 +84,10 @@ public class ViagemFormularioBean extends PaginaBean {
             viagem = new Viagem();
             repeticoes = 1;
         } else {
+            for(ViagemValorClasse vvc : viagemValores){
+                viagemValorClasseSrv.atualizar(vvc);
+            }
+
             viagemSrv.atualizar(viagem);
         }
 
