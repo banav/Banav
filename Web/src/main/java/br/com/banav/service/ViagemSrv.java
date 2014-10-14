@@ -92,6 +92,10 @@ public class ViagemSrv {
         return viagemDAO.listar();
     }
 
+    public List<Viagem> listarViagensAtivas(){
+        return viagemDAO.listarViagensAtivas();
+    }
+
     public void salvarValorPassagens(Viagem viagem, List<ViagemValorClasse> viagemValores) {
         for (ViagemValorClasse _viagemValorClasse : viagemValores) {
             ViagemValorClasse viagemValorClasse = _viagemValorClasse.clone();
