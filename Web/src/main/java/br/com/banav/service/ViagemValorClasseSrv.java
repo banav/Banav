@@ -49,4 +49,11 @@ public class ViagemValorClasseSrv implements Serializable {
     public List<ViagemValorClasse> listar(){
         return viagemValorClasseDAO.listar();
     }
+
+    public void atualizar(ViagemValorClasse viagemValorClasse){
+        ViagemValorClasse _viagemValorClasse = viagemValorClasseDAO.getUm(viagemValorClasse.getId(), ViagemValorClasse.class);
+        viagemValorClasse.setNavioClasse(_viagemValorClasse.getNavioClasse());
+        viagemValorClasse.setViagem(_viagemValorClasse.getViagem());
+        viagemValorClasseDAO.atualizar(viagemValorClasse);
+    }
 }

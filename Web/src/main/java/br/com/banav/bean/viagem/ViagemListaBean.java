@@ -29,7 +29,7 @@ public class ViagemListaBean extends PaginaBean {
 
     @URLAction(mappingId = "viagemLista", onPostback = false)
     public void listar() {
-        viagens = viagemSrv.listar();
+        viagens = viagemSrv.listarViagensAtivas();
     }
 
     public void remover(Long id) {

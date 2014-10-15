@@ -16,4 +16,9 @@ public class ViagemDAO extends DAOEntidadeBasica<Viagem> {
         Query query = getEm().createQuery("select v from Viagem as v order by v.horaSaida desc");
         return query.getResultList();
     }
+
+    public List<Viagem> listarViagensAtivas(){
+        Query query = getEm().createQuery("select v from Viagem as v where v.ativo = true order by v.horaSaida desc");
+        return query.getResultList();
+    }
 }

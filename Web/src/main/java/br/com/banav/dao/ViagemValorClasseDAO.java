@@ -24,4 +24,6 @@ public class ViagemValorClasseDAO extends DAOEntidadeBasica<ViagemValorClasse> {
         Query query = getEm().createQuery("select vvc from ViagemValorClasse vvc");
         return query.getResultList();
     }
+
+
 }
