@@ -73,7 +73,7 @@ public class ViagemValorClasseDAO extends DAOLocalEntidadeBasica<ViagemValorClas
 
         Query query = getEM().createNativeQuery(strQuery);
         query.setParameter(1, entidadeBasica.getId());
-        query.setParameter(2, entidadeBasica.getValor());
+        query.setParameter(2, entidadeBasica.getValor() == null ? 0 : entidadeBasica.getValor());
         query.setParameter(3, entidadeBasica.getNavioClasse().getClasse().getClasseID());
         query.setParameter(4, entidadeBasica.getNavioClasse().getNavio().getNavioID());
         query.setParameter(5, entidadeBasica.getViagem().getId());
