@@ -31,7 +31,14 @@
             <property name="hibernate.default_schema" value="offline" />
             <property name="hibernate.connection.characterEncoding" value="UTF-8" />
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
-            <!--<property name="hibernate.hbm2ddl.auto" value="none"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
         </properties>
     </persistence-unit>
+
+
+
+
+
+
+
 </persistence>

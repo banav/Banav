@@ -186,6 +186,8 @@ public class Passagem extends JPanel {
         }
 
         String quantidadeStr = JOptionPane.showInputDialog(this, "Informe a quantidade", 1);
+        if (quantidadeStr == null || quantidadeStr.isEmpty())
+            return;
         int quantidade = new Integer(quantidadeStr);
         double valorTotal = Double.parseDouble(valor) * quantidade;
 
@@ -220,6 +222,7 @@ public class Passagem extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+
             JButtonData butClasse = (JButtonData) actionEvent.getSource();
             Classe classe = (Classe) butClasse.getData();
 
@@ -234,6 +237,7 @@ public class Passagem extends JPanel {
             } else if(butClasse.getParent().equals(passagem.gratuidadePanel)) {
                 tipo = Passagem.GRATUIDADE;
             }
+
 
             passagem.addPassagem(_viagemValorClasse, tipo);
         }
@@ -300,7 +304,7 @@ public class Passagem extends JPanel {
             ArrayList _data = new ArrayList(dataVector);
 
             SimpleDateFormat dataPadrao = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat horaPadrao = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat horaPadrao = new SimpleDateFormat("HH:mm");
 
             double total = 0;
             for (Object objRow : _data) {
