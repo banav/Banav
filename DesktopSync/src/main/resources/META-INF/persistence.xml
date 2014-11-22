@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-    <persistence-unit name="BanavSync" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="BanavSyncPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
         <properties>
@@ -23,7 +23,7 @@
             -->
 
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/banav" />
-            <property name="hibernate.connection.username" value="banav" />
+            <property name="hibernate.connection.username" value="postgres" />
             <property name="hibernate.connection.password" value="j4rv1s" />
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

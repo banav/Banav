@@ -1,6 +1,5 @@
 package br.com.banav.gui;
 
-import br.com.banav.gui.jobs.*;
 import br.com.banav.model.Viagem;
 
 import javax.swing.*;

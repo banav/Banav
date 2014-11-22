@@ -17,7 +17,7 @@ public class EnvioPassagemJob extends Thread {
 
 
     public EnvioPassagemJob() {
-        setDaemon(true);
+        setDaemon(false);
         setPriority(NORM_PRIORITY);
 
         passagemDAO = new PassagemDAO();

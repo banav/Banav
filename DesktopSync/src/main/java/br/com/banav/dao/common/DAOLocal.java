@@ -26,7 +26,7 @@ public abstract class DAOLocal<T> {
 
     public  EntityManager getEM() {
         if(emf == null) {
-            emf = Persistence.createEntityManagerFactory("BanavLocalPU");
+            emf = Persistence.createEntityManagerFactory("BanavSyncPU");
         }
 
         if(em == null) {

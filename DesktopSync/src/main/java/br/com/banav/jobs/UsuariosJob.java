@@ -18,7 +18,7 @@ public class UsuariosJob extends Thread {
     private UsuarioWS usuarioWS;
 
     public UsuariosJob() {
-        setDaemon(true);
+        setDaemon(false);
         setPriority(NORM_PRIORITY);
 
         usuarioDAOLocal = new UsuarioDAO();

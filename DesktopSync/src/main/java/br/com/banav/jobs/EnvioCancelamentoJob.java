@@ -17,7 +17,7 @@ public class EnvioCancelamentoJob extends Thread {
     private PassagemWS passagemWS;
 
     public EnvioCancelamentoJob() {
-        setDaemon(true);
+        setDaemon(false);
         setPriority(NORM_PRIORITY);
 
         passagemCancelamentoDAO = new PassagemCancelamentoDAO();
