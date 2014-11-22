@@ -9,6 +9,7 @@
       <list>
         <option value="$PROJECT_DIR$/Desktop/pom.xml" />
         <option value="$PROJECT_DIR$/Web/pom.xml" />
+        <option value="$PROJECT_DIR$/DesktopSync/pom.xml" />
       </list>
     </option>
   </component>
@@ -19,4 +20,3 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
-

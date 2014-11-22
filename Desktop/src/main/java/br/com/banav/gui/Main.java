@@ -20,11 +20,7 @@ public class Main extends JFrame {
     private CortesiaForm cortesiaForm;
     private CancelarPassagem cancelarPassagem;
 
-    private EnvioCheckInJob envioCheckInJob;
-    private UsuariosJob usuariosJob;
-    private EnvioPassagemJob envioPassagemJob;
-    private BaseJob baseJob;
-    private EnvioCancelamentoJob envioCancelamentoJob;
+
 
     public Main() {
         setContentPane(mainContent);
@@ -37,61 +33,6 @@ public class Main extends JFrame {
         setVisible(true);
 
         inicializarPaineis();
-        iniciarJobs();
-    }
-
-    public void pausarJobs() {
-        this.envioCheckInJob.esperar();
-        this.usuariosJob.esperar();
-        this.envioPassagemJob.esperar();
-        this.baseJob.esperar();
-
-        this.envioCheckInJob = null;
-        this.usuariosJob = null;
-        this.envioPassagemJob = null;
-        this.baseJob = null;
-    }
-
-    public void iniciarJobs() {
-        if(envioCheckInJob == null) {
-            envioCheckInJob = new EnvioCheckInJob();
-        }
-
-        if(!envioCheckInJob.isAlive()) {
-            envioCheckInJob.start();
-        }
-
-        if(envioPassagemJob == null) {
-            envioPassagemJob = new EnvioPassagemJob();
-        }
-
-        if(!envioPassagemJob.isAlive()) {
-            envioPassagemJob.start();
-        }
-
-        if(usuariosJob == null) {
-            usuariosJob = new UsuariosJob();
-        }
-
-        if(!usuariosJob.isAlive()) {
-            usuariosJob.start();
-        }
-
-        if(baseJob == null){
-            baseJob = new BaseJob();
-        }
-
-        if(!baseJob.isAlive()){
-            baseJob.start();
-        }
-
-        if(envioCancelamentoJob == null){
-            envioCancelamentoJob = new EnvioCancelamentoJob();
-        }
-
-        if(!envioCancelamentoJob.isAlive()){
-            envioCancelamentoJob.start();
-        }
     }
 
     private void inicializarPaineis() {

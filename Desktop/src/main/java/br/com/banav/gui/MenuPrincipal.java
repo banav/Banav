@@ -38,6 +38,9 @@ public class MenuPrincipal extends JPanel {
             btCortesias.setEnabled(false);
             btCancelamento.setEnabled(false);
         }
+        if(usuario.getPerfil().equals(Perfil.VENDEDOR)) {
+            btEfetuarCheckIn.setEnabled(false);
+        }
     }
 
     private static class EmitirPassagemActionListener implements ActionListener {

@@ -3,6 +3,9 @@ package nfiscal;
 import br.com.banav.exception.ImpressoraError;
 import br.com.banav.util.Util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class Ticket {
 
     static {

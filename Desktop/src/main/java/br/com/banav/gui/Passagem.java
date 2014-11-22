@@ -23,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -250,33 +252,42 @@ public class Passagem extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-
+            Boolean prod = true;
             try {
-                BematechNFiscal cupom = BematechNFiscal.Instance;
-
-                int iRetorno;
-                iRetorno = cupom.ConfiguraModeloImpressora(7);
-                iRetorno = cupom.IniciaPorta("USB");
-
-                iRetorno = cupom.Le_Status();
-
-                switch (iRetorno){
-                    case BematechNFiscal.ERRO_COMUNICACAO:
-                        throw new ImpressoraError("Erro de Comunicação com a Impressora!");
-                    case BematechNFiscal.SEM_PAPEL:
-                        throw new ImpressoraError("Impressora sem Papel!");
-                    case BematechNFiscal.TAMPA_ABERTA:
-                        throw new ImpressoraError("Tampa da Impressora Aberta!");
-                    case BematechNFiscal.POUCO_PAPEL:
-                        throw new ImpressoraError("Impressora com pouco papel! Favor trocar a bobina.");
+                String computerName = InetAddress.getLocalHost().getHostName();
+                if(computerName != null && computerName.equalsIgnoreCase("gilson-note")) {
+                   prod = false;
                 }
+            } catch (UnknownHostException e) {
 
-            } catch(Exception e) {
-                JOptionPane.showMessageDialog(main, e.getMessage());
-                return;
             }
 
-            main.pausarJobs();
+            if(prod) {
+                try {
+                    BematechNFiscal cupom = BematechNFiscal.Instance;
+
+                    int iRetorno;
+                    iRetorno = cupom.ConfiguraModeloImpressora(7);
+                    iRetorno = cupom.IniciaPorta("USB");
+
+                    iRetorno = cupom.Le_Status();
+
+                    switch (iRetorno) {
+                        case BematechNFiscal.ERRO_COMUNICACAO:
+                            throw new ImpressoraError("Erro de Comunicação com a Impressora!");
+                        case BematechNFiscal.SEM_PAPEL:
+                            throw new ImpressoraError("Impressora sem Papel!");
+                        case BematechNFiscal.TAMPA_ABERTA:
+                            throw new ImpressoraError("Tampa da Impressora Aberta!");
+                        case BematechNFiscal.POUCO_PAPEL:
+                            throw new ImpressoraError("Impressora com pouco papel! Favor trocar a bobina.");
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(main, e.getMessage());
+                    return;
+                }
+            }
 
             PassagemDAO passagemDAO = new PassagemDAO();
 
@@ -326,19 +337,24 @@ public class Passagem extends JPanel {
 
                     passagemDAO.salvar(_passagem);
 
-                    try {
-                        Ticket.imprimir(
-                            viagem.getOrigem().getNome(),
-                            viagem.getDestino().getNome(),
-                            dataPadrao.format(viagem.getHoraSaida()),
-                            horaPadrao.format(viagem.getHoraSaida()),
-                            row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""),
-                            String.format("%.2f", valor),
-                            _passagem.getCodigoBarras(),
-                            null
-                        );
-                    } catch(Exception e) {
-                        passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
+                    if(prod) {
+                        try {
+                            Ticket.imprimir(
+                                viagem.getOrigem().getNome(),
+                                viagem.getDestino().getNome(),
+                                dataPadrao.format(viagem.getHoraSaida()),
+                                horaPadrao.format(viagem.getHoraSaida()),
+                                row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""),
+                                String.format("%.2f", valor),
+                                _passagem.getCodigoBarras(),
+                                null
+                            );
+                        } catch(Exception e) {
+                            passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
+                        }
+                    } else {
+                        System.out.print(row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""));
+                        System.out.println(" " + _passagem.getCodigoBarras());
                     }
                 }
             }
@@ -347,8 +363,6 @@ public class Passagem extends JPanel {
             passagem.tablePassagem.setModel(tableModel);
             passagem.labelTotal.setText("Finalizado com sucesso.");
             passagem.labelQuantidade.setText("           ");
-
-            main.iniciarJobs();
         }
     }
 

@@ -6,16 +6,12 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>dfc0df9edfd8dfdcdf9bdfd9</user-password>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="BanavLocalPU" uuid="508c4b92-9266-4767-9ff2-c9a455ae7c0e">
       <driver-ref>postgresql</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
-      <user-name>postgres</user-name>
-      <user-password>dfc0df9edfd8dfdcdf9bdfd9</user-password>
       <libraries>
         <library>
           <url>file://$MAVEN_REPOSITORY$/postgresql/postgresql/9.1-901.jdbc4/postgresql-9.1-901.jdbc4.jar</url>
@@ -24,4 +20,3 @@
     </data-source>
   </component>
 </project>
-
