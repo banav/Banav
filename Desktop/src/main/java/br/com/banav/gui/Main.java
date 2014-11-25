@@ -4,6 +4,8 @@ import br.com.banav.model.Viagem;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.InetAddress;
 
 /**
  * Created by GilsonRocha on 10/03/14.
@@ -32,6 +34,17 @@ public class Main extends JFrame {
         setVisible(true);
 
         inicializarPaineis();
+
+        try {
+            String computerName = InetAddress.getLocalHost().getHostName();
+            if(computerName != null && computerName.equalsIgnoreCase("gilson-note")) {
+                Runtime.getRuntime().exec("java -jar /home/gilson/Projetos/y2g/Banav/DesktopSync/target/DesktopSync-1.0-SNAPSHOT.jar");
+            } else {
+                Runtime.getRuntime().exec("java -jar c:/DesktopSync/DesktopSync-1.0-SNAPSHOT.jar");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void inicializarPaineis() {

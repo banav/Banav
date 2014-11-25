@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>br.com.banav.gui.Login</mainClass>
+                            <mainClass>br.com.banav.Main</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>dependency/</classpathPrefix>
                         </manifest>
