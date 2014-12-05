@@ -37,11 +37,23 @@ public class Main extends JFrame {
 
         try {
             String computerName = InetAddress.getLocalHost().getHostName();
+            String command = null;
             if(computerName != null && computerName.equalsIgnoreCase("gilson-note")) {
-                Runtime.getRuntime().exec("java -jar /home/gilson/Projetos/y2g/Banav/DesktopSync/target/DesktopSync-1.0-SNAPSHOT.jar");
+                command = "java -jar /home/gilson/Projetos/y2g/Banav/DesktopSync/target/DesktopSync-1.0-SNAPSHOT.jar";
             } else {
-                Runtime.getRuntime().exec("java -jar c:/DesktopSync/DesktopSync-1.0-SNAPSHOT.jar");
+                command = "java -jar c:/DesktopSync/DesktopSync-1.0-SNAPSHOT.jar";
             }
+
+            final Process desktopSync = Runtime.getRuntime().exec(command);
+
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    desktopSync.destroy();
+                }
+            });
+
+            System.out.println("DesktopSync iniciado.");
         } catch (IOException e) {
             e.printStackTrace();
         }
