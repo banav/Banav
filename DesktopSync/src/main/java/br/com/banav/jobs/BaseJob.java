@@ -87,14 +87,6 @@ public class BaseJob extends Thread {
         }
     }
 
-    public void esperar() {
-        interrupt();
-    }
-
-    public void retomar() {
-        start();
-    }
-
     private void atualizarNavios() {
         Date date = navioDAOLocal.ultimaAtualizacao(Navio.class);
         List<NavioDTO> naviosDTO = navioWS.listar(date);

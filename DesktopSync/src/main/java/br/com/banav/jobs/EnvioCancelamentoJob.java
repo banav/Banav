@@ -36,14 +36,6 @@ public class EnvioCancelamentoJob extends Thread {
         }
     }
 
-    public void esperar() {
-        interrupt();
-    }
-
-    public void retomar() {
-        start();
-    }
-
     private void enviaCodigosPendentes() {
         List<PassagemCancelamento> naoEnviados = passagemCancelamentoDAO.listarNaoEnviados();
         for (PassagemCancelamento passagemCancelamento : naoEnviados) {

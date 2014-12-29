@@ -36,14 +36,6 @@ public class EnvioPassagemJob extends Thread {
         }
     }
 
-    public void esperar() {
-        interrupt();
-    }
-
-    public void retomar() {
-        start();
-    }
-
     private void enviaPassagensPendentes() {
         List<br.com.banav.model.Passagem> naoEnviados = passagemDAO.listarNaoEnviadas();
 
