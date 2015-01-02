@@ -42,7 +42,7 @@ public class BaseJob extends Thread {
     private CortesiaWS cortesiaWS;
 
     public BaseJob() {
-        setDaemon(false);
+        setDaemon(true);
         setPriority(NORM_PRIORITY);
 
         navioDAOLocal = new NavioDAO();

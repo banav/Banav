@@ -17,7 +17,7 @@ public class EnvioCheckInJob extends Thread {
     private CheckInWS checkInWS;
 
     public EnvioCheckInJob() {
-        setDaemon(false);
+        setDaemon(true);
         setPriority(NORM_PRIORITY);
 
         checkInDAO = new CheckInDAO();
