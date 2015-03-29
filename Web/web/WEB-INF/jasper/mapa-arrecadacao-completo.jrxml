@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mapa-arrecadacao" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="954"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicio" class="java.lang.String"/>
+	<parameter name="dataFim" class="java.lang.String"/>
+	<parameter name="idUsuario" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[4]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select CONCAT(tabela.nome, ' - ', tabela.tipo) as classe, tabela.*
+
+
+from (
+select
+c.nome,
+vvc.viagem_id,
+p.codigobarras,
+p.checkin,
+	(select u.nome from public.usuario u where u.id = cast(substring(p.codigobarras from 11 for 2) AS int8)) as usuario,
+	(select pt.nome from public.porto pt where pt.id = v.porto_origem) as origem,
+	(select pt.nome from public.porto pt where pt.id = v.porto_destino) as destino,
+	to_char(v.horaSaida, 'DD/MM/YYYY HH24:MI') as data_saida,
+	p.valor,
+	(select to_char(ph.data, 'DD/MM/YYYY HH24:MI') from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'MARCADA') as data_emissao,
+	(select to_char(ph.data, 'DD/MM/YYYY HH24:MI') from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA') as data_cancelamento,
+	vvc.classe as classe_id,
+	p.gratuidade,
+case when p.valor = vvc.valor then 'Inteira'
+            when p.valor = vvc.valor_meia then 'Meia'
+            else 'Gratuidade' end as tipo ,
+            (p.id in (select ph.passagem_id from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA')) as cancelada
+
+            from passagem p, viagem_valor_classe vvc, classe c,public.viagem v
+where vvc.id = p.viagem_valor_classe_id
+and vvc.viagem_id = v.id and
+	to_char(p.datavenda, 'DD/MM/YYYY') = $P{dataInicio}
+and vvc.classe = c.id
+ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe, tipo) tabela]]>
+	</queryString>
+	<field name="viagem_id" class="java.lang.Long"/>
+	<field name="codigobarras" class="java.lang.String"/>
+	<field name="checkin" class="java.lang.Boolean"/>
+	<field name="usuario" class="java.lang.String"/>
+	<field name="origem" class="java.lang.String"/>
+	<field name="destino" class="java.lang.String"/>
+	<field name="data_saida" class="java.lang.String"/>
+	<field name="valor" class="java.lang.Double"/>
+	<field name="data_emissao" class="java.lang.String"/>
+	<field name="data_cancelamento" class="java.lang.String"/>
+	<field name="cancelada" class="java.lang.Boolean"/>
+	<field name="classe_id" class="java.lang.Long"/>
+	<field name="classe" class="java.lang.String"/>
+	<field name="gratuidade" class="java.lang.Boolean"/>
+	<variable name="SOMA_CLASSE" class="java.lang.Double" resetType="Group" resetGroup="GrupoClasse" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Double("0") : $F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_TOTAL" class="java.lang.Double" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Double("0") : $F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_QTD" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$V{Classe_COUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="QTD_GRATUIDADE" class="java.lang.Integer" resetType="Group" resetGroup="GrupoClasse" calculation="Sum">
+		<variableExpression><![CDATA[$F{gratuidade} && !$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="QTD_CANCELAMENTO" class="java.lang.Integer" resetType="Group" resetGroup="GrupoClasse" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_GRATUIDADE" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$F{gratuidade} && !$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_CANCELAMENTO" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_CHECKIN" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
+		<variableExpression><![CDATA[$F{checkin} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="SOMA_DIARIA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{cancelada} ? new Double("0") : $F{valor}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.String"/>
+	<group name="GrupoVIagem">
+		<groupExpression><![CDATA[$F{viagem_id}]]></groupExpression>
+		<groupHeader>
+			<band height="38">
+				<textField>
+					<reportElement uuid="4862c90e-6678-4bbb-a2b3-9fb0fe1ba695" x="0" y="1" width="802" height="18" forecolor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Viagem: " + $F{origem} + " > " + $F{destino} + "          Data/Hora: " + $F{data_saida}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement uuid="2cdd04a7-5d84-4134-a234-49e4d8b39184" x="4" y="20" width="802" height="18" backcolor="#1D1D1D"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement uuid="a373b6d0-96f6-4ae1-ae0e-f0e6bf3e237e" x="4" y="20" width="164" height="18" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle" markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Classe]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="05ee47b0-cf2c-4cb3-b7e7-091ae18d8a39" x="703" y="20" width="99" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0497da5f-5bd3-446b-8254-431a486e1ac9" x="282" y="20" width="134" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Vendidas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3398ac46-7509-4e44-b0bf-2d75a32b874d" x="465" y="20" width="140" height="18" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Canceladas]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="28">
+				<textField pattern="#,##0.00">
+					<reportElement uuid="201e2b23-bcf9-4c7b-949d-c3abde88058a" x="695" y="2" width="107" height="17"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOMA_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="7d941246-f772-49bd-aeb8-2094694885ee" x="465" y="3" width="140" height="19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTAL_CANCELAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="1fdd2a8a-c236-412f-927e-fca2d9a063b4" x="285" y="4" width="134" height="17"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GrupoVIagem_COUNT}- $V{TOTAL_CANCELAMENTO} - $V{TOTAL_GRATUIDADE}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="68ec9cda-b86b-4dc1-9f16-92d5f4ac07c3" x="285" y="3" width="134" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="cc6c1195-7107-4573-a357-49f37e377a47" x="465" y="3" width="140" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="6114d340-8c51-4761-9e3f-2227fd01f5f9" x="668" y="1" width="134" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Classe">
+		<groupExpression><![CDATA[$F{classe_id}]]></groupExpression>
+	</group>
+	<group name="GrupoClasse">
+		<groupExpression><![CDATA[$F{classe}]]></groupExpression>
+		<groupFooter>
+			<band height="15">
+				<textField>
+					<reportElement uuid="d0d1e359-b6ae-4325-84e9-ab9881c364e8" x="4" y="0" width="164" height="14"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{classe}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="7db30610-ca1d-456d-8034-7638db08d7dd" x="285" y="0" width="134" height="14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GrupoClasse_COUNT} - $V{QTD_CANCELAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="d3834494-f37c-4aac-b4c8-494992c2e862" x="465" y="0" width="140" height="14"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{QTD_CANCELAMENTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement uuid="f4612ec7-6e86-4bcb-87c0-847095f379d6" x="695" y="0" width="107" height="14"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SOMA_CLASSE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4b3e5a9d-5c0b-42ac-8f41-38775bf99037" x="351" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BANAV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53f3874d-95a1-420b-824d-e7d319156373" x="0" y="22" width="185" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mapa de Arrecação do dia:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9aa4d74c-6b32-4a3e-904b-bd78217e2844" x="0" y="41" width="802" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement uuid="464b2f94-84f0-4600-a079-b7e5552b9d0b" x="671" y="21" width="131" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="25ee95f0-bd9b-4812-8fd1-48bab5c11963" x="181" y="22" width="154" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnFooter>
+		<band height="36">
+			<rectangle>
+				<reportElement uuid="5e9c4435-1a9e-4be1-94cd-288d7e32f973" x="0" y="0" width="802" height="36"/>
+			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="b2ab0141-b474-46ba-9c1c-b9fb4fba85f1" x="419" y="3" width="158" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SOMA_DIARIA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="75737c3c-929e-4dfe-96b3-bc565c690f38" x="136" y="3" width="280" height="30"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor total da arrecadação:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement uuid="680674dd-272e-454f-b4dd-bde01cf8d909" x="124" y="15" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nenhum registro encontrado para o período informado.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
