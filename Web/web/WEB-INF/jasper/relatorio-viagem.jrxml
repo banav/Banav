@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
-	<property name="ireport.zoom" value="1.3310000000000006"/>
-	<property name="ireport.x" value="143"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="491"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dataInicio" class="java.lang.String"/>
 	<parameter name="dataFim" class="java.lang.String"/>
@@ -19,7 +19,10 @@
 	(p.id in (select ph.passagem_id from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA')) as cancelada,
 	vvc.classe as classe_id,
 	(select c.nome from public.classe c where c.id = vvc.classe) as classe,
-	p.gratuidade
+	p.gratuidade,
+          case when p.valor = vvc.valor then 'Inteira'
+	when p.valor = vvc.valor_meia then 'Meia'
+	else 'Gratuidade' end as tipo
 FROM
 	public.passagem p,
 	public.viagem_valor_classe vvc,
@@ -28,7 +31,7 @@ WHERE
 	p.viagem_valor_classe_id = vvc.id and
 	vvc.viagem_id = v.id and
 	to_char(v.horaSaida, 'DD/MM/YYYY') = $P{dataInicio}
-ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
+ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe, tipo]]>
 	</queryString>
 	<field name="viagem_id" class="java.lang.Long"/>
 	<field name="codigobarras" class="java.lang.String"/>
@@ -43,6 +46,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 	<field name="classe_id" class="java.lang.Long"/>
 	<field name="classe" class="java.lang.String"/>
 	<field name="gratuidade" class="java.lang.Boolean"/>
+	<field name="tipo" class="java.lang.String"/>
 	<variable name="SOMA_CLASSE" class="java.lang.Double" resetType="Group" resetGroup="Classe" calculation="Sum">
 		<variableExpression><![CDATA[$F{cancelada} ? new Double("0") : $F{valor}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Double("0")]]></initialValueExpression>
@@ -196,7 +200,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 					<textFieldExpression><![CDATA["Gratuidades:" + $V{QTD_GRATUIDADE}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="d3834494-f37c-4aac-b4c8-494992c2e862" x="292" y="4" width="172" height="19"/>
+					<reportElement uuid="d3834494-f37c-4aac-b4c8-494992c2e862" x="292" y="4" width="220" height="19"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -253,11 +257,11 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a41c7508-f0fb-4613-a79e-feca662d9c0a" x="404" y="0" width="222" height="14"/>
+				<reportElement uuid="a41c7508-f0fb-4613-a79e-feca662d9c0a" x="389" y="0" width="218" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cancelada} ? "CANCELADA em " + $F{data_cancelamento} : ($F{gratuidade} && $F{checkin} ? "CHECKIN/GRATUIDADE" : ($F{gratuidade} && !$F{checkin} ? "GRATUIDADE" : ($F{checkin} ? "CHECKIN" : "")))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cancelada} ? "CANCELADA em " + $F{data_cancelamento} : ($F{checkin} ? "CHECKIN" : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bba1d608-98e6-4484-92df-fb3813553e16" x="104" y="0" width="118" height="14"/>
@@ -273,6 +277,11 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe]]>
 				<reportElement uuid="ee3c8475-bca3-45bc-89af-03713292e82a" x="225" y="0" width="168" height="14"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigobarras}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="eaf60f4f-38ae-406a-b915-b9c88034e779" x="613" y="0" width="79" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
