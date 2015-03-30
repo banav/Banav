@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="passagens-sintetico" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="055b48e4-5817-4d08-a373-0c74e5f6835f">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="491"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="dataInicio" class="java.lang.String"/>
 	<parameter name="dataFim" class="java.lang.String"/>
@@ -77,6 +77,14 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe, tipo]]>
 	</variable>
 	<variable name="TOTAL_CHECKIN" class="java.lang.Integer" resetType="Group" resetGroup="GrupoVIagem" calculation="Sum">
 		<variableExpression><![CDATA[$F{checkin} ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="Total_Inteira" class="java.lang.Integer" resetType="Group" resetGroup="Classe" calculation="Sum">
+		<variableExpression><![CDATA[($F{tipo}.equals("Inteira" ) && !$F{cancelada}) ? new Integer("1") : new Integer("0")]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_MEIA" class="java.lang.Integer" resetType="Group" resetGroup="Classe" calculation="Sum">
+		<variableExpression><![CDATA[($F{tipo}.equals("Meia" ) && !$F{cancelada}) ? new Integer("1") : new Integer("0")]]></variableExpression>
 		<initialValueExpression><![CDATA[new Integer("0")]]></initialValueExpression>
 	</variable>
 	<group name="GrupoVIagem">
@@ -193,14 +201,30 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe, tipo]]>
 					<textFieldExpression><![CDATA[$V{SOMA_CLASSE}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="752d1c7c-4533-4d18-b752-8cd164b17a70" x="154" y="4" width="138" height="19"/>
+					<reportElement uuid="8bcb617f-cc0f-4909-9618-3b76252d1859" x="163" y="4" width="59" height="19"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Inteira:" + $V{Total_Inteira}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="5f7c3ec1-f5cb-456d-9789-99f95714d4cc" x="238" y="4" width="100" height="19">
+						<printWhenExpression><![CDATA[$V{TOTAL_MEIA} > new Integer("0")]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Meia:" + $V{TOTAL_MEIA}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="752d1c7c-4533-4d18-b752-8cd164b17a70" x="338" y="4" width="138" height="19"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Gratuidades:" + $V{QTD_GRATUIDADE}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="d3834494-f37c-4aac-b4c8-494992c2e862" x="292" y="4" width="220" height="19"/>
+					<reportElement uuid="d3834494-f37c-4aac-b4c8-494992c2e862" x="475" y="4" width="220" height="19"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
