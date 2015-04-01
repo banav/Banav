@@ -187,7 +187,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe, tipo]]>
 		<groupFooter>
 			<band height="29">
 				<textField>
-					<reportElement uuid="7db30610-ca1d-456d-8034-7638db08d7dd" x="2" y="4" width="152" height="19"/>
+					<reportElement uuid="7db30610-ca1d-456d-8034-7638db08d7dd" x="2" y="4" width="134" height="19"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -201,7 +201,7 @@ ORDER BY v.horaSaida, vvc.viagem_id, vvc.classe, tipo]]>
 					<textFieldExpression><![CDATA[$V{SOMA_CLASSE}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="8bcb617f-cc0f-4909-9618-3b76252d1859" x="163" y="4" width="59" height="19"/>
+					<reportElement uuid="8bcb617f-cc0f-4909-9618-3b76252d1859" x="136" y="4" width="91" height="19"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
