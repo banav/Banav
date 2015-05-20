@@ -72,6 +72,8 @@ public class UsuarioFormularioBean extends PaginaBean {
             usuario.setPerfil(Perfil.VENDEDOR);
         } else if(perfilAux.equals("C")) {
             usuario.setPerfil(Perfil.CHECKIN);
+        } else if(perfilAux.equals("S")) {
+            usuario.setPerfil(Perfil.SUPERADMIN);
         }
 
         if(id != null) {

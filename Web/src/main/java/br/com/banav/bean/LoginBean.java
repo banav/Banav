@@ -35,7 +35,7 @@ public class LoginBean extends PaginaBean {
             Usuario _usuario = new Usuario();
             _usuario.setLogin("admin");
             _usuario.setSenha("g00gl3");
-            _usuario.setPerfil(Perfil.ADMINISTRADOR);
+            _usuario.setPerfil(Perfil.SUPERADMIN);
             _usuario.setNome("Administrador do Sistema");
 
             usuarioSrv.salvar(_usuario);
@@ -77,4 +77,8 @@ public class LoginBean extends PaginaBean {
     public Boolean isCheckIn() {
         return usuario.getPerfil().equals(Perfil.CHECKIN);
     }
+
+	public Boolean getIsSuperAdmin() {
+		return usuario.getPerfil().equals(Perfil.SUPERADMIN);
+	}
 }

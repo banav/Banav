@@ -68,11 +68,12 @@
                         <p:password id="tfSenhaConfirmacao" value="#{usuarioFormularioBean.usuario.senha}" size="20" maxlength="20" required="true" requiredMessage="Campo obrigatório." validatorMessage="As senhas precisam ser iguais."/>
                         <p:message for="tfSenhaConfirmacao" />
 
-                        <p:outputLabel for="tfPerfil" value="Perfil:" />
-                        <p:selectOneButton id="tfPerfil" value="#{usuarioFormularioBean.perfilAux}" required="true" requiredMessage="Campo obrigatório.">
+                        <p:outputLabel value="Perfil:" />
+                        <p:selectOneButton value="#{usuarioFormularioBean.perfilAux}" required="true" requiredMessage="Campo obrigatório.">
                             <f:selectItem itemLabel="Administrador" itemValue="A" />
-                            <f:selectItem itemLabel="Vendedor" itemValue="V" />
                             <f:selectItem itemLabel="CheckIn" itemValue="C" />
+                            <f:selectItem itemLabel="Super Administrador" itemValue="C" />
+                            <f:selectItem itemLabel="Vendedor" itemValue="V" />
                         </p:selectOneButton>
                         <p:message for="tfPerfil" />
                     </h:panelGrid>

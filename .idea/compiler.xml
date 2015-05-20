@@ -22,17 +22,35 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Desktop" />
         <module name="DesktopFX" />
+      </profile>
+      <profile default="false" name="Annotation profile for Desktop" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="Desktop" />
+      </profile>
+      <profile default="false" name="Annotation profile for DesktopSync" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="DesktopSync" />
+      </profile>
+      <profile default="false" name="Annotation profile for Web" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="Web" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.6">
       <module name="Desktop" target="1.6" />
       <module name="DesktopFX" target="1.6" />
       <module name="DesktopSync" target="1.6" />
-      <module name="Web" target="1.7" />
+      <module name="Web" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

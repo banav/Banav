@@ -8,5 +8,5 @@ import javax.xml.bind.annotation.XmlEnum;
 
 @XmlEnum(String.class)
 public enum Perfil {
-    ADMINISTRADOR, VENDEDOR, CHECKIN;
+    ADMINISTRADOR, VENDEDOR, CHECKIN, SUPERADMIN;
 }

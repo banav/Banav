@@ -59,7 +59,7 @@ public class UsuarioSrv {
     public Usuario logar(Usuario usuario) {
         try {
             final List<Usuario> usuarios = usuarioDAO.listarPor(usuario.getLogin(), Util.toMD5(usuario.getSenha()));
-            if(usuarios != null && !usuarios.isEmpty() && usuarios.get(0).getPerfil().equals(Perfil.ADMINISTRADOR)) {
+            if(usuarios != null && !usuarios.isEmpty() && (usuarios.get(0).getPerfil().equals(Perfil.ADMINISTRADOR) || usuarios.get(0).getPerfil().equals(Perfil.SUPERADMIN))) {
                 return usuarios.get(0);
             }
         } catch (NoSuchAlgorithmException e) {

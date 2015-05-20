@@ -9,22 +9,22 @@
     <!-- Change to "Production" when you are ready to deploy -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Production</param-value>
-    <!--<param-value>Development</param-value>-->
-</context-param>
+        <!--<param-value>Production</param-value>-->
+        <param-value>Development</param-value>
+    </context-param>
 
-<context-param>
-    <param-name>primefaces.THEME</param-name>
-    <param-value>bootstrap</param-value>
-</context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bootstrap</param-value>
+    </context-param>
 
-<session-config>
-    <session-timeout>30</session-timeout>
-</session-config>
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
-<welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-</welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 
 <!-- JSF mapping -->
     <servlet>
@@ -62,7 +62,7 @@
 
     <context-param>
         <param-name>com.ocpsoft.pretty.DEVELOPMENT</param-name>
-        <param-value>false</param-value>
+        <param-value>true</param-value>
     </context-param>
 
     <context-param>
@@ -78,6 +78,12 @@
     <context-param>
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
     </context-param>
 
     <filter>
