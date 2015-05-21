@@ -6,6 +6,7 @@ import br.com.banav.model.Estado;
 import br.com.banav.model.dto.DataValorDTO;
 
 import javax.persistence.Query;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import java.util.List;
 public class FaturamentoDAO extends DAO<DataValorDTO> {
 
     public List<DataValorDTO> listarPor(Date inicio, Date fim) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         Query query = getEm().createNativeQuery("select\n" +
                 "\tp.datavenda as data,\n" +
                 "\tround(cast(sum(p.valor) as numeric), 2) as valor\n" +
@@ -26,7 +29,7 @@ public class FaturamentoDAO extends DAO<DataValorDTO> {
                 "where\n" +
                 "\tvvc.id = p.viagem_valor_classe_id and\n" +
                 "\tvvc.viagem_id = v.id and\n" +
-                "\tp.datavenda between '2014-08-01 00:00:00' and '2014-08-31 23:59:59' and\n" +
+                "\tp.datavenda between '" + simpleDateFormat.format(inicio) + " 00:00:00' and '" + simpleDateFormat.format(fim) + " 23:59:59' and\n" +
                 "\tvvc.classe = c.id and\n" +
                 "\tp.id not in (select ph.passagem_id from public.passagem_historico ph where ph.passagem_id = p.id and ph.passagemmovimento = 'CANCELADA')\n" +
                 "GROUP by p.datavenda\n" +

@@ -53,6 +53,7 @@ public class UsuarioFormularioBean extends PaginaBean {
             if(usuario.getPerfil().equals(Perfil.ADMINISTRADOR)) perfilAux = "A";
             if(usuario.getPerfil().equals(Perfil.VENDEDOR)) perfilAux = "V";
             if(usuario.getPerfil().equals(Perfil.CHECKIN)) perfilAux = "C";
+            if(usuario.getPerfil().equals(Perfil.SUPERADMIN)) perfilAux = "S";
 
         } else {
             Cidade cidade = new Cidade();

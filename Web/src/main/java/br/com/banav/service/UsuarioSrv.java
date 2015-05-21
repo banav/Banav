@@ -37,6 +37,14 @@ public class UsuarioSrv {
     }
 
     public void atualizar(Usuario usuario) {
+        try {
+            usuario.setSenha(Util.toMD5(usuario.getSenha()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         usuarioDAO.atualizar(usuario);
     }
 

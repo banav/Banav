@@ -12,7 +12,7 @@ import org.primefaces.model.chart.LineChartSeries;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 @URLMapping(id = "faturamento", pattern = "/faturamento/", viewId = "/pages/relatorio/faturamento.jsf", parentId = "paginaRestrita")
 public class FaturamentoBean extends PaginaBean {
 
@@ -41,6 +41,11 @@ public class FaturamentoBean extends PaginaBean {
         ano = hoje.get(Calendar.YEAR);
         mes = hoje.get(Calendar.MONTH);
 
+        //createModel();
+        faturamentoModel = new LineChartModel();
+    }
+
+    public void gerarRelatorio() {
         createModel();
     }
 
@@ -54,7 +59,7 @@ public class FaturamentoBean extends PaginaBean {
         LineChartSeries faturamentoDiario = new LineChartSeries();
         faturamentoDiario.setLabel("Faturamento Diário");
 
-        List<DataValorDTO> dataValorDTOs = faturamentoSrv.listarPor(null, null);
+        List<DataValorDTO> dataValorDTOs = faturamentoSrv.listarPor(mes, ano);
         for (DataValorDTO dataValorDTO : dataValorDTOs) {
             faturamentoDiario.set(simpleDateFormat.format(dataValorDTO.getData()), dataValorDTO.getValor());
         }

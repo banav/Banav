@@ -69,13 +69,18 @@
                         <p:message for="tfSenhaConfirmacao" />
 
                         <p:outputLabel value="Perfil:" />
-                        <p:selectOneButton value="#{usuarioFormularioBean.perfilAux}" required="true" requiredMessage="Campo obrigatório.">
+                        <p:selectOneButton rendered="#{loginBean.isSuperAdmin}" value="#{usuarioFormularioBean.perfilAux}" required="true" requiredMessage="Campo obrigatório.">
                             <f:selectItem itemLabel="Administrador" itemValue="A" />
                             <f:selectItem itemLabel="CheckIn" itemValue="C" />
-                            <f:selectItem itemLabel="Super Administrador" itemValue="C" />
+                            <f:selectItem itemLabel="Super Administrador" itemValue="S" />
                             <f:selectItem itemLabel="Vendedor" itemValue="V" />
                         </p:selectOneButton>
-                        <p:message for="tfPerfil" />
+                        <p:selectOneButton rendered="#{!loginBean.isSuperAdmin}" value="#{usuarioFormularioBean.perfilAux}" required="true" requiredMessage="Campo obrigatório.">
+                            <f:selectItem itemLabel="Administrador" itemValue="A" />
+                            <f:selectItem itemLabel="CheckIn" itemValue="C" />
+                            <f:selectItem itemLabel="Vendedor" itemValue="V" />
+                        </p:selectOneButton>
+
                     </h:panelGrid>
 
                 </p:fieldset>

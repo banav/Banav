@@ -48,7 +48,7 @@ public class LoginBean extends PaginaBean {
             return null;
         }
 
-		addAtributo("usuario", usuario);
+		addAtributo(USUARIO_SESSAO, usuario);
 		
 		return "pretty:home";
 	}
@@ -66,19 +66,23 @@ public class LoginBean extends PaginaBean {
 		this.usuario = usuario;
 	}
 	
-	public Boolean isAdministrador() {
+	public Boolean getIsAdministrador() {
 		return usuario.getPerfil().equals(Perfil.ADMINISTRADOR);
 	}
 	
-	public Boolean isVendedor() {
+	public Boolean getIsVendedor() {
         return usuario.getPerfil().equals(Perfil.VENDEDOR);
 	}
 
-    public Boolean isCheckIn() {
+    public Boolean getIsCheckIn() {
         return usuario.getPerfil().equals(Perfil.CHECKIN);
     }
 
 	public Boolean getIsSuperAdmin() {
 		return usuario.getPerfil().equals(Perfil.SUPERADMIN);
+	}
+
+	public Boolean getIsUsuarioLogado(Long idUsuario) {
+		return getUsuarioLogado().getId().equals(idUsuario);
 	}
 }

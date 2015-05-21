@@ -8,8 +8,8 @@
 		<jta-data-source>java:jboss/datasources/BanavDS</jta-data-source>
 
 		<properties>
-<!-- 			<property name="hibernate.format_sql" value="true" /> -->
-<!-- 			<property name="hibernate.show_sql" value="true" /> -->
+ 			<!--<property name="hibernate.format_sql" value="true" />-->
+ 			<!--<property name="hibernate.show_sql" value="true" />-->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
 			<property name="hibernate.connection.characterEncoding" value="UTF-8" />
