@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,16 +19,7 @@ public class FaturamentoSrv {
     @Inject
     private FaturamentoDAO faturamentoDAO;
 
-    public List<DataValorDTO> listarPor(Integer mes, Integer ano) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        Calendar dataInicial = Calendar.getInstance();
-        dataInicial.set(ano, mes, 1);
-
-        Calendar dataFinal = Calendar.getInstance();
-        dataFinal.setTime(dataInicial.getTime());
-        dataFinal.set(Calendar.DAY_OF_MONTH, dataFinal.getActualMaximum(Calendar.DAY_OF_MONTH));
-
-        return faturamentoDAO.listarPor(dataInicial.getTime(), dataFinal.getTime());
+    public List<DataValorDTO> listarPor(Date inicio, Date fim) {
+        return faturamentoDAO.listarPor(inicio, fim);
     }
 }

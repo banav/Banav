@@ -30,7 +30,11 @@ public class FaturamentoBean extends PaginaBean {
 
     private Integer mes;
 
+    private Double totalMensal;
+
     private LineChartModel faturamentoModel;
+
+    private List<DataValorDTO> dataValorDTOs;
 
     @EJB private FaturamentoSrv faturamentoSrv;
 
@@ -41,7 +45,6 @@ public class FaturamentoBean extends PaginaBean {
         ano = hoje.get(Calendar.YEAR);
         mes = hoje.get(Calendar.MONTH);
 
-        //createModel();
         faturamentoModel = new LineChartModel();
     }
 
@@ -50,7 +53,15 @@ public class FaturamentoBean extends PaginaBean {
     }
 
     private void createModel() {
+        totalMensal = 0D;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar dataInicial = Calendar.getInstance();
+        dataInicial.set(ano, mes, 1);
+
+        Calendar dataFinal = Calendar.getInstance();
+        dataFinal.setTime(dataInicial.getTime());
+        dataFinal.set(Calendar.DAY_OF_MONTH, dataFinal.getActualMaximum(Calendar.DAY_OF_MONTH));
 
         faturamentoModel = new LineChartModel();
         //faturamentoModel.setLegendPosition("e");
@@ -59,9 +70,10 @@ public class FaturamentoBean extends PaginaBean {
         LineChartSeries faturamentoDiario = new LineChartSeries();
         faturamentoDiario.setLabel("Faturamento Diário");
 
-        List<DataValorDTO> dataValorDTOs = faturamentoSrv.listarPor(mes, ano);
+        dataValorDTOs = faturamentoSrv.listarPor(dataInicial.getTime(), dataFinal.getTime());
         for (DataValorDTO dataValorDTO : dataValorDTOs) {
             faturamentoDiario.set(simpleDateFormat.format(dataValorDTO.getData()), dataValorDTO.getValor());
+            totalMensal += dataValorDTO.getValor();
         }
 
         faturamentoModel.addSeries(faturamentoDiario);
@@ -72,7 +84,8 @@ public class FaturamentoBean extends PaginaBean {
 
         DateAxis axis = new DateAxis("Dias");
         axis.setTickAngle(-50);
-        axis.setMin("2014-08-01");
+        axis.setMin(simpleDateFormat.format(dataInicial.getTime()));
+        axis.setMax(simpleDateFormat.format(dataFinal.getTime()));
         axis.setTickFormat("%#d/%m/%y");
         axis.setTickInterval("1 day");
 
@@ -95,11 +108,27 @@ public class FaturamentoBean extends PaginaBean {
         this.mes = mes;
     }
 
+    public Double getTotalMensal() {
+        return totalMensal;
+    }
+
+    public void setTotalMensal(Double totalMensal) {
+        this.totalMensal = totalMensal;
+    }
+
     public LineChartModel getFaturamentoModel() {
         return faturamentoModel;
     }
 
     public void setFaturamentoModel(LineChartModel faturamentoModel) {
         this.faturamentoModel = faturamentoModel;
+    }
+
+    public List<DataValorDTO> getDataValorDTOs() {
+        return dataValorDTOs;
+    }
+
+    public void setDataValorDTOs(List<DataValorDTO> dataValorDTOs) {
+        this.dataValorDTOs = dataValorDTOs;
     }
 }

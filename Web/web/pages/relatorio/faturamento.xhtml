@@ -42,7 +42,37 @@
 
                 <p:chart id="graficoLinha" type="line" model="#{faturamentoBean.faturamentoModel}" style="height:400px;"/>
 
+                <br />
+
+                <p:dataTable var="dataValor" value="#{faturamentoBean.dataValorDTOs}">
+                    <p:column headerText="Dia da Semana">
+                        <h:outputText value="#{dataValor.data}">
+                            <f:convertDateTime locale="pt_BR" pattern="E" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Data">
+                        <h:outputText value="#{dataValor.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{dataValor.valor}" >
+                            <f:convertNumber currencyCode="BRL" type="currency" />
+                        </h:outputText>
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{faturamentoBean.totalMensal}" >
+                            <f:convertNumber currencyCode="BRL" type="currency" />
+                        </h:outputText>
+                    </f:facet>
+                </p:dataTable>
             </h:form>
+
+            <br />
+            <br />
 
         </p:panel>
     </ui:define>

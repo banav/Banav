@@ -9,8 +9,8 @@
     <!-- Change to "Production" when you are ready to deploy -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <!--<param-value>Production</param-value>-->
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
+        <!--<param-value>Development</param-value>-->
     </context-param>
 
     <context-param>
@@ -62,7 +62,7 @@
 
     <context-param>
         <param-name>com.ocpsoft.pretty.DEVELOPMENT</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
 
     <context-param>
