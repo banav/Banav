@@ -14,6 +14,9 @@ import br.com.banav.util.Util;
 import com.lowagie.text.pdf.BarcodeEAN;
 import nfiscal.BematechNFiscal;
 import nfiscal.Ticket;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.castor.mapping.AbstractMappingLoaderFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,10 +29,8 @@ import java.awt.event.KeyEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by gilson on 4/1/14.
@@ -52,6 +53,8 @@ public class Passagem extends JPanel {
     private JLabel labelTotal;
     private JButton butFinalizar;
     private JCheckBox impressaoAntecipadaCheckBox;
+
+    private Log log = LogFactory.getLog(Passagem.class);
 
     public static final Integer INTEIRA = 0;
     public static final Integer MEIA = 1;
@@ -247,6 +250,8 @@ public class Passagem extends JPanel {
             private final Passagem passagem;
             private final Viagem viagem;
             private final Main main;
+            private Log log = LogFactory.getLog(FinalizarActionListener.class);
+            private Set<String> codigoBarras;
 
             public FinalizarActionListener(Passagem passagem, Viagem viagem, Main main) {
                 this.passagem = passagem;
@@ -256,6 +261,7 @@ public class Passagem extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            codigoBarras = new HashSet<String>();
             Boolean prod = true;
             try {
                 String computerName = InetAddress.getLocalHost().getHostName();
@@ -336,8 +342,15 @@ public class Passagem extends JPanel {
                         _passagem.setDataVenda(new Date());
                     }
 
-                    Integer nextval = passagemDAO.nextval(viagem.getId());
-                    _passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, _passagem.getUsuario()));
+                    boolean naoRepetido;
+                    do{
+                        naoRepetido = false;
+                        Integer nextval = passagemDAO.nextval(viagem.getId());
+                        String codigoBarra = Util.gerarCodigoDeBarras(viagem, nextval, _passagem.getUsuario());
+                        naoRepetido = codigoBarras.add(codigoBarra);
+                        if(naoRepetido)
+                            _passagem.setCodigoBarras(codigoBarra);
+                    }while(!naoRepetido);
 
                     passagemDAO.salvar(_passagem);
 
@@ -353,8 +366,17 @@ public class Passagem extends JPanel {
                                 _passagem.getCodigoBarras(),
                                 null
                             );
+
                         } catch(Exception e) {
-                            passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
+                            log.error(e.getMessage(), e);
+                            log.info("Tentando remover a passagem de codigo de barras " + _passagem.getCodigoBarras());
+                            try{
+                                passagemDAO.excluir(br.com.banav.model.Passagem.class, _passagem.getId());
+                            }
+                            catch (Exception ex){
+                                log.error(e.getMessage(), ex);
+                            }
+
                         }
                     } else {
                         System.out.print(row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""));

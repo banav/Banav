@@ -2,6 +2,8 @@ package nfiscal;
 
 import br.com.banav.exception.ImpressoraError;
 import br.com.banav.util.Util;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -11,7 +13,7 @@ public class Ticket {
     static {
         System.setProperty("jna.library.path", "C:\\Windows\\SysWOW64");
     }
-	
+	private static final Log log = LogFactory.getLog(Ticket.class);
 	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras, String nome) throws ImpressoraError{
 		int iRetorno = 0;
 		int iOpc = 1;
@@ -58,17 +60,24 @@ public class Ticket {
 		iRetorno = cupom.FechaPorta();
 
 
-        if(iRetorno < 0)
+        if(iRetorno < 0){
+            log.error("Erro de impressão. Passagem com codigo de barras " + codigoBarras);
             throw new ImpressoraError("Erro de impressão!");
+        }
 
         switch (iRetorno){
             case BematechNFiscal.PARAMETRO_INVALIDO:
+                log.error("Parametro Inválido!. Passagem com codigo de barras " + codigoBarras);
                 throw new ImpressoraError("Parametro Inválido!");
             case BematechNFiscal.ERRO_COMUNICACAO:
+                log.error("Erro de comunicação!. Passagem com codigo de barras " + codigoBarras);
                 throw new ImpressoraError("Erro de comunicação!");
             case BematechNFiscal.SEM_PAPEL:
+                log.error("Sem Papel!. Passagem com codigo de barras " + codigoBarras);
                 throw new ImpressoraError("Sem Papel!");
         }
+
+        log.info("Passagem impressa com sucesso. Codigo de Barras da Passagem " + codigoBarras);
 
 	}
 }

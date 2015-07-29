@@ -10,6 +10,8 @@ import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import nfiscal.BematechNFiscal;
 import nfiscal.Ticket;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +21,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by gilson on 5/2/14.
@@ -72,6 +76,10 @@ public class CortesiaForm extends JPanel {
 
         private CortesiaForm cortesiaForm;
 
+        private Set<String> codigoBarras;
+
+        private Log log = LogFactory.getLog(this.getClass());
+
         private EmitirPassagemActionListener(CortesiaForm cortesiaForm) {
             this.cortesiaForm = cortesiaForm;
         }
@@ -79,7 +87,7 @@ public class CortesiaForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             try {
-
+                codigoBarras  = new HashSet<String>();
                 BematechNFiscal cupom = BematechNFiscal.Instance;
 
                 int iRetorno;
@@ -101,6 +109,7 @@ public class CortesiaForm extends JPanel {
 
             if(cortesiaForm.tableCortesia.getSelectedRow() != -1) {
                 CortesiaDAO cortesiaDAO = new CortesiaDAO();
+                br.com.banav.model.Passagem passagem = null;
                 try {
 
                     cortesiaDAO.setAutoCommit(false);
@@ -131,15 +140,22 @@ public class CortesiaForm extends JPanel {
                         ViagemValorClasseDAO viagemValorClasseDAO = new ViagemValorClasseDAO();
                         ViagemValorClasse viagemValorClasse = viagemValorClasseDAO.getPor(viagem, classeSelecionada);
 
-                        br.com.banav.model.Passagem passagem = new Passagem();
+                        passagem = new Passagem();
                         passagem.setViagemValorClasse(viagemValorClasse);
                         passagem.setCodigoBarras(null);
                         passagem.setValor(0D);
                         passagem.setGratuidade(true);
                         passagem.setEnviado(false);
 
-                        Integer nextval = passagemDAO.nextval(viagem.getId());
-                        passagem.setCodigoBarras(Util.gerarCodigoDeBarras(viagem, nextval, (UsuarioLocal) Session.get("usuario")));
+                        boolean naoRepetido;
+                        do{
+                            naoRepetido = false;
+                            Integer nextval = passagemDAO.nextval(viagem.getId());
+                            String codigoBarra = Util.gerarCodigoDeBarras(viagem, nextval, (UsuarioLocal) Session.get("usuario"));
+                            naoRepetido = codigoBarras.add(codigoBarra);
+                            if(naoRepetido)
+                                passagem.setCodigoBarras(codigoBarra);
+                        }while(!naoRepetido);
 
                         passagemDAO.salvar(passagem);
 
@@ -170,10 +186,20 @@ public class CortesiaForm extends JPanel {
                         cortesiaForm.carregar();
 
                         cortesiaDAO.getEM().getTransaction().commit();
+
                     }
                 } catch (Exception ex) {
-                    cortesiaDAO.getEM().getTransaction().rollback();
-                    ex.printStackTrace();
+                    log.error(ex.getMessage(), ex);
+                    log.info("Tentando remover a passagem de codigo de barras "
+                            + passagem == null ? "passagem nula" : passagem.getCodigoBarras());
+                    try{
+                        cortesiaDAO.getEM().getTransaction().rollback();
+                    }
+                    catch (Exception e){
+                        log.error("Erro ao dar rollback na passagem: " + passagem == null ? "passagem nula" : passagem.getCodigoBarras());
+                        log.error(e.getMessage(), e);
+                    }
+                        ex.printStackTrace();
                 } finally {
                     DAO.setAutoCommit(true);
                 }
