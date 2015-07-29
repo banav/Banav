@@ -157,7 +157,7 @@ public class CortesiaForm extends JPanel {
                                 passagem.setCodigoBarras(codigoBarra);
                         }while(!naoRepetido);
 
-                        passagemDAO.salvar(passagem);
+                        passagem = passagemDAO.salvarFlush(passagem);
 
 //                        String number = String.format("%07d", passagem.getId());
 //                        passagem.setCodigoBarras(number);

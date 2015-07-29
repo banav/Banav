@@ -75,4 +75,27 @@ public class PassagemDAO extends DAOLocal<Passagem> {
             return null;
         }
     }
+
+    public Passagem salvarFlush(Passagem passagem){
+        if(super.autoCommit) {
+            if(getEM().getTransaction().isActive()) {
+                getEM().persist(passagem);
+                getEM().flush();
+                getEM().refresh(passagem);
+            }
+            else {
+                getEM().getTransaction().begin();
+                getEM().persist(passagem);
+                getEM().flush();
+                getEM().refresh(passagem);
+                getEM().getTransaction().commit();
+            }
+        }
+        else {
+            getEM().persist(passagem);
+            getEM().flush();
+            getEM().refresh(passagem);
+        }
+        return passagem;
+    }
 }
