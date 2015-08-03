@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="30" strict="true">
     <Appenders>
-        <RollingFile name="RollingFile" fileName="logs/app.log"
+        <RollingFile name="RollingFile" fileName="../logs/app.log"
                      filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
@@ -13,8 +13,8 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
-        <RollingFile name="RollingFileTicket" fileName="logs/TicketLog.log"
-                     filePattern="logs/$${date:yyyy-MM}/TesteLog-%d{MM-dd-yyyy}-%i.log">
+        <RollingFile name="RollingFileTicket" fileName="../logs/TicketLog.log"
+                     filePattern="logs/$${date:yyyy-MM}/TicketLog-%d{MM-dd-yyyy}-%i.log">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
