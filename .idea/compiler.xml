@@ -45,11 +45,19 @@
         <processorPath useClasspath="true" />
         <module name="Web" />
       </profile>
+      <profile default="false" name="Annotation profile for Venda" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="Venda" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.6">
       <module name="Desktop" target="1.6" />
       <module name="DesktopFX" target="1.6" />
       <module name="DesktopSync" target="1.6" />
+      <module name="Venda" target="1.6" />
       <module name="Web" target="1.6" />
     </bytecodeTargetLevel>
   </component>

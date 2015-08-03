@@ -40,6 +40,7 @@
       <element id="library" level="project" name="Maven: com.jgoodies:forms:1.2.1" />
       <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.2.Final" />
       <element id="file-copy" path="$PROJECT_DIR$/Desktop/lib/jna.jar" />
+      <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
     </root>
   </artifact>
 </component>

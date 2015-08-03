@@ -3,6 +3,9 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/Venda" />
+  </component>
   <component name="IdProvider" IDEtalkID="9F18C5DAFB085697D1776B5140283C6C" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -10,6 +13,7 @@
         <option value="$PROJECT_DIR$/Desktop/pom.xml" />
         <option value="$PROJECT_DIR$/Web/pom.xml" />
         <option value="$PROJECT_DIR$/DesktopSync/pom.xml" />
+        <option value="$PROJECT_DIR$/Venda/pom.xml" />
       </list>
     </option>
   </component>

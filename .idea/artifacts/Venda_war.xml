@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Venda:war">
+    <output-path>$PROJECT_DIR$/Venda/target</output-path>
+    <root id="archive" name="venda-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Venda:war exploded" />
+    </root>
+  </artifact>
+</component>
