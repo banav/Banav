@@ -10,6 +10,7 @@
 
     <properties>
         <jdk.version>1.6</jdk.version>
+        <log4j2.version>2.3</log4j2.version>
     </properties>
 
     <build>
@@ -105,6 +106,24 @@
             <groupId>com.sun.jna</groupId>
             <artifactId>jna</artifactId>
             <version>3.0.9</version>
+        </dependency>
+
+
+        <!-- Dependencias do Log4j2 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>${log4j2.version}</version>
         </dependency>
 
     </dependencies>
