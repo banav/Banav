@@ -54,7 +54,7 @@ public class Passagem extends JPanel {
     private JButton butFinalizar;
     private JCheckBox impressaoAntecipadaCheckBox;
 
-    private Log log = LogFactory.getLog(Passagem.class);
+    private static final Log log = LogFactory.getLog(Passagem.class);
 
     public static final Integer INTEIRA = 0;
     public static final Integer MEIA = 1;
@@ -250,7 +250,7 @@ public class Passagem extends JPanel {
             private final Passagem passagem;
             private final Viagem viagem;
             private final Main main;
-            private Log log = LogFactory.getLog(FinalizarActionListener.class);
+            private static final Log log = LogFactory.getLog(FinalizarActionListener.class);
             private Set<String> codigoBarras;
 
             public FinalizarActionListener(Passagem passagem, Viagem viagem, Main main) {
@@ -379,8 +379,7 @@ public class Passagem extends JPanel {
 
                         }
                     } else {
-                        System.out.print(row.get(1).toString() + (valor == 0 ? " / Gratuidade" : ""));
-                        System.out.println(" " + _passagem.getCodigoBarras());
+                        log.info(row.get(1).toString() + (valor == 0 ? " / Gratuidade" : "") + " " + _passagem.getCodigoBarras());
                     }
                 }
             }
