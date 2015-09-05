@@ -18,6 +18,13 @@
               <text value="Voltar"/>
             </properties>
           </component>
+          <hspacer id="36b5f">
+            <constraints/>
+          </hspacer>
+          <component id="feb4" class="javax.swing.JFormattedTextField" binding="tfData" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
         </children>
       </grid>
       <grid id="aac4d" layout-manager="BorderLayout" hgap="0" vgap="0">

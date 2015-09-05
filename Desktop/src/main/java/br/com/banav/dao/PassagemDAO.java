@@ -1,6 +1,5 @@
 package br.com.banav.dao;
 
-import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOLocal;
 import br.com.banav.model.Cortesia;
 import br.com.banav.model.Passagem;

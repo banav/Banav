@@ -1,6 +1,5 @@
 package br.com.banav.dao;
 
-import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOLocalEntidadeBasica;
 import br.com.banav.model.Cortesia;
 import br.com.banav.model.Passagem;
@@ -16,8 +15,10 @@ public class CortesiaDAO extends DAOLocalEntidadeBasica<Cortesia> {
 
 
 
-    public List<Cortesia> listar() {
-        Query query = getEM().createQuery("select c from Cortesia as c where c.passagem is null order by c.nome");
+    public List<Cortesia> listar(String data) {
+        Query query = getEM().createQuery("select c from Cortesia as c where c.passagem is null and to_char(c.viagem.horaSaida, 'DD/MM/YYYY') = :data order by c.nome");
+        query.setParameter("data", data);
+
         return query.getResultList();
     }
 

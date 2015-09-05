@@ -16,14 +16,14 @@ import org.apache.commons.logging.LogFactory;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by gilson on 5/2/14.
@@ -33,6 +33,7 @@ public class CortesiaForm extends JPanel {
     private JButton btVoltar;
     private JTable tableCortesia;
     private JButton btEmitirPassagem;
+    private JFormattedTextField tfData;
 
     private ArrayList<String[]> values = new ArrayList<String[]>();
     private ArrayList<String> columns = new ArrayList<String>();
@@ -55,13 +56,14 @@ public class CortesiaForm extends JPanel {
         tableCortesia.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         btVoltar.addActionListener(new VoltarActionListener(this));
         btEmitirPassagem.addActionListener(new EmitirPassagemActionListener(this));
+        tfData.addActionListener(new AlterarDataActionListener(this));
     }
 
     public void carregar() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         CortesiaDAO cortesiaDAO = new CortesiaDAO();
-        final List<Cortesia> cortesias = cortesiaDAO.listar();
+        final List<Cortesia> cortesias = cortesiaDAO.listar(tfData.getText());
 
         TableModel tableModel = new DefaultTableModel(values.toArray(new Object[][] {}), columns.toArray());
         tableCortesia.setModel(tableModel);
@@ -69,6 +71,20 @@ public class CortesiaForm extends JPanel {
         DefaultTableModel model = (DefaultTableModel) tableCortesia.getModel();
         for (Cortesia cortesia : cortesias) {
             model.addRow(new Object[]{cortesia.getId(), cortesia.getNome(), cortesia.getRg(), cortesia.getCpf(), dateFormat.format(cortesia.getViagem().getHoraSaida())});
+        }
+    }
+
+    private void createUIComponents() {
+        try {
+            SimpleDateFormat formatData = new SimpleDateFormat("dd/MM/yyyy");
+            final Calendar hoje = Calendar.getInstance();
+
+            MaskFormatter formatter = new MaskFormatter("##/##/####");
+            tfData = new JFormattedTextField(formatter);
+            tfData.setColumns(10);
+            tfData.setText(formatData.format(hoje.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -221,6 +237,20 @@ public class CortesiaForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             cortesiaForm.main.abrir(MenuPrincipal.class.getCanonicalName());
+        }
+    }
+
+    private static class AlterarDataActionListener implements ActionListener {
+
+        private final CortesiaForm cortesiaForm;
+
+        public AlterarDataActionListener(CortesiaForm cortesiaForm) {
+            this.cortesiaForm = cortesiaForm;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            cortesiaForm.carregar();
         }
     }
 }
