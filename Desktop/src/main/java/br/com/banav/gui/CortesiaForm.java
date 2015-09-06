@@ -149,7 +149,8 @@ public class CortesiaForm extends JPanel {
                     Object selectedValue = JOptionPane.showInputDialog(null, "Selecione uma classe:", "Emitir Passagem", JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);
 
                     if(selectedValue != null) {
-                        PassagemDAO passagemDAO = new PassagemDAO();
+                        PassagemDAO passagemDAO = new PassagemDAO(cortesiaDAO.getEM());
+                        passagemDAO.setAutoCommit(false);
 
                         Classe classeSelecionada = (Classe) selectedValue;
 

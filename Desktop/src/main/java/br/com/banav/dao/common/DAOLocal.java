@@ -20,7 +20,7 @@ public abstract class DAOLocal<T> {
 
     protected  EntityManager em;
 
-    protected static boolean autoCommit = true;
+    protected  boolean autoCommit = true;
 
     //static { getEM(); }
 
@@ -36,8 +36,8 @@ public abstract class DAOLocal<T> {
         return em;
     }
 
-    public static void setAutoCommit(boolean autoCommit) {
-        DAOLocal.autoCommit = autoCommit;
+    public  void setAutoCommit(boolean autoCommit) {
+        this.autoCommit = autoCommit;
     }
 
     public void salvar(T t) {
