@@ -19,6 +19,10 @@ public class MapaViagem implements Serializable {
     @JoinColumn(name = "viagem_valor_classe_id", referencedColumnName = "id", nullable = false)
     private ViagemValorClasse viagemValorClasse;
 
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "mapa_arrecadacao_id", referencedColumnName = "id")
+    private MapaArrecadacao mapaArrecadacao;
+
     @Column(nullable = false, name = "numeracao_cupom")
     private String numeracaoCupom;
 
