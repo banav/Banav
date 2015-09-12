@@ -1,8 +1,6 @@
 package br.com.banav.dao;
 
-import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOLocalEntidadeBasica;
-import br.com.banav.model.EntidadeBasica;
 import br.com.banav.model.Navio;
 
 import javax.persistence.Query;

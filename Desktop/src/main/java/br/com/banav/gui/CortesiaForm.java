@@ -1,11 +1,12 @@
 package br.com.banav.gui;
 
-import br.com.banav.dao.*;
-import br.com.banav.dao.common.DAO;
+import br.com.banav.dao.CortesiaDAO;
+import br.com.banav.dao.NavioClasseDAO;
+import br.com.banav.dao.PassagemDAO;
+import br.com.banav.dao.ViagemValorClasseDAO;
 import br.com.banav.exception.ImpressoraError;
 import br.com.banav.model.*;
 import br.com.banav.model.Passagem;
-import br.com.banav.model.UsuarioLocal;
 import br.com.banav.util.Session;
 import br.com.banav.util.Util;
 import nfiscal.BematechNFiscal;
@@ -218,7 +219,8 @@ public class CortesiaForm extends JPanel {
                     }
                         ex.printStackTrace();
                 } finally {
-                    DAO.setAutoCommit(true);
+                    cortesiaDAO.setAutoCommit(true);
+//                    DAO.setAutoCommit(true);
                 }
 
             } else {

@@ -34,29 +34,6 @@ public class Main extends JFrame {
         setVisible(true);
 
         inicializarPaineis();
-
-        /*try {
-            String computerName = InetAddress.getLocalHost().getHostName();
-            String command = null;
-            if(computerName != null && computerName.equalsIgnoreCase("gilson-note")) {
-                command = "java -jar -Dfile.encoding=UTF8 /home/gilson/Projetos/y2g/Banav/DesktopSync/target/DesktopSync-1.0-SNAPSHOT.jar";
-            } else {
-                command = "java -jar -Dfile.encoding=UTF8 c:/DesktopSync/DesktopSync-1.0-SNAPSHOT.jar";
-            }
-
-            final Process desktopSync = Runtime.getRuntime().exec(command);
-
-            addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    desktopSync.destroy();
-                }
-            });
-
-            System.out.println("DesktopSync iniciado.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void inicializarPaineis() {

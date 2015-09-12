@@ -1,6 +1,5 @@
 package br.com.banav.dao;
 
-import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOLocalEntidadeBasica;
 import br.com.banav.model.Classe;
 import br.com.banav.model.Viagem;
