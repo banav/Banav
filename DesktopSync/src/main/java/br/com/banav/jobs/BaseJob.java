@@ -2,6 +2,7 @@ package br.com.banav.jobs;
 
 import br.com.banav.dao.*;
 import br.com.banav.model.*;
+import br.com.banav.util.Util;
 import br.com.banav.ws.*;
 import br.com.banav.ws.dto.*;
 
@@ -41,6 +42,10 @@ public class BaseJob extends Thread {
 
     private CortesiaWS cortesiaWS;
 
+    private MapaArrecadacaoDAO mapaArrecadacaoDAO;
+
+    private MapaArrecadacaoWS mapaArrecadacaoWS;
+
     public BaseJob() {
         setDaemon(true);
         setPriority(NORM_PRIORITY);
@@ -65,6 +70,11 @@ public class BaseJob extends Thread {
 
         cortesiaDAO = new CortesiaDAO();
         cortesiaWS = new CortesiaWS();
+
+        mapaArrecadacaoDAO = new MapaArrecadacaoDAO();
+        mapaArrecadacaoWS = new MapaArrecadacaoWS();
+
+
     }
 
     @Override
@@ -80,6 +90,7 @@ public class BaseJob extends Thread {
                 atualizaViagem();
                 atualizaViagemValorClasse();
                 atualizaCortesias();
+                enivarMapaArrecadacaoPendentes();
 
             }
         } catch (InterruptedException e) {
@@ -284,6 +295,20 @@ public class BaseJob extends Thread {
             cortesia.setUsuario(usuario);
 
             cortesiaDAO.sincronizar(cortesia);
+        }
+
+    }
+
+    private void enivarMapaArrecadacaoPendentes(){
+        List<MapaArrecadacao> mapas = mapaArrecadacaoDAO.listarNaoEnviadas();
+
+        for(MapaArrecadacao mapaArrecadacao : mapas){
+            boolean salvar = mapaArrecadacaoWS.salvar(Util.transformaMapaArrecadacaoParaDTO(mapaArrecadacao));
+
+            if(salvar){
+                mapaArrecadacao.setEnviado(true);
+                mapaArrecadacaoDAO.atualizar(mapaArrecadacao);
+            }
         }
 
     }

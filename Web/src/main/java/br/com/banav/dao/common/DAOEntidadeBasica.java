@@ -2,6 +2,8 @@ package br.com.banav.dao.common;
 
 import br.com.banav.exception.AcessoDBError;
 import br.com.banav.model.EntidadeBasica;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -16,7 +18,6 @@ import java.util.List;
  * Created by gustavocosta on 06/08/14.
  */
 public class DAOEntidadeBasica<T extends EntidadeBasica> extends DAO<T> {
-
 
     @Override
     public void remover(Serializable id, Class<T> clazz) throws AcessoDBError {
