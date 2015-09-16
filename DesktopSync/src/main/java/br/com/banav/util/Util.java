@@ -1,15 +1,21 @@
 package br.com.banav.util;
 
+import br.com.banav.model.MapaArrecadacao;
+import br.com.banav.model.MapaViagem;
 import br.com.banav.model.UsuarioLocal;
 import br.com.banav.model.Viagem;
+import br.com.banav.ws.dto.MapaArrecadacaoDTO;
+import br.com.banav.ws.dto.MapaViagemDTO;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by GilsonRocha on 26/12/13.
@@ -103,5 +109,28 @@ public class Util {
 
         //201406200102010001
         return codigo.toString();
+    }
+
+    public static MapaArrecadacaoDTO transformaMapaArrecadacaoParaDTO(MapaArrecadacao mapa){
+        MapaArrecadacaoDTO arrecadacaoDTO = new MapaArrecadacaoDTO();
+
+        arrecadacaoDTO.setViagemId(mapa.getViagem().getId());
+        arrecadacaoDTO.setUsuarioLogin(mapa.getUsuario().getLogin());
+        arrecadacaoDTO.setValor(mapa.getValor());
+
+        List<MapaViagemDTO> viagensDTO = new ArrayList<MapaViagemDTO>();
+
+        for(MapaViagem v : mapa.getMapaViagem()){
+            MapaViagemDTO dt = new MapaViagemDTO();
+            dt.setViagemValorClasseID(v.getViagemValorClasse().getId());
+            dt.setNumeracaoCupom(v.getNumeracaoCupom());
+            dt.setValor(v.getValor());
+            dt.setQuantidade(v.getQuantidade());
+            viagensDTO.add(dt);
+        }
+
+        arrecadacaoDTO.setMapaViagens(viagensDTO);
+
+        return arrecadacaoDTO;
     }
 }

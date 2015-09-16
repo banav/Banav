@@ -78,4 +78,8 @@ public class UsuarioSrv {
 
         return null;
     }
+
+    public Usuario getUsuarioByLogin(String login){
+        return usuarioDAO.getUsuarioByLogin(login);
+    }
 }

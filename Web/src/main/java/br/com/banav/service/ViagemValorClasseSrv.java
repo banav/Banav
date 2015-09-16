@@ -56,4 +56,8 @@ public class ViagemValorClasseSrv implements Serializable {
         viagemValorClasse.setViagem(_viagemValorClasse.getViagem());
         viagemValorClasseDAO.atualizar(viagemValorClasse);
     }
+
+    public ViagemValorClasse getUm(Long id){
+        return viagemValorClasseDAO.getUm(id, ViagemValorClasse.class);
+    }
 }

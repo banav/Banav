@@ -29,7 +29,7 @@ public abstract class RestClient {
         }
     }
 
-    protected String getBaseURL() throws FileNotFoundException, IOException {
+    protected String getBaseURL()  {
         if(prod) {
             return "http://173.230.137.47:8080/banav"; // PRODUÇÃO
         } else {
@@ -52,6 +52,22 @@ public abstract class RestClient {
         bufferedReader.close();
 
         return (T) obj;
+    }
+
+    protected <T> T getResult(InputStream in, JAXBContext jaxbContext) throws IOException, JAXBException{
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+        try{
+        //BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        Object obj = unmarshaller.unmarshal(bufferedReader);
+
+        return (T) obj;
+        }
+        finally {
+            if(bufferedReader !=  null)
+                bufferedReader.close();
+        }
     }
 
     protected void limparParametros() {
