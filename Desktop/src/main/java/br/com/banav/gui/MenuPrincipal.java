@@ -13,11 +13,13 @@ import java.awt.event.ActionListener;
  * Created by GilsonRocha on 10/03/14.
  */
 public class MenuPrincipal extends JPanel {
+
     private JPanel mainContent;
     private JButton btEmitirPassagem;
     private JButton btEfetuarCheckIn;
     private JButton btCortesias;
     private JButton btCancelamento;
+    private JButton btMapaArrecadacao;
 
     private Main main;
 
@@ -31,13 +33,16 @@ public class MenuPrincipal extends JPanel {
         btEfetuarCheckIn.addActionListener(new CheckInActionListener(this));
         btCortesias.addActionListener(new CortesiasActionListener(this));
         btCancelamento.addActionListener(new CancelamentoActionListener(this));
+        btMapaArrecadacao.addActionListener(new MapaArrecadacaoActionListener(this));
 
         UsuarioLocal usuario = (UsuarioLocal) Session.get("usuario");
         if(usuario.getPerfil().equals(Perfil.CHECKIN)) {
             btEmitirPassagem.setEnabled(false);
             btCortesias.setEnabled(false);
             btCancelamento.setEnabled(false);
+            btMapaArrecadacao.setEnabled(false);
         }
+
         if(usuario.getPerfil().equals(Perfil.VENDEDOR)) {
             btEfetuarCheckIn.setEnabled(false);
         }
@@ -96,6 +101,20 @@ public class MenuPrincipal extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             menuPrincipal.main.abrir(CancelarPassagem.class.getCanonicalName());
+        }
+    }
+
+    private static class MapaArrecadacaoActionListener implements ActionListener {
+
+        private MenuPrincipal menuPrincipal;
+
+        private MapaArrecadacaoActionListener(MenuPrincipal menuPrincipal) {
+            this.menuPrincipal = menuPrincipal;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            menuPrincipal.main.abrirMapa();
         }
     }
 }

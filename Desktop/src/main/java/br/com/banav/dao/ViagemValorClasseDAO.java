@@ -28,6 +28,13 @@ public class ViagemValorClasseDAO extends DAOLocalEntidadeBasica<ViagemValorClas
         return null;
     }
 
+    public List<ViagemValorClasse> getPor(Viagem viagem) {
+        Query query = getEM().createQuery("select vvc from ViagemValorClasse vvc where vvc.viagem.id = :id order by vvc.navioClasse.classe.id");
+        query.setParameter("id", viagem.getId());
+
+        return query.getResultList();
+    }
+
     @Override
     public void excluir(Class<ViagemValorClasse> clazz, Object id) {
         if(autoCommit) {

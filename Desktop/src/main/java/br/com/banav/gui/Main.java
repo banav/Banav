@@ -20,8 +20,7 @@ public class Main extends JFrame {
     private CheckIn checkIn;
     private CortesiaForm cortesiaForm;
     private CancelarPassagem cancelarPassagem;
-
-
+    private MapaArrecadacaoForm mapaArrecadacaoForm;
 
     public Main() {
         setContentPane(mainContent);
@@ -43,6 +42,7 @@ public class Main extends JFrame {
         checkIn = new CheckIn(this);
         cortesiaForm = new CortesiaForm(this);
         cancelarPassagem = new CancelarPassagem(this);
+        mapaArrecadacaoForm = new MapaArrecadacaoForm(this);
 
         panelCard.add(menuPrincipal, menuPrincipal.getClass().getCanonicalName());
         panelCard.add(destinoViagem, destinoViagem.getClass().getCanonicalName());
@@ -50,6 +50,7 @@ public class Main extends JFrame {
         panelCard.add(checkIn, checkIn.getClass().getCanonicalName());
         panelCard.add(cortesiaForm, cortesiaForm.getClass().getCanonicalName());
         panelCard.add(cancelarPassagem, cancelarPassagem.getClass().getCanonicalName());
+        panelCard.add(mapaArrecadacaoForm, mapaArrecadacaoForm.getClass().getCanonicalName());
     }
 
     public void abrir(String panel) {
@@ -70,5 +71,10 @@ public class Main extends JFrame {
     public void abrirCortesias() {
         abrir(CortesiaForm.class.getCanonicalName());
         cortesiaForm.carregar();
+    }
+
+    public void abrirMapa() {
+        abrir(MapaArrecadacaoForm.class.getCanonicalName());
+        mapaArrecadacaoForm.carregar();
     }
 }

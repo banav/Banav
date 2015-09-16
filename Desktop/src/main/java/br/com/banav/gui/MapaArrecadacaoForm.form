@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="br.com.banav.gui.MapaArrecadacaoForm">
+  <grid id="27dc6" binding="mainContent" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="2c548" layout-manager="FlowLayout" hgap="10" vgap="5" flow-align="1">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4f8b0" class="javax.swing.JButton" binding="btVoltar">
+            <constraints/>
+            <properties>
+              <text value="Voltar"/>
+            </properties>
+          </component>
+          <hspacer id="a861b">
+            <constraints/>
+          </hspacer>
+          <component id="757c2" class="javax.swing.JFormattedTextField" binding="tfData" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+          <hspacer id="ae8f9">
+            <constraints/>
+          </hspacer>
+          <component id="b8b3b" class="javax.swing.JComboBox" binding="cbViagens">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <grid id="16f54" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="c9d00" class="javax.swing.JButton" binding="btEnviarMapa">
+            <constraints/>
+            <properties>
+              <font size="24"/>
+              <text value="Enviar Mapa de Arrecadação"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="25d0b" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <scrollpane id="748be">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="8a7cf" class="javax.swing.JTable" binding="tableMapa">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
