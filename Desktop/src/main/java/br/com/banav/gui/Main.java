@@ -27,7 +27,7 @@ public class Main extends JFrame {
 
         mainContent.add(panelCard, BorderLayout.CENTER);
 
-        setTitle("Rodofluvial Banav LTDA");
+        setTitle("Sistem de Controle de Passagem");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);

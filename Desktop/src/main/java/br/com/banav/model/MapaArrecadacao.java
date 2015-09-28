@@ -24,7 +24,7 @@ public class MapaArrecadacao implements Serializable {
     @JoinColumn(name = "usuario_id")
     private UsuarioLocal usuario;
 
-    @OneToMany(mappedBy = "mapaArrecadacao")
+    @OneToMany(mappedBy = "mapaArrecadacao", fetch = FetchType.EAGER)
     private List<MapaViagem> mapaViagem;
 
     @Column(nullable = false, name = "valor")

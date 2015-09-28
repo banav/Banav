@@ -72,6 +72,14 @@ public class MapaViagem implements Serializable {
         this.valor = valor;
     }
 
+    public MapaArrecadacao getMapaArrecadacao() {
+        return mapaArrecadacao;
+    }
+
+    public void setMapaArrecadacao(MapaArrecadacao mapaArrecadacao) {
+        this.mapaArrecadacao = mapaArrecadacao;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

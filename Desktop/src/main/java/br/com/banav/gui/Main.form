@@ -22,8 +22,8 @@
             <constraints/>
             <properties>
               <horizontalAlignment value="0"/>
-              <icon value="img/banav.png"/>
-              <preferredSize width="78" height="150"/>
+              <icon value="img/bmexpress.jpg"/>
+              <preferredSize width="262" height="150"/>
               <text value=""/>
             </properties>
           </component>

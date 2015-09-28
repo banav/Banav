@@ -1,9 +1,11 @@
 package br.com.banav.gui;
 
+import br.com.banav.dao.MapaArrecadacaoDAO;
+import br.com.banav.dao.MapaViagemDAO;
 import br.com.banav.dao.ViagemDAO;
 import br.com.banav.dao.ViagemValorClasseDAO;
-import br.com.banav.model.Viagem;
-import br.com.banav.model.ViagemValorClasse;
+import br.com.banav.model.*;
+import br.com.banav.util.Session;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by gilson on 12/09/15.
@@ -45,6 +48,7 @@ public class MapaArrecadacaoForm extends JPanel {
         columns.add("Controle de Cupom");
         columns.add("Quantidade");
         columns.add("Valor em R$");
+        columns.add("");
 
         tableMapa.setFont(new Font("Arial", Font.BOLD, 20));
         tableMapa.setRowHeight(40);
@@ -53,6 +57,7 @@ public class MapaArrecadacaoForm extends JPanel {
         btVoltar.addActionListener(new VoltarActionListener(this));
         tfData.addActionListener(new AlterarDataActionListener(this));
         cbViagens.addActionListener(new AlteraComboActionListener(this));
+        btEnviarMapa.addActionListener(new EnviarMapaActionListener(this));
     }
 
     public void carregar() {
@@ -71,14 +76,14 @@ public class MapaArrecadacaoForm extends JPanel {
 
             DefaultTableModel model = (DefaultTableModel) tableMapa.getModel();
             for (ViagemValorClasse viagemValorClasse : viagemValorClasseList) {
-                model.addRow(new Object[]{ viagemValorClasse.getNavioClasse().getClasse().getNome() + " - Inteira", "", "", "" });
+                model.addRow(new Object[]{ viagemValorClasse.getNavioClasse().getClasse().getNome() + " - Inteira", "", "", "", viagemValorClasse });
 
                 if(viagemValorClasse.getValorMeia() != null && viagemValorClasse.getValorMeia() > 0) {
-                    model.addRow(new Object[]{ viagemValorClasse.getNavioClasse().getClasse().getNome() + " - Meia", "", "", "" });
+                    model.addRow(new Object[]{ viagemValorClasse.getNavioClasse().getClasse().getNome() + " - Meia", "", "", "", viagemValorClasse });
                 }
 
                 if(viagemValorClasse.getAceitaGratuidade()) {
-                    model.addRow(new Object[]{ viagemValorClasse.getNavioClasse().getClasse().getNome() + " - Gratuidade", "", "", "" });
+                    model.addRow(new Object[]{ viagemValorClasse.getNavioClasse().getClasse().getNome() + " - Gratuidade", "", "", "", viagemValorClasse });
                 }
             }
         }
@@ -123,6 +128,49 @@ public class MapaArrecadacaoForm extends JPanel {
         }
     }
 
+    private void salvar() {
+        DefaultTableModel model = (DefaultTableModel) tableMapa.getModel();
+        Vector dataVector = model.getDataVector();
+        ArrayList _data = new ArrayList(dataVector);
+        UsuarioLocal usuarioLocal = (UsuarioLocal) Session.get("usuario");
+        Viagem viagemSelecionada = (Viagem) cbViagens.getSelectedItem();
+        List<MapaViagem> mapasViagem = new ArrayList<MapaViagem>();
+
+        double total = 0;
+        for (Object objRow : _data) {
+            Vector row = (Vector) objRow;
+
+            double valor = Double.parseDouble(row.get(3).toString().replace(",","."));
+            total += valor;
+
+            MapaViagem mapaViagem = new MapaViagem();
+            mapaViagem.setNumeracaoCupom(row.get(1).toString());
+            mapaViagem.setQuantidade(Integer.parseInt(row.get(2).toString()));
+            mapaViagem.setViagemValorClasse((ViagemValorClasse) row.get(4));
+            mapaViagem.setValor(valor);
+
+            mapasViagem.add(mapaViagem);
+        }
+
+        MapaArrecadacao mapaArrecadacao = new MapaArrecadacao();
+        mapaArrecadacao.setEnviado(false);
+        mapaArrecadacao.setUsuario(usuarioLocal);
+        mapaArrecadacao.setViagem(viagemSelecionada);
+        mapaArrecadacao.setValor(total);
+
+        MapaArrecadacaoDAO mapaArrecadacaoDAO = new MapaArrecadacaoDAO();
+        mapaArrecadacaoDAO.salvar(mapaArrecadacao);
+
+        MapaViagemDAO mapaViagemDAO = new MapaViagemDAO();
+        for (MapaViagem mapaViagem : mapasViagem) {
+            mapaViagem.setMapaArrecadacao(mapaArrecadacao);
+            mapaViagemDAO.salvar(mapaViagem);
+        }
+
+        JOptionPane.showMessageDialog(main, "Mapa enviado com sucesso.");
+        carregarTabela();
+    }
+
     private static class VoltarActionListener implements ActionListener {
 
         private MapaArrecadacaoForm mapaArrecadacaoForm;
@@ -162,6 +210,20 @@ public class MapaArrecadacaoForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             mapaArrecadacaoForm.carregarTabela();
+        }
+    }
+
+    private static class EnviarMapaActionListener implements ActionListener {
+
+        private MapaArrecadacaoForm mapaArrecadacaoForm;
+
+        public EnviarMapaActionListener(MapaArrecadacaoForm mapaArrecadacaoForm) {
+            this.mapaArrecadacaoForm = mapaArrecadacaoForm;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            mapaArrecadacaoForm.salvar();
         }
     }
 }
