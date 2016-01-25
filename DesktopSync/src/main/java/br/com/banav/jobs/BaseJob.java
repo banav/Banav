@@ -90,7 +90,7 @@ public class BaseJob extends Thread {
                 atualizaViagem();
                 atualizaViagemValorClasse();
                 atualizaCortesias();
-                enivarMapaArrecadacaoPendentes();
+                //enivarMapaArrecadacaoPendentes();
 
             }
         } catch (InterruptedException e) {

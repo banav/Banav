@@ -31,9 +31,9 @@ public abstract class RestClient {
 
     protected String getBaseURL()  {
         if(prod) {
-            return "http://173.230.137.47:8080/banav"; // PRODUÇÃO
+            return "http://173.230.137.47:8080/bmexpress"; // PRODUÇÃO
         } else {
-            return "http://localhost:8080/banav"; // DESENVOLVIMENTO
+            return "http://localhost:8080/bmexpress"; // DESENVOLVIMENTO
         }
     }
 

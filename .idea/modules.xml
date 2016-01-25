@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Desktop/Desktop.iml" filepath="$PROJECT_DIR$/Desktop/Desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesktopFX/DesktopFX.iml" filepath="$PROJECT_DIR$/DesktopFX/DesktopFX.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesktopSync/DesktopSync.iml" filepath="$PROJECT_DIR$/DesktopSync/DesktopSync.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Venda/Venda.iml" filepath="$PROJECT_DIR$/Venda/Venda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Vendas/Vendas.iml" filepath="$PROJECT_DIR$/Vendas/Vendas.iml" />
       <module fileurl="file://$PROJECT_DIR$/Web/Web.iml" filepath="$PROJECT_DIR$/Web/Web.iml" />
     </modules>
   </component>

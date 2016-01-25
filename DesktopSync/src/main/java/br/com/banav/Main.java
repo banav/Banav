@@ -32,7 +32,8 @@ public class Main implements ActionListener {
     }
 
     private void criaTrayIcon() {
-        File sourceimage = new File("c:/DesktopSync/tray-icon.png");
+        //File sourceimage = new File("c:/DesktopSync/tray-icon.png");
+        File sourceimage = new File("/home/gilson/Projetos/y2g/Banav/DesktopSync/src/main/java/br/com/banav/img/tray-icon.png");
         Image image2 = null;
         try {
             image2 = ImageIO.read(sourceimage);
