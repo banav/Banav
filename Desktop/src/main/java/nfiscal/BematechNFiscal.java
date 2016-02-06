@@ -5,7 +5,7 @@ import com.sun.jna.Native;
 
 public interface BematechNFiscal extends Library {
 
-    public BematechNFiscal Instance = (BematechNFiscal) Native.loadLibrary("mp2064", BematechNFiscal.class);
+    public BematechNFiscal Instance = (BematechNFiscal) Native.loadLibrary("mp2032", BematechNFiscal.class);
 
 
     public static final int ERRO_COMUNICACAO = 0;

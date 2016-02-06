@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 public class Ticket {
 
     static {
-        System.setProperty("jna.library.path", "C:\\Windows\\SysWOW64");
+        System.setProperty("jna.library.path", "C:\\Windows\\system32");
     }
 	private static final Log log = LogFactory.getLog(Ticket.class);
 	public static void imprimir(String origem, String destino, String data, String hora, String tipo, String valor, String codigoBarras, String nome) throws ImpressoraError{

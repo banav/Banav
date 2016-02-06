@@ -8,7 +8,7 @@
         <datasource-mapping>
           <factory-entry name="BanavLocalPU" />
           <factory-entry name="BanavSync" />
-          <factory-entry name="BanavSyncPU" />
+          <factory-entry name="BanavSyncPU" value="1d3a3e96-7d20-49b6-87b6-7c2dd6a68b86" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
@@ -245,3 +245,4 @@
     </option>
   </component>
 </module>
+
