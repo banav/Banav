@@ -6,10 +6,9 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="BanavLocalPU" uuid="508c4b92-9266-4767-9ff2-c9a455ae7c0e">
-      <driver-ref>postgresql</driver-ref>
+      <driver-ref>2b37b200-7985-4daf-9b34-257af8252884</driver-ref>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://banco-pc:5432/banav</jdbc-url>
       <libraries>

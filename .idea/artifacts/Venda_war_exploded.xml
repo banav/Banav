@@ -39,6 +39,7 @@
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:4.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm:4.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-analysis:4.1" />
+          <element id="library" level="project" name="Maven: com.thetransactioncompany:cors-filter:2.1.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">

@@ -1,19 +1,17 @@
 package br.com.banav.rest.service;
 
-import br.com.banav.model.Viagem;
 import br.com.banav.model.ViagemValorClasse;
-import br.com.banav.rest.dto.ViagemDTO;
 import br.com.banav.rest.dto.ViagemValorClasseDTO;
-import br.com.banav.service.ViagemSrv;
 import br.com.banav.service.ViagemValorClasseSrv;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +24,20 @@ public class ViagemValorClasseRest {
     private ViagemValorClasseSrv srv;
 
     @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response query(@QueryParam("origem") Long origem, @QueryParam("destino") Long destino, @QueryParam("dia") String dia) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        //Date date = formatter.parse(dia);
+
+        List<ViagemValorClasse> viagemValorClasseList = srv.listarPor(origem, destino, new Date(1448236800000L));
+        for (ViagemValorClasse viagemValorClasse : viagemValorClasseList) {
+            viagemValorClasse.getViagem().getNavio().setClasses(null);
+        }
+        return Response.ok(viagemValorClasseList).build();
+    }
+
+    @GET
     @Path("/list/{time}")
     @Produces(MediaType.APPLICATION_XML)
     public List<ViagemValorClasseDTO> recuperarLista(@PathParam("time") Long time){
@@ -33,7 +45,6 @@ public class ViagemValorClasseRest {
 
         return montaDTOs(objs);
     }
-
 
     @GET
     @Path("/list")

@@ -1,0 +1,68 @@
+<div class="row" style="padding-bottom: 10px;">
+  <div class="col-lg-12">
+    <ul class='nav nav-wizard'>
+      <li class='active'><a data-toggle="tab">1. Busca</a></li>
+      <li><a>2. Viagens</a></li>
+      <li><a>3. Passageiros</a></li>
+      <li><a>4. Pagamento</a></li>
+      <li><a>5. Confirmação</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Encontre sua Passagem</h3>
+      </div>
+      <div class="panel-body">
+        <form role="form">
+          <div class="form-group">
+            <label class="control-label" for="origem">Origem</label>
+            <select class="form-control" ng-model="origem" ng-options="cidade.nome disable when cidade.id == destino.id for cidade in cidades track by cidade.id" ng-required="id" id="origem">
+              <option value="">Selecione uma origem</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="destino">Destino</label>
+            <select class="form-control" ng-model="destino" ng-options="cidade.nome disable when cidade.id == origem.id for cidade in cidades track by cidade.id" ng-required="id" id="destino">
+              <option value="">Selecione um destino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="radio">
+              <label>
+                <input name="tipoViagem" ng-value="'IV'" ng-model="tipoViagem" type="radio"> Ida e Volta
+              </label>
+              &nbsp;
+              &nbsp;
+              <label>
+                <input name="tipoViagem" ng-value="'I'" ng-model="tipoViagem" type="radio"> Somente Ida
+              </label>
+            </div>
+          </div>
+          <div class="form-group form-inline">
+            <label class="control-label" for="dataPartida">Data de Partida</label>
+            <input ng-model="dataPartida" class="form-control" type="date" id="dataPartida"/>
+
+            <label class="control-label" for="dataRetorno">Data de Retorno</label>
+            <input ng-model="dataRetorno" class="form-control" type="date" id="dataRetorno"/>
+          </div>
+          <button ng-click="pesquisar()" type="button" class="btn btn-primary">
+            Compre seu bilhete
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" style="background-image:url(../images/navio_otavio_olivia.jpg)"></div>
+      <div class="swiper-slide" style="background-image:url(../images/navio_soure.jpg)"></div>
+    </div>
+    <div class="swiper-pagination swiper-pagination-white"></div>
+    <div class="swiper-button-next swiper-button-white"></div>
+    <div class="swiper-button-prev swiper-button-white"></div>
+  </div>
+</div>

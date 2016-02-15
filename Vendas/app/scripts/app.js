@@ -8,28 +8,33 @@
  *
  * Main module of the application.
  */
-angular
+var app = angular
   .module('vendasApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'vendasApp.resources'
   ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+      .when('/pesquisa', {
+        templateUrl: 'views/pesquisa.html',
+        controller: 'PesquisaCtrl',
+        controllerAs: 'pesquisaCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .when('/resultado', {
+        templateUrl: 'views/resultado.html',
+        controller: 'ResultadoCtrl',
+        controllerAs: 'resultadoCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/pesquisa'
       });
-  });
+  }]);
+
+angular.module('vendasApp.resources', []);
+
+app.rootContext = 'http://localhost:8080/banav/';

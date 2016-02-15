@@ -38,6 +38,10 @@ public class ViagemValorClasseSrv implements Serializable {
         return viagemValorClasses;
     }
 
+    public List<ViagemValorClasse> listarPor(Long origem, Long destino, Date dia) {
+        return viagemValorClasseDAO.listarPor(origem, destino, dia);
+    }
+
     public List<ViagemValorClasse> listarPor(Viagem viagem) {
         return viagemValorClasseDAO.listarPor(viagem.getId());
     }

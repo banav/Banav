@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Web:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/banav.war</output-path>
+    <output-path>$PROJECT_DIR$/Web/target/artifacts/banav.war</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -39,6 +39,8 @@
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:4.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm:4.1" />
           <element id="library" level="project" name="Maven: org.ow2.asm:asm-analysis:4.1" />
+          <element id="library" level="project" name="Maven: com.thetransactioncompany:cors-filter:2.1.2" />
+          <element id="library" level="project" name="Maven: com.thetransactioncompany:java-property-utils:1.9.1" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="Web/web/Web" />

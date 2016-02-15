@@ -81,3 +81,12 @@ body {
     border-bottom: 0;
   }
 }
+
+
+.swiper-container {
+  height: 250px;
+}
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
