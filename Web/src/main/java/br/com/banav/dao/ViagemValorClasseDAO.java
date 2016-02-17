@@ -27,7 +27,7 @@ public class ViagemValorClasseDAO extends DAOEntidadeBasica<ViagemValorClasse> {
         sql.append(" select vvc from ViagemValorClasse as vvc ");
         sql.append(" where vvc.viagem.origem.id = :origem ");
         sql.append(" and vvc.viagem.destino.id = :destino ");
-        sql.append(" and vvc.viagem.horaSaida = :dia ");
+        sql.append(" and date(vvc.viagem.horaSaida) = :dia ");
         sql.append(" order by vvc.viagem.horaSaida ");
 
         Query query = getEm().createQuery(sql.toString());

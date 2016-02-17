@@ -22,13 +22,11 @@ var app = angular
     $routeProvider
       .when('/pesquisa', {
         templateUrl: 'views/pesquisa.html',
-        controller: 'PesquisaCtrl',
-        controllerAs: 'pesquisaCtrl'
+        controller: 'PesquisaCtrl'
       })
       .when('/resultado', {
         templateUrl: 'views/resultado.html',
-        controller: 'ResultadoCtrl',
-        controllerAs: 'resultadoCtrl'
+        controller: 'ResultadoCtrl'
       })
       .otherwise({
         redirectTo: '/pesquisa'

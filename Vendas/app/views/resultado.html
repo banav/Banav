@@ -1,7 +1,7 @@
 <div class="row" style="padding-bottom: 10px;">
   <div class="col-lg-12">
     <ul class='nav nav-wizard'>
-      <li><a href='#/pesquisa' data-toggle="tab">1. Busca</a></li>
+      <li><a href="#/pesquisa" data-toggle="tab">1. Busca</a></li>
       <li class='active'><a>2. Viagens</a></li>
       <li><a>3. Passageiros</a></li>
       <li><a>4. Pagamento</a></li>
@@ -15,12 +15,12 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> IDA
-          <small><strong>Quarta-feira, 02 de Março de 2016</strong>. De: <strong>Belém</strong> Para: <strong>São Paulo</strong></small>
+          <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> IDA, {{ida.dataViagem | date : 'fullDate'}}.
+          <small> De: <strong>{{ida.de}}</strong> Para: <strong>{{ida.para}}</strong></small>
         </h3>
       </div>
       <div class="panel-body">
-        <div class="well well-sm"><strong>18:30 - Navio Soure</strong></div>
+        <div ng-repeat-start="viagem in ida.resultadoViagensDTO" class="well well-sm"><strong>{{viagem.horaSaida | date : 'HH:mm'}} - {{viagem.navio}}</strong></div>
         <div class="row">
           <div class="col-xs-1"></div>
           <div class="col-xs-11">
@@ -34,63 +34,69 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Econômica</td>
-                  <td>R$ 22,00</td>
+                <tr ng-repeat="valorClasse in viagem.valorClassesDTO">
+                  <td>{{valorClasse.classe}}</td>
+                  <td>{{valorClasse.valor | currency: 'R$' : 2}}</td>
                   <td class="form-inline">
-                    <button type="button" class="btn btn-default btn-sm">
+                    <button ng-click="subtrair(valorClasse)" type="button" class="btn btn-default btn-sm">
                       <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                     </button>
-                    <input class="form-control input-sm" type="text" value="0" readonly />
-                    <button type="button" class="btn btn-default btn-sm">
+                    <input ng-value="valorClasse.quantidade" class="form-control input-sm" type="text" readonly />
+                    <button ng-click="somar(valorClasse)" type="button" class="btn btn-default btn-sm">
                       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                   </td>
-                  <td>R$ 44,00</td>
-                </tr>
-                <tr>
-                  <td>Cultural</td>
-                  <td>R$ 22,00</td>
-                  <td class="form-inline">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                    </button>
-                    <input class="form-control input-sm" type="text" value="0" readonly />
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
-                  </td>
-                  <td>R$ 44,00</td>
-                </tr>
-                <tr>
-                  <td>VIP</td>
-                  <td>R$ 22,00</td>
-                  <td class="form-inline">
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                    </button>
-                    <input class="form-control input-sm" type="text" value="0" readonly />
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </button>
-                  </td>
-                  <td>R$ 44,00</td>
+                  <td>{{valorClasse.subtotal | currency: 'R$' : 2}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+        <div ng-repeat-end=""></div>
       </div>
     </div>
 
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> VOLTA
-          <small><strong>Quarta-feira, 02 de Março de 2016</strong>. De: <strong>Belém</strong> Para: <strong>São Paulo</strong></small>
+          <span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span> VOLTA, {{volta.dataViagem | date : 'fullDate'}}.
+          <small> De: <strong>{{volta.de}}</strong> Para: <strong>{{volta.para}}</strong></small>
         </h3>
       </div>
       <div class="panel-body">
+        <div ng-repeat-start="viagem in volta.resultadoViagensDTO" class="well well-sm"><strong>{{viagem.horaSaida | date : 'HH:mm'}} - {{viagem.navio}}</strong></div>
+        <div class="row">
+          <div class="col-xs-1"></div>
+          <div class="col-xs-11">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Classe</th>
+                <th>Valor Unitário</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="valorClasse in viagem.valorClassesDTO">
+                <td>{{valorClasse.classe}}</td>
+                <td>{{valorClasse.valor | currency: 'R$' : 2}}</td>
+                <td class="form-inline">
+                  <button ng-click="subtrair(valorClasse)" type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                  </button>
+                  <input ng-value="valorClasse.quantidade" class="form-control input-sm" type="text" readonly />
+                  <button ng-click="somar(valorClasse)" type="button" class="btn btn-default btn-sm">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </button>
+                </td>
+                <td>{{valorClasse.subtotal | currency: 'R$' : 2}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div ng-repeat-end=""></div>
       </div>
     </div>
   </div>
