@@ -28,6 +28,18 @@ angular.module('vendasApp').controller('ResultadoCtrl', ['$scope', '$rootScope',
     );
   });
 
+  $scope.atualizarTotal = function() {
+    $scope.total = 0;
+
+    angular.forEach($scope.ida.resultadoViagensDTO, function(viagem, key) {
+      angular.forEach(viagem.valorClassesDTO, function(valorClasse, key) {
+        if(valorClasse.quantidade && valorClasse.quantidade > 0) {
+          $scope.total += (valorClasse.quantidade * valorClasse.valor);
+        }
+      });
+    });
+  };
+
   $scope.subtrair = function(valorClasse) {
     if(!valorClasse.quantidade) {
       valorClasse.quantidade = 0;
@@ -36,6 +48,7 @@ angular.module('vendasApp').controller('ResultadoCtrl', ['$scope', '$rootScope',
     }
 
     valorClasse.subtotal = valorClasse.valor * valorClasse.quantidade;
+    $scope.atualizarTotal();
   };
 
   $scope.somar = function(valorClasse) {
@@ -46,6 +59,7 @@ angular.module('vendasApp').controller('ResultadoCtrl', ['$scope', '$rootScope',
     }
 
     valorClasse.subtotal = valorClasse.valor * valorClasse.quantidade;
+    $scope.atualizarTotal();
   };
 
   $rootScope.$emit(ResultadoEvents.CARREGAR_RESULTADOS, {
