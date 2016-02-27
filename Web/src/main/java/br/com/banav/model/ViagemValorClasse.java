@@ -34,6 +34,13 @@ public class ViagemValorClasse extends EntidadeBasica implements Serializable {
     @Column(name = "aceita_gratuidade", nullable = false)
     private Boolean aceitaGratuidade = false;
 
+    public ViagemValorClasse() {
+    }
+
+    public ViagemValorClasse(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

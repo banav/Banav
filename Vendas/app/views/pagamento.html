@@ -1,0 +1,38 @@
+<div class="row" style="padding-bottom: 10px;">
+  <div class="col-lg-12">
+    <ul class='nav nav-wizard'>
+      <li><a href="#/pesquisa" data-toggle="tab">1. Busca</a></li>
+      <li><a href="#/resultado" data-toggle="tab">2. Viagens</a></li>
+      <li><a href="#/passageiros" data-toggle="tab">3. Passageiros</a></li>
+      <li class='active'><a>4. Pagamento</a></li>
+      <li><a>5. Confirmação</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> RESUMO DA COMPRA
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div ng-repeat="passagem in passagens" class="row">
+          <div class="col-xs-3">Classe&nbsp;<strong>{{passagem.classe}}:</strong></div>
+          <div class="col-xs-9"><p ng-repeat="passageiro in passagem.passageiros">Passageiro(a)&nbsp;<strong>{{passageiro.nome}}</strong>,&nbsp;CPF:&nbsp;<strong>{{passageiro.cpf}}</strong>&nbsp;Valor:&nbsp;<strong>{{passagem.valor | currency: 'R$' : 2}}</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer"><label>TOTAL: {{total | currency: 'R$' : 2}}</label></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <button ng-click="pagar()" type="button" class="btn btn-primary btn-block btn-lg">
+      <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>&nbsp;&nbsp;Pagar
+    </button>
+  </div>
+</div>

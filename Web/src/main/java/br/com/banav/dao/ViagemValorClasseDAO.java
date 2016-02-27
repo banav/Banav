@@ -1,8 +1,6 @@
 package br.com.banav.dao;
 
-import br.com.banav.dao.common.DAO;
 import br.com.banav.dao.common.DAOEntidadeBasica;
-import br.com.banav.model.NavioClasse;
 import br.com.banav.model.ViagemValorClasse;
 
 import javax.persistence.Query;

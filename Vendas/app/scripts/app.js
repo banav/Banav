@@ -28,6 +28,14 @@ var app = angular
         templateUrl: 'views/resultado.html',
         controller: 'ResultadoCtrl'
       })
+      .when('/passageiros', {
+        templateUrl: 'views/passageiros.html',
+        controller: 'PassageirosCtrl'
+      })
+      .when('/pagamento', {
+        templateUrl: 'views/pagamento.html',
+        controller: 'PagamentoCtrl'
+      })
       .otherwise({
         redirectTo: '/pesquisa'
       });

@@ -14,6 +14,8 @@ angular.module('vendasApp').controller('PesquisaCtrl', ['$scope', '$rootScope', 
 
   $scope.cidades = [];
   $scope.tipoViagem = 'IV';
+  $scope.dataPartida = new Date('02-16-2016');
+  $scope.dataRetorno = new Date('02-16-2016');
 
   $scope.listarCidades = function() {
     var cidadesResources = $injector.get('CidadesResources');
@@ -28,8 +30,8 @@ angular.module('vendasApp').controller('PesquisaCtrl', ['$scope', '$rootScope', 
   };
 
   $scope.pesquisar = function() {
+    $location.path('/resultado');
     var timer = $timeout(function() {
-      $location.path('/resultado');
       $rootScope.$emit(ResultadoEvents.CARREGAR_RESULTADOS, {
         origem : $scope.origem,
         destino : $scope.destino,
